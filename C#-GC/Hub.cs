@@ -75,7 +75,7 @@ namespace C__GC
                     }
                 }
             }
-            while (KeyPress != ConsoleKey.Escape);
+            while (KeyPress != ConsoleKey.Spacebar);
 
 
             return HubIndex;
@@ -99,13 +99,15 @@ namespace C__GC
         public void Credit()
         {
             Console.Clear();
-            Console.Write("\n Game designed by Gwent\n");
+            Console.WriteLine("\n Game designed by Gwent\n Dev: Tom (holland), Valentin (Saint), Quentin (Avion)");
+            Console.ReadKey(true);
+            OverlayOption();
         }
 
         public void Exit()
         {
-            Console.Write("\n Press 'Escape' to exit");
-            Console.ReadKey(true);
+            //Console.WriteLine("\n Press 'Escape' to exit");
+            //Console.ReadKey(true);
             Environment.Exit(0);
         }
     }
