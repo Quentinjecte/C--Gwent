@@ -68,16 +68,16 @@ namespace C__GC
             switch (direction)
             {
                 case MoveDirection.Forward:
-                    playerY--;
-                    break;
-                case MoveDirection.Backward:
                     playerY++;
                     break;
+                case MoveDirection.Backward:
+                    playerY--;
+                    break;
                 case MoveDirection.Left:
-                    playerX--;
+                    playerX++;
                     break;
                 case MoveDirection.Right:
-                    playerX++;
+                    playerX--;
                     break;
             }
         }
