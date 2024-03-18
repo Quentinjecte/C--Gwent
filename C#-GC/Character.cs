@@ -32,6 +32,7 @@ namespace C__GC
             shadow
         }
 
+        public string name;
         public int dmg;
         public int type;
 
