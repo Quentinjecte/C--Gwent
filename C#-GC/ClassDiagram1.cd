@@ -3,22 +3,22 @@
   <Class Name="C__GC.Game">
     <Position X="11.25" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="C__GC.Hub">
     <Position X="1" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAAAABAAAACSIABAEAAAAAIAAAAABAAAA=</HashCode>
-      <FileName>Hub.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="C__GC.Programe">
     <Position X="11.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
-      <FileName>Program.cs</FileName>
+      <HashCode>AAAACAMAAAAAAAABAAAACSIABAECAAAAIAIAAAAAAAA=</HashCode>
+      <FileName>Hub.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="C__GC.Enemies">
