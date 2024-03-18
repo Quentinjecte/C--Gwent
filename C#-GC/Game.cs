@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using C__GC.DataString;
 
 namespace C__GC
 {
@@ -20,8 +21,8 @@ namespace C__GC
 
         public void StartHub()
         {
-            string prompt = Hub.CharactereData.Prompt;
-            string[] HubInfo = Hub.CharactereData.HubInfo;
+            string prompt = CharactereData.Prompt;
+            string[] HubInfo = CharactereData.HubInfo;
 
             Hub.Hub MainHub = new Hub.Hub(prompt, HubInfo);
 

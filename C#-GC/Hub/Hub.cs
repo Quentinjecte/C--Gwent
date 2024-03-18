@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Media;
 using NAudio.Wave;
+using C__GC.DataString;
 
 namespace C__GC.Hub
 {

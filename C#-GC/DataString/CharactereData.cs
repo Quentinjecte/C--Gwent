@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C__GC.Hub
+namespace C__GC.DataString
 {
     internal class CharactereData
     {
