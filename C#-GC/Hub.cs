@@ -84,7 +84,8 @@ namespace C__GC
 
         public void NewGame()
         {
-
+            Console.Clear();
+            Console.WriteLine("Clearing the screen!");
         }
 
         public void Continue()
@@ -147,7 +148,7 @@ namespace C__GC
         public void Credit()
         {
             Console.Clear();
-            Console.WriteLine("\n Game designed by Gwent\n Dev: Tom (holland), Valentin (Saint), Quentin (Avion)");
+            Console.WriteLine("\n Game designed by Gwent\n Dev: Tom (holland), Valentin (Saint), Quentin (Avion), Mathieu (Mangemort)");
             Console.ReadKey(true);
         }
 
