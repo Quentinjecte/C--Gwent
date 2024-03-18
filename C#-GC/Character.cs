@@ -41,9 +41,9 @@ namespace C__GC
 
     public class Character
     {
-        public Stats stats;
-        public string name;
-        public Offense[] offenses;
-        public Spell[] spells;
+        Stats stats;
+        string name;
+        Offense[] offenses;
+        Spell[] spells;
     }
 }
