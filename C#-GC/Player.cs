@@ -24,9 +24,8 @@ namespace C__GC
             Right
         }
 
-        public int playerX = 0;
-        public int playerY = 0;
-
+        public int playerX = 10;
+        public int playerY = 10;
 
         public static class Keyboard;
         public Protagonist[] team;
@@ -35,51 +34,60 @@ namespace C__GC
 
         public void Input()
         {
-            MoveDirection moveDirection;
+            ConsoleKeyInfo keyInfo;
 
             do
             {
-                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+                keyInfo = Console.ReadKey(true);
 
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.Z:
-                        moveDirection = MoveDirection.Forward;
+                        Move(MoveDirection.Forward);
                         break;
                     case ConsoleKey.S:
-                        moveDirection = MoveDirection.Backward;
+                        Move(MoveDirection.Backward);
                         break;
                     case ConsoleKey.Q:
-                        moveDirection = MoveDirection.Left;
+                        Move(MoveDirection.Left);
                         break;
                     case ConsoleKey.D:
-                        moveDirection = MoveDirection.Right;
+                        Move(MoveDirection.Right);
                         break;
                     default:
                         continue;
                 }
 
-                Move(moveDirection);
-
             } while (true);
         }
         private void Move(MoveDirection direction)
         {
+            Console.SetCursorPosition(playerX, playerY);
+            Console.Write(" ");
+
             switch (direction)
             {
                 case MoveDirection.Forward:
-                    playerY++;
-                    break;
-                case MoveDirection.Backward:
                     playerY--;
                     break;
-                case MoveDirection.Left:
-                    playerX++;
+                case MoveDirection.Backward:
+                    playerY++;
                     break;
-                case MoveDirection.Right:
+                case MoveDirection.Left:
                     playerX--;
                     break;
+                case MoveDirection.Right:
+                    playerX++;
+                    break;
             }
+
+            DrawPlayer();
+        }
+        public void DrawPlayer()
+        {
+            Console.SetCursorPosition(playerX, playerY);
+            Console.Write("P");
         }
     }
+
 }

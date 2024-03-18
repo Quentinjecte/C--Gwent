@@ -86,7 +86,13 @@ namespace C__GC
         {
             Console.Clear();
             Console.WriteLine("Clearing the screen!");
+
+            Player player = new Player();
+            player.DrawPlayer();
+            player.Input();
+
         }
+
 
         public void Continue()
         {
