@@ -39,7 +39,7 @@ namespace C__GC
     }
 
 
-    internal class Character
+    public class Character
     {
         public Stats stats;
         public string name;
