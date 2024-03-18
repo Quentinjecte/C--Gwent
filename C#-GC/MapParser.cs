@@ -61,7 +61,7 @@ namespace C__GC
         private string[] _AsciiChars = { "#", "#", "@", "%", "=", "+", "*", ":", "-", ".", "&nbsp;" };
 
 
-        private Bitmap Load(string path)
+        internal Bitmap Load(string path)
         {
             Bitmap img = null;
             try
@@ -105,6 +105,19 @@ namespace C__GC
             g.DrawImage(inputBitmap, 0, 0, asciiWidth, asciiHeight);
             g.Dispose();
             return result;
+        }
+
+        public char GetMapAtCoordinates(Bitmap img, int x, int y)
+        {
+            if (x >= 0 && x < img.Width && y >= 0 && y < img.Height)
+            {
+                Color pixelColor = img.GetPixel(x, y);
+                int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
+                // Map the gray value to the appropriate ASCII character
+                int index = (gray * (_AsciiChars.Length - 1)) / 255;
+                return _AsciiChars[index][0];
+            }
+            return ' ';
         }
     }
 }
