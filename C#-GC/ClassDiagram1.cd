@@ -38,7 +38,7 @@
   <Class Name="C__GC.Player" Collapsed="true">
     <Position X="18.25" Y="6.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAQAAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAEAAQAAACAAAAAACAAQA=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
   </Class>
