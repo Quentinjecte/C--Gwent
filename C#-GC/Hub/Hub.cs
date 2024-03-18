@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Media;
 using NAudio.Wave;
 
-namespace C__GC
+namespace C__GC.Hub
 {
 
     internal class Hub
@@ -60,7 +60,7 @@ namespace C__GC
                 ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
                 KeyPress = KeyInfo.Key;
 
-                if (KeyPress == ConsoleKey.UpArrow)
+                if (KeyPress == ConsoleKey.UpArrow || KeyPress == ConsoleKey.Z)
                 {
                     HubIndex--;
                     if (HubIndex == -1)
@@ -68,7 +68,7 @@ namespace C__GC
                         HubIndex = HubInfo.Length - 1;
                     }
                 }
-                else if (KeyPress == ConsoleKey.DownArrow)
+                else if (KeyPress == ConsoleKey.DownArrow || KeyPress == ConsoleKey.S)
                 {
                     HubIndex++;
                     if (HubIndex == HubInfo.Length)
@@ -94,37 +94,12 @@ namespace C__GC
 
         public void Option(string prompt)
         {
-            string[] OptionsInfo = 
-                { @"
-      █     █░ ██▓ ███▄    █ ▓█████▄  ▒█████   █     █░     ██████  ██▓▒███████▒▓█████ 
-     ▓█░ █ ░█░▓██▒ ██ ▀█   █ ▒██▀ ██▌▒██▒  ██▒▓█░ █ ░█░   ▒██    ▒ ▓██▒▒ ▒ ▒ ▄▀░▓█   ▀ 
-     ▒█░ █ ░█ ▒██▒▓██  ▀█ ██▒░██   █▌▒██░  ██▒▒█░ █ ░█    ░ ▓██▄   ▒██▒░ ▒ ▄▀▒░ ▒███   
-     ░█░ █ ░█ ░██░▓██▒  ▐▌██▒░▓█▄   ▌▒██   ██░░█░ █ ░█      ▒   ██▒░██░  ▄▀▒   ░▒▓█  ▄ 
-     ░░██▒██▓ ░██░▒██░   ▓██░░▒████▓ ░ ████▓▒░░░██▒██▓    ▒██████▒▒░██░▒███████▒░▒████▒", @"
-
-      ██▓     ▄▄▄       ███▄    █   ▄████  █    ██  ▄▄▄        ▄████ ▓█████ 
-     ▓██▒    ▒████▄     ██ ▀█   █  ██▒ ▀█▒ ██  ▓██▒▒████▄     ██▒ ▀█▒▓█   ▀ 
-     ▒██░    ▒██  ▀█▄  ▓██  ▀█ ██▒▒██░▄▄▄░▓██  ▒██░▒██  ▀█▄  ▒██░▄▄▄░▒███   
-     ▒██░    ░██▄▄▄▄██ ▓██▒  ▐▌██▒░▓█  ██▓▓▓█  ░██░░██▄▄▄▄██ ░▓█  ██▓▒▓█  ▄ 
-     ░██████▒ ▓█   ▓██▒▒██░   ▓██░░▒▓███▀▒▒▒█████▓  ▓█   ▓██▒░▒▓███▀▒░▒████▒", @"
-
-      ███▄ ▄███▓ █    ██   ██████  ██▓ ▄████▄  
-     ▓██▒▀█▀ ██▒ ██  ▓██▒▒██    ▒ ▓██▒▒██▀ ▀█  
-     ▓██    ▓██░▓██  ▒██░░ ▓██▄   ▒██▒▒▓█    ▄ 
-     ▒██    ▒██ ▓▓█  ░██░  ▒   ██▒░██░▒▓▓▄ ▄██▒
-     ▒██▒   ░██▒▒▒█████▓ ▒██████▒▒░██░▒ ▓███▀ ░", @"
-
-     ▓█████ ▒██   ██▒ ██▓▄▄▄█████▓
-     ▓█   ▀ ▒▒ █ █ ▒░▓██▒▓  ██▒ ▓▒
-     ▒███   ░░  █   ░▒██▒▒ ▓██░ ▒░
-     ▒▓█  ▄  ░ █ █ ▒ ░██░░ ▓██▓ ░ 
-     ░▒████▒▒██▒ ▒██▒░██░  ▒██▒ ░ " 
-            };
+            string[] OptionsInfo = CharactereData.OptionInfo;
 
             Hub HubOptions = new Hub(prompt, OptionsInfo);
             HubIndex = HubOptions.SwapIndex();
 
-            switch(HubIndex) 
+            switch (HubIndex)
             {
                 case 0:
                     ResizeConsoleWindow();
@@ -241,7 +216,7 @@ namespace C__GC
 
                 KeyPress = Console.ReadKey();
 
-                if (KeyPress.Key == ConsoleKey.UpArrow)
+                if (KeyPress.Key == ConsoleKey.UpArrow || KeyPress.Key == ConsoleKey.Z)
                 {
                     Volume++;
                     if (Volume > 10)
@@ -249,7 +224,7 @@ namespace C__GC
                         Volume = 10;
                     }
                 }
-                else if (KeyPress.Key == ConsoleKey.DownArrow)
+                else if (KeyPress.Key == ConsoleKey.DownArrow || KeyPress.Key == ConsoleKey.S)
                 {
                     Volume--;
                     if (Volume < 0)
