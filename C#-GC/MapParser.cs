@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Reflection.Metadata;
@@ -8,9 +9,11 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using System.Reflection;
 
 namespace C__GC
 {
+
     internal class MapParser
     {
         public string ParseBitmap(string path, int width)
@@ -43,6 +46,7 @@ namespace C__GC
                     {
                         int index = (grayColor.R * 10) / 255;
                         sb.Append(_AsciiChars[index]);
+                        TileTypes.;
                     }
                 }
                 if (!toggle)
@@ -59,7 +63,6 @@ namespace C__GC
         }
 
         private string[] _AsciiChars = { "#", "#", "@", "%", "=", "+", "*", ":", "-", ".", "&nbsp;" };
-
 
         private Bitmap Load(string path)
         {
@@ -106,5 +109,56 @@ namespace C__GC
             g.Dispose();
             return result;
         }
+
     }
+
+    public class Tile
+    {
+
+    }
+
+    public class TileTypes
+    {
+        public static readonly TileType Water;
+        public static readonly TileType Grass;
+        public static readonly TileType Dirts;
+        public static readonly TileType Rock;
+
+        static TileTypes()
+        {
+            Water = new TileType("Water", ConsoleColor.Cyan, ConsoleColor.Black, " ");
+            Grass = new TileType("Grass", ConsoleColor.Green, ConsoleColor.DarkGreen, "#");
+            Dirts = new TileType("Dirts", ConsoleColor.Cyan, ConsoleColor.Black, "%");
+            Rock = new TileType("Rock", ConsoleColor.Cyan, ConsoleColor.Black, "@");
+        }
+    }
+
+    public class TileType
+    {
+        public string Name { get; set; }
+        public ConsoleColor BackColor { get; set; }
+
+        public ConsoleColor ForeColor { get; set; }
+
+        public string RenderString { get; set; }
+
+        public TileType(string name,
+            ConsoleColor backColor,
+            ConsoleColor foreColor,
+            string renderString)
+        {
+            this.Name = name;
+            this.BackColor = backColor;
+            this.ForeColor = foreColor;
+            this.RenderString = renderString;
+        }
+
+        public void Render()
+        {
+            Console.BackgroundColor = BackColor;
+            Console.ForegroundColor = ForeColor;
+            Console.Write(RenderString);
+        }
+    }
+
 }
