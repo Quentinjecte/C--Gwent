@@ -15,12 +15,24 @@ namespace C__GC
         private string _prompt;
         str_func[] _hubInfo;
 
+        static public const str_func[] mainMenuPreset = [
+                new str_func("New Game", MainHub.NewGame),
+                new str_func("Continue", MainHub.Continue),
+                new str_func("Options", MainHub.Option),
+                new str_func("Credits", MainHub.Credit),
+                new str_func("Exit", MainHub.Exit)
+                ];
+
+        static public const str_func[] optionsPreset = [
+                new str_func("Window Size", ResizeConsoleWindow),
+                new str_func("Language", null),
+                new str_func("Music", Music),
+                new str_func("Exit", Exit)
+                ];
+
         public int Volume;
 
-        public Hub()
-        {
-
-        }
+        public Hub(){}
 
         public void InitHub(string prompt, str_func[] HubInfo)
         {
@@ -57,35 +69,40 @@ namespace C__GC
         public int SwapIndex(int i)
         {
             ConsoleKey KeyPress;
+            byte isClosed;
 
             do
             {
-                Console.Clear();
-                OverlayOption();
-
-                ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
-                KeyPress = KeyInfo.Key;
-
-                if (KeyPress == ConsoleKey.UpArrow)
+                do
                 {
-                    _hubIndex--;
-                    if (_hubIndex == -1)
-                    {
-                        _hubIndex = _hubInfo.Length - 1;
-                    }
-                }
-                else if (KeyPress == ConsoleKey.DownArrow)
-                {
-                    _hubIndex++;
-                    if (_hubIndex == _hubInfo.Length)
-                    {
-                        _hubIndex = 0;
-                    }
-                }
-            }
-            while (KeyPress != ConsoleKey.Spacebar);
+                    Console.Clear();
+                    OverlayOption();
 
-            _hubInfo[_hubIndex].Func(0);
+                    ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
+                    KeyPress = KeyInfo.Key;
+
+                    if (KeyPress == ConsoleKey.UpArrow)
+                    {
+                        _hubIndex--;
+                        if (_hubIndex == -1)
+                        {
+                            _hubIndex = _hubInfo.Length - 1;
+                        }
+                    }
+                    else if (KeyPress == ConsoleKey.DownArrow)
+                    {
+                        _hubIndex++;
+                        if (_hubIndex == _hubInfo.Length)
+                        {
+                            _hubIndex = 0;
+                        }
+                    }
+                } while (KeyPress != ConsoleKey.Spacebar);
+
+                isColsed = _hubInfo[_hubIndex].Func(0);
+
+            } while (isClosed != 1);
+
             return _hubIndex;
         }
 
@@ -101,12 +118,7 @@ namespace C__GC
 
         public int Option(int i)
         {
-            str_func[] OptionsInfo = {
-                new str_func("Window Size", ResizeConsoleWindow),
-                new str_func("Language", null),
-                new str_func("Music", Music),
-                new str_func("Exit", Exit)};
-            InitHub(_prompt, OptionsInfo);
+            InitHub(_prompt, Hub.optionsPreset);
             SwapIndex(0);
             return 0;
         }

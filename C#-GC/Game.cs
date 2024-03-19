@@ -36,14 +36,7 @@ Use arrow keys and press 'Spacebar' for select ur options :
             
 
             Hub MainHub = new Hub();
-            str_func[] HubInfo = [
-                new str_func("New Game", MainHub.NewGame),
-                new str_func("Continue", MainHub.Continue),
-                new str_func("Options", MainHub.Option),
-                new str_func("Credits", MainHub.Credit),
-                new str_func("Exit", MainHub.Exit)
-                ];
-            MainHub.InitHub(prompt, HubInfo);
+            MainHub.InitHub(prompt, Hub.mainMenuPreset);
             
             int HubIndex = MainHub.SwapIndex(0);
             int Volume = MainHub.Volume;
