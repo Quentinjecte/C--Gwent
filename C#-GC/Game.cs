@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,37 +33,45 @@ namespace C__GC
 Use arrow keys and press 'Spacebar' for select ur options :
 ";
 
-            string[] HubInfo = { "New Game", "Continue", "Options", "Credits", "Exit" };
+            
 
-            Hub MainHub = new Hub(prompt, HubInfo);
-
-            int HubIndex = MainHub.SwapIndex();
+            Hub MainHub = new Hub();
+            str_func[] HubInfo = [
+                new str_func("New Game", MainHub.NewGame),
+                new str_func("Continue", MainHub.Continue),
+                new str_func("Options", MainHub.Option),
+                new str_func("Credits", MainHub.Credit),
+                new str_func("Exit", MainHub.Exit)
+                ];
+            MainHub.InitHub(prompt, HubInfo);
+            
+            int HubIndex = MainHub.SwapIndex(0);
             int Volume = MainHub.Volume;
 
-           switch (HubIndex)
-            {
-                case 0:
-                    MainHub.NewGame();
-                    break;
+           //switch (HubIndex)
+           // {
+           //     case 0:
+           //         MainHub.NewGame();
+           //         break;
 
-                case 1:
-                    MainHub.Continue();
-                    break;
+           //     case 1:
+           //         MainHub.Continue();
+           //         break;
 
-                case 2:
-                    MainHub.Option(prompt);
-                    StartHub();
-                    break;
+           //     case 2:
+           //         MainHub.Option(prompt);
+           //         StartHub();
+           //         break;
 
-                case 3:
-                    MainHub.Credit();
-                    StartHub();
-                    break;
+           //     case 3:
+           //         MainHub.Credit();
+           //         StartHub();
+           //         break;
 
-                case 4:
-                    MainHub.Exit();
-                    break;
-            }
+           //     case 4:
+           //         MainHub.Exit();
+           //         break;
+           // }
         }
     }
 }

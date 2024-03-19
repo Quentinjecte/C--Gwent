@@ -11,28 +11,33 @@ namespace C__GC
 
     internal class Hub
     {
-        private int HubIndex;
-        private string[] HubInfo;
-        private string Prompt;
+        private int _hubIndex;
+        private string _prompt;
+        str_func[] _hubInfo;
 
         public int Volume;
 
-        public Hub(string _Prompt, string[] _HubInfo)
+        public Hub()
         {
-            Prompt = _Prompt;
-            HubInfo = _HubInfo;
-            HubIndex = 0;
+
+        }
+
+        public void InitHub(string prompt, str_func[] HubInfo)
+        {
+            _prompt = prompt;
+            _hubInfo = HubInfo;
+            _hubIndex = 0;
         }
 
         private void OverlayOption()
         {
-            Console.WriteLine(Prompt);
-            for (int i = 0; i < HubInfo.Length; i++)
+            Console.WriteLine(_prompt);
+            for (int i = 0; i < _hubInfo.Length; i++)
             {
                 string ActChoise;
-                string CurrentOption = HubInfo[i];
+                string CurrentOption = _hubInfo[i].Str;
 
-                if (i == HubIndex)
+                if (i == _hubIndex)
                 {
                     ActChoise = "->";
                     Console.ForegroundColor = ConsoleColor.Black;
@@ -49,7 +54,7 @@ namespace C__GC
             Console.ResetColor();
         }
 
-        public int SwapIndex()
+        public int SwapIndex(int i)
         {
             ConsoleKey KeyPress;
 
@@ -63,75 +68,64 @@ namespace C__GC
 
                 if (KeyPress == ConsoleKey.UpArrow)
                 {
-                    HubIndex--;
-                    if (HubIndex == -1)
+                    _hubIndex--;
+                    if (_hubIndex == -1)
                     {
-                        HubIndex = HubInfo.Length - 1;
+                        _hubIndex = _hubInfo.Length - 1;
                     }
                 }
                 else if (KeyPress == ConsoleKey.DownArrow)
                 {
-                    HubIndex++;
-                    if (HubIndex == HubInfo.Length)
+                    _hubIndex++;
+                    if (_hubIndex == _hubInfo.Length)
                     {
-                        HubIndex = 0;
+                        _hubIndex = 0;
                     }
                 }
             }
             while (KeyPress != ConsoleKey.Spacebar);
 
-            return HubIndex;
+            _hubInfo[_hubIndex].Func(0);
+            return _hubIndex;
         }
 
-        public void NewGame()
+        public int NewGame(int i)
         {
-
+            return 0;
         }
 
-        public void Continue()
+        public int Continue(int i)
         {
-
+            return 0;
         }
 
-        public void Option(string prompt)
+        public int Option(int i)
         {
-            string[] OptionsInfo = {"Window Size", "Language", "Music", "Exit"};
-            Hub HubOptions = new Hub(prompt, OptionsInfo);
-            HubIndex = HubOptions.SwapIndex();
-
-            switch(HubIndex) 
-            {
-                case 0:
-                    ResizeConsoleWindow();
-                    Option(prompt);
-                    break;
-
-                case 1:
-                    break;
-
-                case 2:
-                    Music();
-                    Option(prompt);
-                    break;
-
-                case 3:
-                    break;
-            }
+            str_func[] OptionsInfo = {
+                new str_func("Window Size", ResizeConsoleWindow),
+                new str_func("Language", null),
+                new str_func("Music", Music),
+                new str_func("Exit", Exit)};
+            InitHub(_prompt, OptionsInfo);
+            SwapIndex(0);
+            return 0;
         }
 
-        public void Credit()
+        public int Credit(int i)
         {
             Console.Clear();
             Console.WriteLine("\n Game designed by Gwent\n Dev: Tom (holland), Valentin (Saint), Quentin (Avion)");
             Console.ReadKey(true);
+            return 0;
         }
 
-        public void Exit()
+        public int Exit(int i)
         {
             Environment.Exit(0);
+            return 0;
         }
 
-        private void ResizeConsoleWindow()
+        private int ResizeConsoleWindow(int i)
         {
             Console.WriteLine("Enter the new window width (in pixels '400 min'):");
 
@@ -163,9 +157,10 @@ namespace C__GC
                 Console.WriteLine("The new window size would force the console buffer size to be too large.");
                 Console.WriteLine("Please try again with a smaller window size.");
             }
+            return 0;
         }
 
-        private int Music()
+        private int Music(int i)
         {
             ConsoleKeyInfo KeyPress;
 
