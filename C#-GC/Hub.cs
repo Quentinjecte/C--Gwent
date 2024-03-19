@@ -15,15 +15,15 @@ namespace C__GC
         private string _prompt;
         str_func[] _hubInfo;
 
-        static public const str_func[] mainMenuPreset = [
-                new str_func("New Game", MainHub.NewGame),
-                new str_func("Continue", MainHub.Continue),
-                new str_func("Options", MainHub.Option),
-                new str_func("Credits", MainHub.Credit),
-                new str_func("Exit", MainHub.Exit)
+        public const str_func[] _mainMenuPreset = [
+                new str_func("New Game", NewGame),
+                new str_func("Continue", Continue),
+                new str_func("Options", Option),
+                new str_func("Credits", Credit),
+                new str_func("Exit", Exit)
                 ];
 
-        static public const str_func[] optionsPreset = [
+        public const str_func[] _optionsPreset = [
                 new str_func("Window Size", ResizeConsoleWindow),
                 new str_func("Language", null),
                 new str_func("Music", Music),
