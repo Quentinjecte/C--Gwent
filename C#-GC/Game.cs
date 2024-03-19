@@ -36,10 +36,10 @@ Use arrow keys and press 'Spacebar' for select ur options :
             
 
             Hub MainHub = new Hub();
-            MainHub.InitHub(prompt, MainHub.mainMenuPreset);
+            MainHub.InitHub(prompt, MainHub._mainMenuPreset);
             
             int HubIndex = MainHub.SwapIndex(0);
-            int Volume = MainHub.Volume;
+            //int Volume = MainHub.Volume;
 
            //switch (HubIndex)
            // {

@@ -14,31 +14,48 @@ namespace C__GC
         private int _hubIndex;
         private string _prompt;
         str_func[] _hubInfo;
+        int Volume;
+        int isClosed;
 
-        public const str_func[] _mainMenuPreset = [
+        public str_func[] _mainMenuPreset;
+        public str_func[] _OptionMenuPreset;
+        private str_func isColsed;
+
+        /*
+                public const str_func[] _optionsPreset = [
+                        new str_func("Window Size", ResizeConsoleWindow),
+                        new str_func("Language", null),
+                        new str_func("Music", Music),
+                        new str_func("Exit", Exit)
+                        ];
+        */
+
+
+        public Hub()
+        {
+            _mainMenuPreset = new[] { 
                 new str_func("New Game", NewGame),
                 new str_func("Continue", Continue),
-                new str_func("Options", Option),
-                new str_func("Credits", Credit),
-                new str_func("Exit", Exit)
-                ];
+                new str_func("Option", Option),
+                new str_func("Credit", Credit),
+                new str_func("Exit", Exit),
+            };
 
-        public const str_func[] _optionsPreset = [
+            _OptionMenuPreset = new[] { 
                 new str_func("Window Size", ResizeConsoleWindow),
                 new str_func("Language", null),
-                new str_func("Music", Music),
-                new str_func("Exit", Exit)
-                ];
+                new str_func("Music", Option),
+                new str_func("Exit", Exit),
+            };
+        }
 
-        public int Volume;
-
-        public Hub(){}
 
         public void InitHub(string prompt, str_func[] HubInfo)
         {
             _prompt = prompt;
             _hubInfo = HubInfo;
             _hubIndex = 0;
+            Action action = NewGame; 
         }
 
         private void OverlayOption()
@@ -51,13 +68,12 @@ namespace C__GC
 
                 if (i == _hubIndex)
                 {
-                    ActChoise = "->";
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.Gray;
+                    ActChoise = " ";
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                 }
                 else
                 {
-                    ActChoise = "  ";
+                    ActChoise = " ";
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.BackgroundColor = ConsoleColor.Black;
                 }
@@ -69,7 +85,6 @@ namespace C__GC
         public int SwapIndex(int i)
         {
             ConsoleKey KeyPress;
-            byte isClosed;
 
             do
             {
@@ -99,45 +114,40 @@ namespace C__GC
                     }
                 } while (KeyPress != ConsoleKey.Spacebar);
 
-                isColsed = _hubInfo[_hubIndex].Func(0);
+                isColsed = _hubInfo[_hubIndex];
 
             } while (isClosed != 1);
 
             return _hubIndex;
         }
 
-        public int NewGame(int i)
+        public void NewGame()
         {
-            return 0;
         }
 
-        public int Continue(int i)
+        public void Continue()
         {
-            return 0;
         }
 
-        public int Option(int i)
+        public void Option()
         {
-            InitHub(_prompt, Hub.optionsPreset);
+            InitHub(_prompt, _OptionMenuPreset);
             SwapIndex(0);
-            return 0;
         }
 
-        public int Credit(int i)
+        public void Credit()
         {
             Console.Clear();
             Console.WriteLine("\n Game designed by Gwent\n Dev: Tom (holland), Valentin (Saint), Quentin (Avion)");
             Console.ReadKey(true);
-            return 0;
         }
 
-        public int Exit(int i)
+        public void Exit()
         {
             Environment.Exit(0);
-            return 0;
         }
 
-        private int ResizeConsoleWindow(int i)
+        private void ResizeConsoleWindow()
         {
             Console.WriteLine("Enter the new window width (in pixels '400 min'):");
 
@@ -169,10 +179,9 @@ namespace C__GC
                 Console.WriteLine("The new window size would force the console buffer size to be too large.");
                 Console.WriteLine("Please try again with a smaller window size.");
             }
-            return 0;
         }
 
-        private int Music(int i)
+        private void Music()
         {
             ConsoleKeyInfo KeyPress;
 
@@ -240,8 +249,6 @@ namespace C__GC
                     }
                 }
             } while (KeyPress.Key != ConsoleKey.Spacebar); // Sortir de la boucle lorsque l'utilisateur appuie sur Escape
-
-            return Volume;
         }
     }
 }

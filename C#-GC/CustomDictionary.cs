@@ -9,15 +9,22 @@ namespace C__GC
 {
     struct str_func
     {
-        public str_func(string str, Func<int, int> func)
-        {
-            _str = str;
-            _func = func;
-        }
+        public str_func(string str, Action func)
+                {
+                    _str = str;
+                    _func = func;
+                }
 
-        string _str;
-        public string Str {  get { return _str; } }
-        Func<int, int> _func;
-        public Func<int, int> Func { get {  return _func; } }
+                string _str;
+                public string Str {  get { return _str; } }
+                readonly Action _func;
+                public Action Func { get {  return _func; } }
+
+/*
+        Dictionary<string, Action> Dic_Func = new Dictionary<string, Action>();
+
+        public str_func()
+        {
+        }*/
     }
 }
