@@ -18,28 +18,16 @@ namespace C__GC
 
     internal class Player
     {
-        enum MoveDirection
-        {
-            Forward,
-            Backward,
-            Left,
-            Right
-        }
 
         MapParser mapParser = new MapParser();
-        Bitmap img;
-        public int playerX = 0;
-        public int playerY = 0;
+        public int playerX = 10;
+        public int playerY = 10;
 
-        public static class Keyboard;
         public Protagonist[] team;
         public Inventory inventory;
 
-        public int asciiWidth { get; private set; }
-        public int asciiHeight { get; private set; }
-
         //saveS
-        public void Input()
+        public void Input(Bitmap img, int x, int y)
         {
             ConsoleKeyInfo keyInfo;
 
@@ -50,46 +38,37 @@ namespace C__GC
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.Z:
-                        Move(MoveDirection.Forward);
+                        (x, y) = (0, -1);
                         break;
                     case ConsoleKey.S:
-                        Move(MoveDirection.Backward);
+                        (x, y) = (0, 1);
                         break;
                     case ConsoleKey.Q:
-                        Move(MoveDirection.Left);
+                        (x, y) = (-1, 0);
                         break;
                     case ConsoleKey.D:
-                        Move(MoveDirection.Right);
+                        (x, y) = (1, 0);
                         break;
                     default:
                         continue;
                 }
-                InteractWithMap(img);
+                Move(img, x, y);
+                OverlayOnCase(img, playerX, playerY, x, y);
 
             } while (true);
         }
-        private void Move(MoveDirection direction)
+        private void Move(Bitmap img, int x, int y)
         {
-            Console.SetCursorPosition(playerX, playerY);
-            Console.Write(" ");
+            int newX = playerX + x;
+            int newY = playerY + y;
 
-            switch (direction)
+            if (mapParser.GetCollision(img, newX, newY) == false)
             {
-                case MoveDirection.Forward:
-                    playerY--;
-                    break;
-                case MoveDirection.Backward:
-                    playerY++;
-                    break;
-                case MoveDirection.Left:
-                    playerX--;
-                    break;
-                case MoveDirection.Right:
-                    playerX++;
-                    break;
+                playerX = newX;
+                playerY = newY;
+                Console.SetCursorPosition(playerX, playerY);
+                DrawPlayer();
             }
-
-            DrawPlayer();
         }
         public void DrawPlayer()
         {
@@ -97,11 +76,23 @@ namespace C__GC
             Console.Write("P");
         }
 
-        public void InteractWithMap(Bitmap mapImage)
+        private void OverlayOnCase(Bitmap img, int playerX, int playerY, int dx, int dy)
         {
-            // Update the player's position on the map
-            char mapCharacter = mapParser.GetMapAtCoordinates(mapImage, playerX, playerY);
-            Console.WriteLine(mapCharacter);
+
+            int leftX = playerX - dx;
+            int leftY = playerY - dy;
+            int rightX = playerX + dx;
+            int rightY = playerY + dy;
+
+            // Retrieve the characters from the GetCharacter method
+            char leftCharacter = mapParser.GetWalkingArea(img, leftX, leftY);
+            char rightCharacter = mapParser.GetWalkingArea(img, rightX, rightY);
+
+            // Print the characters at the calculated positions
+            Console.SetCursorPosition(leftX, leftY);
+            Console.Write(leftCharacter);
+            Console.SetCursorPosition(rightX, rightY);
+            Console.Write(rightCharacter);
         }
     }
 

@@ -104,7 +104,7 @@ namespace C__GC
             player.DrawPlayer();
 
             // Start taking input from the player
-            player.Input();
+            player.Input(mapImage, 0, 0);
 
         }
 

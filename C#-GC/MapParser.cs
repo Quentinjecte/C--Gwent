@@ -107,17 +107,25 @@ namespace C__GC
             return result;
         }
 
-        public char GetMapAtCoordinates(Bitmap img, int x, int y)
+        public char GetWalkingArea(Bitmap img, int x, int y)
         {
-            if (x >= 0 && x < img.Width && y >= 0 && y < img.Height)
+            Color pixelColor = img.GetPixel(x, y);
+            int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3; // dark maths to return %
+            int index = (gray * (_AsciiChars.Length - 1)) / 255;
+            return _AsciiChars[index][0]; // return %
+        }
+
+        public bool GetCollision(Bitmap img, int x, int y)
+        {
+            char character = GetWalkingArea(img, x, y);
+            if (character == '#')
             {
                 Color pixelColor = img.GetPixel(x, y);
-                int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3;
-                // Map the gray value to the appropriate ASCII character
+                int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3; // dark maths to return #
                 int index = (gray * (_AsciiChars.Length - 1)) / 255;
-                return _AsciiChars[index][0];
+                return true; // return #}
             }
-            return ' ';
+            return false;
         }
     }
 }
