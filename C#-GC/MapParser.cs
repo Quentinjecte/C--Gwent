@@ -46,7 +46,22 @@ namespace C__GC
                     {
                         int index = (grayColor.R * 10) / 255;
                         sb.Append(_AsciiChars[index]);
-                        TileTypes.;
+                        if (_AsciiChars[index] == "#")
+                        {
+                            TileTypes.Grass.Render();
+                        }
+                        if (_AsciiChars[index] == "%")
+                        {
+                            TileTypes.Dirts.Render();
+                        }
+                        else if (_AsciiChars[index] == " ")
+                        {
+                            TileTypes.Water.Render();
+                        }
+                        else if (_AsciiChars[index] == "@")
+                        {
+                            TileTypes.Rock.Render();
+                        }
                     }
                 }
                 if (!toggle)
@@ -93,7 +108,6 @@ namespace C__GC
             }
             return null;
         }
-
         private Bitmap ResizeImg(Bitmap inputBitmap, int asciiWidth)
         {
             //int asciiWidth = 100;
@@ -126,10 +140,10 @@ namespace C__GC
 
         static TileTypes()
         {
-            Water = new TileType("Water", ConsoleColor.Cyan, ConsoleColor.Black, " ");
-            Grass = new TileType("Grass", ConsoleColor.Green, ConsoleColor.DarkGreen, "#");
-            Dirts = new TileType("Dirts", ConsoleColor.Cyan, ConsoleColor.Black, "%");
-            Rock = new TileType("Rock", ConsoleColor.Cyan, ConsoleColor.Black, "@");
+            Water = new TileType("Water", ConsoleColor.Black, ConsoleColor.Black, " ");
+            Grass = new TileType("Grass", ConsoleColor.DarkGreen, ConsoleColor.DarkGreen, "#");
+            Dirts = new TileType("Dirts", ConsoleColor.DarkGray, ConsoleColor.DarkGray, "%");
+            Rock = new TileType("Rock", ConsoleColor.Gray, ConsoleColor.Gray, "@");
         }
     }
 

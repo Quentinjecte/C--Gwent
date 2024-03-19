@@ -14,6 +14,8 @@ namespace C__GC
             MapParser parser = new MapParser();
             Console.WriteLine(parser.ParseBitmap(assetsPath, 100));
             Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("\n");
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
