@@ -22,15 +22,11 @@ namespace C__GC
 
         public void StartHub()
         {
-            string prompt = CharactereData.Prompt;
-            string[] HubInfo = CharactereData.HubInfo;
+            Hub.Hub MainHub = new Hub.Hub();
 
-            Hub.Hub MainHub = new Hub.Hub(prompt, HubInfo);
-
-            Hub MainHub = new Hub();
-            MainHub.InitHub(prompt, MainHub._mainMenuPreset);
+            MainHub.InitHub(CharactereData.Prompt, MainHub._mainMenuPreset);
             
-            int HubIndex = MainHub.SwapIndex(0);
+            int HubIndex = MainHub.SwapIndex();
             //int Volume = MainHub.Volume;
 
            //switch (HubIndex)

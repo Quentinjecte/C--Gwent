@@ -9,54 +9,51 @@ using C__GC.DataString;
 
 namespace C__GC.Hub
 {
-
     internal class Hub
     {
         private int _hubIndex;
         private string _prompt;
+
         str_func[] _hubInfo;
+        public str_func[] _mainMenuPreset;
+        public str_func[] _OptionMenuPreset;
+        public str_func[] _OptionWindows;
+
         int Volume;
         int isClosed;
 
-        public str_func[] _mainMenuPreset;
-        public str_func[] _OptionMenuPreset;
-        private str_func isColsed;
-
-        /*
-                public const str_func[] _optionsPreset = [
-                        new str_func("Window Size", ResizeConsoleWindow),
-                        new str_func("Language", null),
-                        new str_func("Music", Music),
-                        new str_func("Exit", Exit)
-                        ];
-        */
-
-
         public Hub()
         {
-            _mainMenuPreset = new[] { 
-                new str_func("New Game", NewGame),
-                new str_func("Continue", Continue),
-                new str_func("Option", Option),
-                new str_func("Credit", Credit),
-                new str_func("Exit", Exit),
+            _OptionWindows = new[] { 
+                new str_func(CharactereData.OptionWindowSize[0]),
+                new str_func(CharactereData.OptionWindowSize[1]), // Language pas fait
+                new str_func(CharactereData.OptionWindowSize[2]),
             };
 
             _OptionMenuPreset = new[] { 
-                new str_func("Window Size", ResizeConsoleWindow),
-                new str_func("Language", null),
-                new str_func("Music", Option),
-                new str_func("Exit", Exit),
+                new str_func(CharactereData.OptionInfo[0], () => ResizeConsoleWindow(CharactereData.Prompt, _OptionWindows), 0),
+                new str_func(CharactereData.OptionInfo[1], Exit, 1), // Language pas fait
+                new str_func(CharactereData.OptionInfo[2], Music, 2),
+                new str_func(CharactereData.OptionInfo[3], Exit, 3),
             };
-        }
 
+            _mainMenuPreset = new[] { 
+                new str_func(CharactereData.HubInfo[0], NewGame, 0),
+                new str_func(CharactereData.HubInfo[1], Continue, 1),
+                new str_func(CharactereData.HubInfo[2], () => Option(CharactereData.Prompt, _OptionMenuPreset), 2),
+                new str_func(CharactereData.HubInfo[3], Credit, 3),
+                new str_func(CharactereData.HubInfo[4], Exit, 4),
+            };
+
+
+            _hubIndex = 0;
+        }
 
         public void InitHub(string prompt, str_func[] HubInfo)
         {
             _prompt = prompt;
             _hubInfo = HubInfo;
             _hubIndex = 0;
-            Action action = NewGame; 
         }
 
         private void OverlayOption()
@@ -83,7 +80,7 @@ namespace C__GC.Hub
             Console.ResetColor();
         }
 
-        public int SwapIndex(int i)
+        public int SwapIndex()
         {
             ConsoleKey KeyPress;
 
@@ -115,7 +112,7 @@ namespace C__GC.Hub
                     }
                 } while (KeyPress != ConsoleKey.Spacebar);
 
-                isColsed = _hubInfo[_hubIndex];
+                _hubInfo[_hubIndex].ExecuteAction();
 
             } while (isClosed != 1);
 
@@ -132,31 +129,11 @@ namespace C__GC.Hub
         {
         }
 
-        public void Option(string prompt)
+        public void Option(string prompt, str_func[] HubInfo)
         {
-            string[] OptionsInfo = CharactereData.OptionInfo;
-
-            Hub HubOptions = new Hub(prompt, OptionsInfo);
-            HubIndex = HubOptions.SwapIndex();
-
-            switch (HubIndex)
-            {
-                case 0:
-                    ResizeConsoleWindow();
-                    Option(prompt);
-                    break;
-
-                case 1:
-                    break;
-
-                case 2:
-                    Music();
-                    Option(prompt);
-                    break;
-
-                case 3:
-                    break;
-            }
+            Hub HubOptions = new Hub();
+            HubOptions.InitHub(prompt, _OptionMenuPreset);
+            _hubIndex = HubOptions.SwapIndex();
         }
 
         public void Credit()
@@ -171,26 +148,35 @@ namespace C__GC.Hub
             Environment.Exit(0);
         }
 
-        private void ResizeConsoleWindow()
+        private void ResizeConsoleWindow(string prompt, str_func[] HubInfo)
         {
-            Console.WriteLine("Enter the new window width (in pixels '400 min'):");
+            //RCW -> ResizeConsoleWindow
+            Hub HubOptionsRCW = new Hub();
+            HubOptionsRCW.InitHub(prompt, _OptionWindows);
+            _hubIndex = HubOptionsRCW.SwapIndex();
 
-            int newWidth;
-            while (!int.TryParse(Console.ReadLine(), out newWidth) || newWidth < 400)
+            int newWidth = 0;
+            int newHeight = 0;
+
+            switch (_hubIndex)
             {
-                Console.WriteLine("Invalid width. Please enter a valid positive integer.");
-                Console.WriteLine("Enter the new window width (in pixels):");
+                case 0:
+                    newWidth = Console.LargestWindowWidth;
+                    newHeight = Console.LargestWindowHeight;
+                    break;
+
+                case 1:
+                    newWidth = 1600;
+                    newHeight = 1200;
+                    break;
+
+                case 2:
+                    newWidth = 1280;
+                    newHeight = 1024;
+                    break;
             }
 
-            Console.WriteLine("Enter the new window height (in pixels):");
-            int newHeight;
-            while (!int.TryParse(Console.ReadLine(), out newHeight) || newHeight < 400)
-            {
-                Console.WriteLine("Invalid height. Please enter a valid positive integer.");
-                Console.WriteLine("Enter the new window height (in pixels '400 min'):");
-            }
-
-            int consoleWidth = (int)Math.Ceiling((double)newWidth / 8); // Convertie Pixel to Console Size, and rounded up the value
+            int consoleWidth = (int)Math.Ceiling((double)newWidth / 8); // Convert Pixel to Console Size
             int consoleHeight = (int)Math.Ceiling((double)newHeight / 16);
 
             try
