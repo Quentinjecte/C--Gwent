@@ -128,6 +128,10 @@ namespace C__GC.Hub
 
         public void Continue()
         {
+            ProgramTest programTest = new ProgramTest();
+            Console.Clear();
+            programTest.Load();
+            Console.ReadKey(true);
         }
 
         public void Option(string prompt, str_func[] HubInfo)
@@ -146,9 +150,9 @@ namespace C__GC.Hub
 
         public void Save()
         {
+            ProgramTest programTest = new ProgramTest();
             Console.Clear();
-            ProgramTest.Save();
-            Console.ReadKey(true);
+            programTest.Save();
         }
 
         public void Exit()

@@ -27,8 +27,6 @@ namespace C__GC
             MainHub.InitHub(CharactereData.Prompt, MainHub._mainMenuPreset);
             
             int HubIndex = MainHub.SwapIndex();
-
-            ProgramTest.Save();
             //int Volume = MainHub.Volume;
 
            //switch (HubIndex)

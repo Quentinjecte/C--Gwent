@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace C__GC
 {
@@ -11,28 +12,32 @@ namespace C__GC
     {
         public string? Name { get; set; }
         public int Age { get; set; }
+
+        public string fileName = "../../../BloupSaveData.json";
     }
 
     public class ProgramTest
     {
-        public static async void Save()
+        Data IDCard = new Data
         {
-            var IDCard = new Data
+            Name = "Bob",
+            Age = 1000
+        };
+
+        public void Save()
+        {
+
+            using (var stream = new StreamWriter(IDCard.fileName))
             {
-                Name = "Bob",
-                Age = 1000
-            };
+                stream.Write(JsonSerializer.Serialize(IDCard));
+            }
 
-            /*            string stringSaveFile = JsonSerializer.Serialize(IDCard);
-
-                        Console.WriteLine(stringSaveFile);*/
-
-            string fileName = "../../../BobSaveData.json";
-            await using FileStream createStream = File.Create(fileName);
-            await JsonSerializer.SerializeAsync(createStream, IDCard);
-
-
-            Console.WriteLine(File.ReadAllText(fileName));
+            // Console.WriteLine(File.ReadAllText(fileName));
         }
+        public void Load()
+        {
+            Console.WriteLine(File.ReadAllText(IDCard.fileName));
+        }
+
     }
 }
