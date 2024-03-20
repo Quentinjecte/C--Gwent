@@ -110,13 +110,10 @@ namespace C__GC
             // Start taking input from the player
             player.Input(mapImage, 0, 0);
 
-            if (KeyPress == ConsoleKey.UpArrow)
+            if (KeyPress == ConsoleKey.P)
             {
-                HubIndex--;
-                if (HubIndex == -1)
-                {
-                    HubIndex = HubInfo.Length - 1;
-                }
+                Overlay overlay = new Overlay();
+                overlay.InitPopUp();
             }
         }
 
