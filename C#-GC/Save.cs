@@ -16,12 +16,12 @@ namespace C__GC
         public string fileName = "../../../BloupSaveData.json";
     }
 
-    public class ProgramTest
+    public class SaveLoad
     {
         Data IDCard = new Data
         {
-            Name = "Bob",
-            Age = 1000
+            Name = "Jean",
+            Age = 1
         };
 
         public void Save()
