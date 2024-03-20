@@ -9,11 +9,11 @@
                         stateManager.ChangeState(State.Fight);
                         Console.WriteLine(stateManager.GetCurrentState()); // affiche le nouveau state*/
 
-            Overlay overlay = new Overlay();
-            overlay.InitPopUp();
+            /*            Overlay overlay = new Overlay();
+                        overlay.InitPopUp();*/
 
-            /*            Game game = new Game();
-                        game.Start();*/
+            Game game = new Game();
+            game.Start();
         }
     }
 }

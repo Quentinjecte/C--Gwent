@@ -30,11 +30,10 @@ namespace C__GC
         public void Input(Bitmap img, int x, int y)
         {
             ConsoleKeyInfo keyInfo;
-
+            Overlay overlay = new Overlay();
             do
             {
                 keyInfo = Console.ReadKey(true);
-
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.Z:
@@ -48,6 +47,9 @@ namespace C__GC
                         break;
                     case ConsoleKey.D:
                         (x, y) = (1, 0);
+                        break;
+                    case ConsoleKey.P: 
+                        overlay.InitPopUp();
                         break;
                     default:
                         continue;

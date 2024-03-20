@@ -85,9 +85,6 @@ namespace C__GC
 
         public void NewGame()
         {
-            ConsoleKey KeyPress;
-            ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
-            KeyPress = KeyInfo.Key;
 
             Console.Clear();
             Console.WriteLine("Clearing the screen!");
@@ -109,12 +106,6 @@ namespace C__GC
 
             // Start taking input from the player
             player.Input(mapImage, 0, 0);
-
-            if (KeyPress == ConsoleKey.P)
-            {
-                Overlay overlay = new Overlay();
-                overlay.InitPopUp();
-            }
         }
 
 
