@@ -13,15 +13,15 @@ namespace C__GC
         public string? Name { get; set; }
         public int Age { get; set; }
 
-        public string fileName = "../../../BloupSaveData.json";
+        public string fileName = "../../../SaveData.json";
     }
 
-    public class ProgramTest
+    public class SaveLoad
     {
         Data IDCard = new Data
         {
-            Name = "Bob",
-            Age = 1000
+            Name = "Jean",
+            Age = 0
         };
 
         public void Save()

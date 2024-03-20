@@ -128,9 +128,9 @@ namespace C__GC.Hub
 
         public void Continue()
         {
-            ProgramTest programTest = new ProgramTest();
+            SaveLoad saveLoad = new SaveLoad();
             Console.Clear();
-            programTest.Load();
+            saveLoad.Load();
             Console.ReadKey(true);
         }
 
@@ -150,9 +150,9 @@ namespace C__GC.Hub
 
         public void Save()
         {
-            ProgramTest programTest = new ProgramTest();
+            SaveLoad saveLoad = new SaveLoad();
             Console.Clear();
-            programTest.Save();
+            saveLoad.Save();
         }
 
         public void Exit()
