@@ -1,4 +1,6 @@
-﻿namespace C__GC
+﻿using C__GC.assets;
+
+namespace C__GC
 {
     class Programe
     {
@@ -8,9 +10,10 @@
             Console.WriteLine(stateManager.GetCurrentState()); // affiche le state actuel
             stateManager.ChangeState(State.Fight);
             Console.WriteLine(stateManager.GetCurrentState()); // affiche le nouveau state*/
-
-            Game game = new Game();
-            game.Start();
+            Overlay overlay = new Overlay();
+            overlay.PopUp();
+/*            Game game = new Game();
+            game.Start();*/
         }
     }
 }

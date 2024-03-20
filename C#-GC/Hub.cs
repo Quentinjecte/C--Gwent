@@ -88,7 +88,7 @@ namespace C__GC
             Console.Clear();
             Console.WriteLine("Clearing the screen!");
 
-            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Tom\\source\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\qrenaud\\Documents\\GitHub\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
 
             // Load the bitmap image using the MapParser
             MapParser parser = new MapParser();
