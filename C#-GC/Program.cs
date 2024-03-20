@@ -4,13 +4,23 @@
     {
         public static void Main(string[] args)
         {
-/*            StateManager stateManager = new StateManager();
-            Console.WriteLine(stateManager.GetCurrentState()); // affiche le state actuel
-            stateManager.ChangeState(State.Fight);
-            Console.WriteLine(stateManager.GetCurrentState()); // affiche le nouveau state*/
+            int left = Console.LargestWindowWidth - Console.WindowWidth;
+            int top = Console.LargestWindowHeight - Console.WindowHeight;
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+
+            Console.SetWindowPosition(0, 0);
+
 
             Game game = new Game();
             game.Start();
+            //string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "testMap.bmp");
+            //MapParser parser = new MapParser();
+            //Console.WriteLine(parser.ParseBitmap(assetsPath, 100));
+
+            //Protagonist[] prota = {new Protagonist()};
+            //Character[] enemy = {new Character()};
+            //Battle battle = new Battle(prota, enemy);
+            //battle.start();
         }
     }
 }

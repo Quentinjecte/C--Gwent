@@ -5,42 +5,75 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Media;
 using NAudio.Wave;
+using C__GC.DataString;
 using System.Drawing;
 
-namespace C__GC
+namespace C__GC.Hub
 {
-
     internal class Hub
     {
-        private int HubIndex;
-        private string[] HubInfo;
-        private string Prompt;
+        private int _hubIndex;
+        private string _prompt;
 
-        public int Volume;
+        str_func[] _hubInfo;
+        public str_func[] _mainMenuPreset;
+        public str_func[] _OptionMenuPreset;
+        public str_func[] _OptionWindows;
 
-        public Hub(string _Prompt, string[] _HubInfo)
+        int Volume;
+        int isClosed;
+
+        public Hub()
         {
-            Prompt = _Prompt;
-            HubInfo = _HubInfo;
-            HubIndex = 0;
+            _OptionWindows = new[] { 
+                new str_func(CharactereData.OptionWindowSize[0]),
+                new str_func(CharactereData.OptionWindowSize[1]), // Language pas fait
+                new str_func(CharactereData.OptionWindowSize[2]),
+            };
+
+            _OptionMenuPreset = new[] { 
+                new str_func(CharactereData.OptionInfo[0], () => ResizeConsoleWindow(CharactereData.Prompt, _OptionWindows), 0),
+                new str_func(CharactereData.OptionInfo[1], Exit, 1), // Language pas fait
+                new str_func(CharactereData.OptionInfo[2], Music, 2),
+                new str_func(CharactereData.OptionInfo[3], Exit, 3),
+            };
+
+            _mainMenuPreset = new[] { 
+                new str_func(CharactereData.HubInfo[0], NewGame, 0),
+                new str_func(CharactereData.HubInfo[1], Continue, 1),
+                new str_func(CharactereData.HubInfo[2], () => Option(CharactereData.Prompt, _OptionMenuPreset), 2),
+                new str_func(CharactereData.HubInfo[3], Credit, 3),
+                new str_func(CharactereData.HubInfo[4], Save, 4),
+                new str_func(CharactereData.HubInfo[5], Exit, 5),
+            };
+
+
+            _hubIndex = 0;
+        }
+
+        public void InitHub(string prompt, str_func[] HubInfo)
+        {
+            _prompt = prompt;
+            _hubInfo = HubInfo;
+            _hubIndex = 0;
         }
 
         private void OverlayOption()
         {
-            Console.WriteLine(Prompt);
-            for (int i = 0; i < HubInfo.Length; i++)
+            Console.WriteLine(_prompt);
+            for (int i = 0; i < _hubInfo.Length; i++)
             {
                 string ActChoise;
-                string CurrentOption = HubInfo[i];
+                string CurrentOption = _hubInfo[i].Str;
 
-                if (i == HubIndex)
+                if (i == _hubIndex)
                 {
                     ActChoise = "  ";
                     Console.ForegroundColor = ConsoleColor.Red;
                 }
                 else
                 {
-                    ActChoise = "  ";
+                    ActChoise = " ";
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.BackgroundColor = ConsoleColor.Black;
                 }
@@ -55,32 +88,37 @@ namespace C__GC
 
             do
             {
-                Console.Clear();
-                OverlayOption();
-
-                ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
-                KeyPress = KeyInfo.Key;
-
-                if (KeyPress == ConsoleKey.UpArrow)
+                do
                 {
-                    HubIndex--;
-                    if (HubIndex == -1)
-                    {
-                        HubIndex = HubInfo.Length - 1;
-                    }
-                }
-                else if (KeyPress == ConsoleKey.DownArrow)
-                {
-                    HubIndex++;
-                    if (HubIndex == HubInfo.Length)
-                    {
-                        HubIndex = 0;
-                    }
-                }
-            }
-            while (KeyPress != ConsoleKey.Spacebar);
+                    Console.Clear();
+                    OverlayOption();
 
-            return HubIndex;
+                    ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
+                    KeyPress = KeyInfo.Key;
+
+                    if (KeyPress == ConsoleKey.UpArrow)
+                    {
+                        _hubIndex--;
+                        if (_hubIndex == -1)
+                        {
+                            _hubIndex = _hubInfo.Length - 1;
+                        }
+                    }
+                    else if (KeyPress == ConsoleKey.DownArrow)
+                    {
+                        _hubIndex++;
+                        if (_hubIndex == _hubInfo.Length)
+                        {
+                            _hubIndex = 0;
+                        }
+                    }
+                } while (KeyPress != ConsoleKey.Spacebar);
+
+                _hubInfo[_hubIndex].ExecuteAction();
+
+            } while (isClosed != 1);
+
+            return _hubIndex;
         }
 
         public void NewGame()
@@ -111,59 +149,17 @@ namespace C__GC
 
         public void Continue()
         {
-
+            ProgramTest programTest = new ProgramTest();
+            Console.Clear();
+            programTest.Load();
+            Console.ReadKey(true);
         }
 
-        public void Option(string prompt)
+        public void Option(string prompt, str_func[] HubInfo)
         {
-            string[] OptionsInfo = 
-                { @"
-      █     █░ ██▓ ███▄    █ ▓█████▄  ▒█████   █     █░     ██████  ██▓▒███████▒▓█████ 
-     ▓█░ █ ░█░▓██▒ ██ ▀█   █ ▒██▀ ██▌▒██▒  ██▒▓█░ █ ░█░   ▒██    ▒ ▓██▒▒ ▒ ▒ ▄▀░▓█   ▀ 
-     ▒█░ █ ░█ ▒██▒▓██  ▀█ ██▒░██   █▌▒██░  ██▒▒█░ █ ░█    ░ ▓██▄   ▒██▒░ ▒ ▄▀▒░ ▒███   
-     ░█░ █ ░█ ░██░▓██▒  ▐▌██▒░▓█▄   ▌▒██   ██░░█░ █ ░█      ▒   ██▒░██░  ▄▀▒   ░▒▓█  ▄ 
-     ░░██▒██▓ ░██░▒██░   ▓██░░▒████▓ ░ ████▓▒░░░██▒██▓    ▒██████▒▒░██░▒███████▒░▒████▒", @"
-
-      ██▓     ▄▄▄       ███▄    █   ▄████  █    ██  ▄▄▄        ▄████ ▓█████ 
-     ▓██▒    ▒████▄     ██ ▀█   █  ██▒ ▀█▒ ██  ▓██▒▒████▄     ██▒ ▀█▒▓█   ▀ 
-     ▒██░    ▒██  ▀█▄  ▓██  ▀█ ██▒▒██░▄▄▄░▓██  ▒██░▒██  ▀█▄  ▒██░▄▄▄░▒███   
-     ▒██░    ░██▄▄▄▄██ ▓██▒  ▐▌██▒░▓█  ██▓▓▓█  ░██░░██▄▄▄▄██ ░▓█  ██▓▒▓█  ▄ 
-     ░██████▒ ▓█   ▓██▒▒██░   ▓██░░▒▓███▀▒▒▒█████▓  ▓█   ▓██▒░▒▓███▀▒░▒████▒", @"
-
-      ███▄ ▄███▓ █    ██   ██████  ██▓ ▄████▄  
-     ▓██▒▀█▀ ██▒ ██  ▓██▒▒██    ▒ ▓██▒▒██▀ ▀█  
-     ▓██    ▓██░▓██  ▒██░░ ▓██▄   ▒██▒▒▓█    ▄ 
-     ▒██    ▒██ ▓▓█  ░██░  ▒   ██▒░██░▒▓▓▄ ▄██▒
-     ▒██▒   ░██▒▒▒█████▓ ▒██████▒▒░██░▒ ▓███▀ ░", @"
-
-     ▓█████ ▒██   ██▒ ██▓▄▄▄█████▓
-     ▓█   ▀ ▒▒ █ █ ▒░▓██▒▓  ██▒ ▓▒
-     ▒███   ░░  █   ░▒██▒▒ ▓██░ ▒░
-     ▒▓█  ▄  ░ █ █ ▒ ░██░░ ▓██▓ ░ 
-     ░▒████▒▒██▒ ▒██▒░██░  ▒██▒ ░ " 
-            };
-
-            Hub HubOptions = new Hub(prompt, OptionsInfo);
-            HubIndex = HubOptions.SwapIndex();
-
-            switch(HubIndex) 
-            {
-                case 0:
-                    ResizeConsoleWindow();
-                    Option(prompt);
-                    break;
-
-                case 1:
-                    break;
-
-                case 2:
-                    Music();
-                    Option(prompt);
-                    break;
-
-                case 3:
-                    break;
-            }
+            Hub HubOptions = new Hub();
+            HubOptions.InitHub(prompt, _OptionMenuPreset);
+            _hubIndex = HubOptions.SwapIndex();
         }
 
         public void Credit()
@@ -173,31 +169,47 @@ namespace C__GC
             Console.ReadKey(true);
         }
 
+        public void Save()
+        {
+            ProgramTest programTest = new ProgramTest();
+            Console.Clear();
+            programTest.Save();
+        }
+
         public void Exit()
         {
             Environment.Exit(0);
         }
 
-        private void ResizeConsoleWindow()
+        private void ResizeConsoleWindow(string prompt, str_func[] HubInfo)
         {
-            Console.WriteLine("Enter the new window width (in pixels '400 min'):");
+            //RCW -> ResizeConsoleWindow
+            Hub HubOptionsRCW = new Hub();
+            HubOptionsRCW.InitHub(prompt, _OptionWindows);
+            _hubIndex = HubOptionsRCW.SwapIndex();
 
-            int newWidth;
-            while (!int.TryParse(Console.ReadLine(), out newWidth) || newWidth < 400)
+            int newWidth = 0;
+            int newHeight = 0;
+
+            switch (_hubIndex)
             {
-                Console.WriteLine("Invalid width. Please enter a valid positive integer.");
-                Console.WriteLine("Enter the new window width (in pixels):");
+                case 0:
+                    newWidth = Console.LargestWindowWidth;
+                    newHeight = Console.LargestWindowHeight;
+                    break;
+
+                case 1:
+                    newWidth = 1600;
+                    newHeight = 1200;
+                    break;
+
+                case 2:
+                    newWidth = 1280;
+                    newHeight = 1024;
+                    break;
             }
 
-            Console.WriteLine("Enter the new window height (in pixels):");
-            int newHeight;
-            while (!int.TryParse(Console.ReadLine(), out newHeight) || newHeight < 400)
-            {
-                Console.WriteLine("Invalid height. Please enter a valid positive integer.");
-                Console.WriteLine("Enter the new window height (in pixels '400 min'):");
-            }
-
-            int consoleWidth = (int)Math.Ceiling((double)newWidth / 8); // Convertie Pixel to Console Size, and rounded up the value
+            int consoleWidth = (int)Math.Ceiling((double)newWidth / 8); // Convert Pixel to Console Size
             int consoleHeight = (int)Math.Ceiling((double)newHeight / 16);
 
             try
@@ -212,7 +224,7 @@ namespace C__GC
             }
         }
 
-        private int Music()
+        private void Music()
         {
             ConsoleKeyInfo KeyPress;
 
@@ -263,7 +275,7 @@ namespace C__GC
 
                 KeyPress = Console.ReadKey();
 
-                if (KeyPress.Key == ConsoleKey.UpArrow)
+                if (KeyPress.Key == ConsoleKey.UpArrow || KeyPress.Key == ConsoleKey.Z)
                 {
                     Volume++;
                     if (Volume > 10)
@@ -271,7 +283,7 @@ namespace C__GC
                         Volume = 10;
                     }
                 }
-                else if (KeyPress.Key == ConsoleKey.DownArrow)
+                else if (KeyPress.Key == ConsoleKey.DownArrow || KeyPress.Key == ConsoleKey.S)
                 {
                     Volume--;
                     if (Volume < 0)
@@ -280,8 +292,6 @@ namespace C__GC
                     }
                 }
             } while (KeyPress.Key != ConsoleKey.Spacebar); // Sortir de la boucle lorsque l'utilisateur appuie sur Escape
-
-            return Volume;
         }
     }
 }
