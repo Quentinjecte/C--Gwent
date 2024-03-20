@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,32 +27,36 @@ namespace C__GC
 
             Hub.Hub MainHub = new Hub.Hub(prompt, HubInfo);
 
-            int HubIndex = MainHub.SwapIndex();
-            int Volume = MainHub.Volume;
-            switch (HubIndex)
-            {
-                case 0:
-                    MainHub.NewGame();
-                    break;
+            Hub MainHub = new Hub();
+            MainHub.InitHub(prompt, MainHub._mainMenuPreset);
+            
+            int HubIndex = MainHub.SwapIndex(0);
+            //int Volume = MainHub.Volume;
 
-                case 1:
-                    MainHub.Continue();
-                    break;
+           //switch (HubIndex)
+           // {
+           //     case 0:
+           //         MainHub.NewGame();
+           //         break;
 
-                case 2:
-                    MainHub.Option(prompt);
-                    StartHub();
-                    break;
+           //     case 1:
+           //         MainHub.Continue();
+           //         break;
 
-                case 3:
-                    MainHub.Credit();
-                    StartHub();
-                    break;
+           //     case 2:
+           //         MainHub.Option(prompt);
+           //         StartHub();
+           //         break;
 
-                case 4:
-                    MainHub.Exit();
-                    break;
-            }
+           //     case 3:
+           //         MainHub.Credit();
+           //         StartHub();
+           //         break;
+
+           //     case 4:
+           //         MainHub.Exit();
+           //         break;
+           // }
         }
     }
 }

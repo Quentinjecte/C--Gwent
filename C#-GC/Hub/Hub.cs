@@ -12,35 +12,69 @@ namespace C__GC.Hub
 
     internal class Hub
     {
-        private int HubIndex;
-        private string[] HubInfo;
-        private string Prompt;
+        private int _hubIndex;
+        private string _prompt;
+        str_func[] _hubInfo;
+        int Volume;
+        int isClosed;
 
-        public int Volume;
+        public str_func[] _mainMenuPreset;
+        public str_func[] _OptionMenuPreset;
+        private str_func isColsed;
 
-        public Hub(string _Prompt, string[] _HubInfo)
+        /*
+                public const str_func[] _optionsPreset = [
+                        new str_func("Window Size", ResizeConsoleWindow),
+                        new str_func("Language", null),
+                        new str_func("Music", Music),
+                        new str_func("Exit", Exit)
+                        ];
+        */
+
+
+        public Hub()
         {
-            Prompt = _Prompt;
-            HubInfo = _HubInfo;
-            HubIndex = 0;
+            _mainMenuPreset = new[] { 
+                new str_func("New Game", NewGame),
+                new str_func("Continue", Continue),
+                new str_func("Option", Option),
+                new str_func("Credit", Credit),
+                new str_func("Exit", Exit),
+            };
+
+            _OptionMenuPreset = new[] { 
+                new str_func("Window Size", ResizeConsoleWindow),
+                new str_func("Language", null),
+                new str_func("Music", Option),
+                new str_func("Exit", Exit),
+            };
+        }
+
+
+        public void InitHub(string prompt, str_func[] HubInfo)
+        {
+            _prompt = prompt;
+            _hubInfo = HubInfo;
+            _hubIndex = 0;
+            Action action = NewGame; 
         }
 
         private void OverlayOption()
         {
-            Console.WriteLine(Prompt);
-            for (int i = 0; i < HubInfo.Length; i++)
+            Console.WriteLine(_prompt);
+            for (int i = 0; i < _hubInfo.Length; i++)
             {
                 string ActChoise;
-                string CurrentOption = HubInfo[i];
+                string CurrentOption = _hubInfo[i].Str;
 
-                if (i == HubIndex)
+                if (i == _hubIndex)
                 {
                     ActChoise = "  ";
                     Console.ForegroundColor = ConsoleColor.Red;
                 }
                 else
                 {
-                    ActChoise = "  ";
+                    ActChoise = " ";
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.BackgroundColor = ConsoleColor.Black;
                 }
@@ -49,38 +83,43 @@ namespace C__GC.Hub
             Console.ResetColor();
         }
 
-        public int SwapIndex()
+        public int SwapIndex(int i)
         {
             ConsoleKey KeyPress;
 
             do
             {
-                Console.Clear();
-                OverlayOption();
-
-                ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
-                KeyPress = KeyInfo.Key;
-
-                if (KeyPress == ConsoleKey.UpArrow || KeyPress == ConsoleKey.Z)
+                do
                 {
-                    HubIndex--;
-                    if (HubIndex == -1)
-                    {
-                        HubIndex = HubInfo.Length - 1;
-                    }
-                }
-                else if (KeyPress == ConsoleKey.DownArrow || KeyPress == ConsoleKey.S)
-                {
-                    HubIndex++;
-                    if (HubIndex == HubInfo.Length)
-                    {
-                        HubIndex = 0;
-                    }
-                }
-            }
-            while (KeyPress != ConsoleKey.Spacebar);
+                    Console.Clear();
+                    OverlayOption();
 
-            return HubIndex;
+                    ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
+                    KeyPress = KeyInfo.Key;
+
+                    if (KeyPress == ConsoleKey.UpArrow)
+                    {
+                        _hubIndex--;
+                        if (_hubIndex == -1)
+                        {
+                            _hubIndex = _hubInfo.Length - 1;
+                        }
+                    }
+                    else if (KeyPress == ConsoleKey.DownArrow)
+                    {
+                        _hubIndex++;
+                        if (_hubIndex == _hubInfo.Length)
+                        {
+                            _hubIndex = 0;
+                        }
+                    }
+                } while (KeyPress != ConsoleKey.Spacebar);
+
+                isColsed = _hubInfo[_hubIndex];
+
+            } while (isClosed != 1);
+
+            return _hubIndex;
         }
 
         public void NewGame()
@@ -91,7 +130,6 @@ namespace C__GC.Hub
 
         public void Continue()
         {
-
         }
 
         public void Option(string prompt)
@@ -167,7 +205,7 @@ namespace C__GC.Hub
             }
         }
 
-        private int Music()
+        private void Music()
         {
             ConsoleKeyInfo KeyPress;
 
@@ -235,8 +273,6 @@ namespace C__GC.Hub
                     }
                 }
             } while (KeyPress.Key != ConsoleKey.Spacebar); // Sortir de la boucle lorsque l'utilisateur appuie sur Escape
-
-            return Volume;
         }
     }
 }
