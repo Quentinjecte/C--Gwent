@@ -42,7 +42,8 @@ namespace C__GC.Hub
                 new str_func(CharactereData.HubInfo[1], Continue, 1),
                 new str_func(CharactereData.HubInfo[2], () => Option(CharactereData.Prompt, _OptionMenuPreset), 2),
                 new str_func(CharactereData.HubInfo[3], Credit, 3),
-                new str_func(CharactereData.HubInfo[4], Exit, 4),
+                new str_func(CharactereData.HubInfo[4], Save, 4),
+                new str_func(CharactereData.HubInfo[5], Exit, 5),
             };
 
 
@@ -140,6 +141,13 @@ namespace C__GC.Hub
         {
             Console.Clear();
             Console.WriteLine("\n Game designed by Gwent\n Dev: Tom (holland), Valentin (Saint), Quentin (Avion), Mathieu (Mangemort)");
+            Console.ReadKey(true);
+        }
+
+        public void Save()
+        {
+            Console.Clear();
+            ProgramTest.Save();
             Console.ReadKey(true);
         }
 
