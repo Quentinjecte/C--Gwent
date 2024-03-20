@@ -10,8 +10,8 @@ namespace C__GC
 {
     public class Data
     {
-        public string? Name { get; set; }
-        public int Age { get; set; }
+        public int PlayerX { get; set; }
+        public int PlayerY { get; set; }
 
         public string fileName = "../../../BloupSaveData.json";
     }
@@ -20,8 +20,8 @@ namespace C__GC
     {
         Data IDCard = new Data
         {
-            Name = "Jean",
-            Age = 1
+            PlayerX = 0 /*Get playerX*/,
+            PlayerY = 0 /*Get playerY*/
         };
 
         public void Save()

@@ -49,6 +49,10 @@ namespace C__GC
                     case ConsoleKey.D:
                         (x, y) = (1, 0);
                         break;
+                    case ConsoleKey.E:
+                        SaveLoad saveLoad = new SaveLoad();
+                        saveLoad.Save();
+                        break;
                     default:
                         continue;
                 }
