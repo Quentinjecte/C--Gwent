@@ -7,13 +7,6 @@
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="C__GC.Hub">
-    <Position X="1" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAACAMAAAAAAAABAAAACSIABAECAAAAIAIAAAAAAAA=</HashCode>
-      <FileName>Hub.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="C__GC.Programe">
     <Position X="8.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
@@ -21,7 +14,7 @@
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="C__GC.Enemies">
+  <Class Name="C__GC.Enemies" Collapsed="true">
     <Position X="16" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -37,20 +30,8 @@
   </Class>
   <Class Name="C__GC.Player" Collapsed="true">
     <Position X="18.25" Y="6.75" Width="1.5" />
-    <NestedTypes>
-      <Enum Name="C__GC.Player.MoveDirection" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Player.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-      <Class Name="C__GC.Player.Keyboard" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Player.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIgAAAAAAAAAAAAAEAAAAAAAAAAAQACAIQQ=</HashCode>
+      <HashCode>AAAAAAAAAIgAAAAAAAAAAAAAEAAQAAACAAAAEACAIQA=</HashCode>
       <FileName>Player.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -80,6 +61,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAQAAAAAAAAAAAAAAEAAAAEAAAAAACAAAAAAAA=</HashCode>
       <FileName>Character.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="C__GC.Hub">
+    <Position X="1" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAMAAAAAAAABAAAACSIABAECAAAAIAIAAAAAAAA=</HashCode>
+      <FileName>Hub.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="C__GC.Stats" Collapsed="true">
