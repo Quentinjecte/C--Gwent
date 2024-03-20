@@ -18,13 +18,20 @@ namespace C__GC
 
     internal class Player
     {
-
-        MapParser mapParser = new MapParser();
+        char _buffer;
+        string _map;
+        int _size;
         public int playerX = 10;
         public int playerY = 10;
 
         public Protagonist[] team;
         public Inventory inventory;
+
+        public Player(string map, int size) 
+        {
+            _map = map;
+            _size = size;
+        }
 
         //saveS
         public void Input(Bitmap img, int x, int y)
@@ -52,8 +59,9 @@ namespace C__GC
                     default:
                         continue;
                 }
+                OverlayOnCase((playerX - x), ((playerY - y))*_size);
+                ReplaceOldCase((playerX + x), ((playerY + y)) * _size);
                 Move(img, x, y);
-                OverlayOnCase(img, playerX, playerY, x, y);
 
             } while (true);
         }
@@ -62,13 +70,10 @@ namespace C__GC
             int newX = playerX + x;
             int newY = playerY + y;
 
-            if (mapParser.GetCollision(img, newX, newY) == false)
-            {
                 playerX = newX;
                 playerY = newY;
-                Console.SetCursorPosition(playerX, playerY);
-                DrawPlayer();
-            }
+            Console.SetCursorPosition(playerX, playerY);
+            DrawPlayer();
         }
         public void DrawPlayer()
         {
@@ -76,24 +81,18 @@ namespace C__GC
             Console.Write("P");
         }
 
-        private void OverlayOnCase(Bitmap img, int playerX, int playerY, int dx, int dy)
+
+        private bool OverlayOnCase(int PlayerX, int PlayerY)
         {
+             _buffer = _map[PlayerX + PlayerY];
+            return true;
+        }
 
-            int leftX = playerX - dx;
-            int leftY = playerY - dy;
-            int rightX = playerX + dx;
-            int rightY = playerY + dy;
-
-            // Retrieve the characters from the GetCharacter method
-            char leftCharacter = mapParser.GetWalkingArea(img, leftX, leftY);
-            char rightCharacter = mapParser.GetWalkingArea(img, rightX, rightY);
-
-            // Print the characters at the calculated positions
-            Console.SetCursorPosition(leftX, leftY);
-            Console.Write(leftCharacter);
-            Console.SetCursorPosition(rightX, rightY);
-            Console.Write(rightCharacter);
+        private string ReplaceOldCase(int PlayerX, int PlayerY)
+        {
+            Console.SetCursorPosition(playerX, playerY);
+            Console.Write(_buffer);
+            return "";
         }
     }
-
 }

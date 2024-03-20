@@ -15,6 +15,8 @@ namespace C__GC
         private int HubIndex;
         private string[] HubInfo;
         private string Prompt;
+        int newWidth;
+        int newHeight;
 
         public int Volume;
 
@@ -88,17 +90,18 @@ namespace C__GC
             Console.Clear();
             Console.WriteLine("Clearing the screen!");
 
-            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Tom\\source\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\tforest\\Source\\Repos\\Quentinjecte\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
 
             // Load the bitmap image using the MapParser
             MapParser parser = new MapParser();
             Bitmap mapImage = parser.Load(assetsPath);
 
+            string map = parser.ParseBitmap(assetsPath, 100);
             // Print the parsed bitmap to console
-            Console.WriteLine(parser.ParseBitmap(assetsPath, 100));
+            Console.WriteLine(map);
 
             // Create an instance of the Player class and pass the MapParser and Bitmap objects
-            Player player = new Player();
+            Player player = new Player(map, parser._mapSize);
 
             // Draw the player on the map
             player.DrawPlayer();
@@ -182,7 +185,6 @@ namespace C__GC
         {
             Console.WriteLine("Enter the new window width (in pixels '400 min'):");
 
-            int newWidth;
             while (!int.TryParse(Console.ReadLine(), out newWidth) || newWidth < 400)
             {
                 Console.WriteLine("Invalid width. Please enter a valid positive integer.");
@@ -190,7 +192,6 @@ namespace C__GC
             }
 
             Console.WriteLine("Enter the new window height (in pixels):");
-            int newHeight;
             while (!int.TryParse(Console.ReadLine(), out newHeight) || newHeight < 400)
             {
                 Console.WriteLine("Invalid height. Please enter a valid positive integer.");
