@@ -16,8 +16,8 @@ namespace C__GC
         }
 
         string _str;
-        public string Str {  get { return _str; } }
+        public string Str { get => _str; }
         Func<int, int> _func;
-        public Func<int, int> Func { get {  return _func; } }
+        public Func<int, int> Func { get => _func; }
     }
 }
