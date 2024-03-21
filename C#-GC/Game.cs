@@ -28,32 +28,6 @@ namespace C__GC
             MainHub.InitHub(CharactereData.Prompt, MainHub._mainMenuPreset);
             
             int HubIndex = MainHub.SwapIndex();
-            //int Volume = MainHub.Volume;
-
-           //switch (HubIndex)
-           // {
-           //     case 0:
-           //         MainHub.NewGame();
-           //         break;
-
-           //     case 1:
-           //         MainHub.Continue();
-           //         break;
-
-           //     case 2:
-           //         MainHub.Option(prompt);
-           //         StartHub();
-           //         break;
-
-           //     case 3:
-           //         MainHub.Credit();
-           //         StartHub();
-           //         break;
-
-           //     case 4:
-           //         MainHub.Exit();
-           //         break;
-           // }
         }
     }
 }

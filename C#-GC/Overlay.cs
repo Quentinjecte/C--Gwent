@@ -1,4 +1,5 @@
-﻿using System;
+﻿using C__GC.DataString;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -14,16 +15,27 @@ namespace C__GC
         private Rectangle Box = new Rectangle(2,2,20,20);
         private char BoxBoder = DefaultBoxBorder;
 
-        List<string> content = new List<string>
+        str_func[] OlInfo;
+        public str_func[] _OlOptions;
+
+
+        public Overlay()
         {
-            "This is line 1",
-            "This is line 2",
-            "This is line 3"
-        };
-        public void InitPopUp()
+            _OlOptions = new[] {
+                new str_func("     Continue     "),
+                new str_func("       Stat       "),
+                new str_func("       Item       "),
+                new str_func("      Option      "),
+                new str_func("       Save       "),
+                new str_func("       Load       "),
+                new str_func("       Exit       "),
+            };
+        }
+
+        public void InitPopUp(str_func[] OlInfo)
         {
             MenuPopUp();
-            PrintText(content);
+            PrintText(_OlOptions);
         }
 
         private void MenuPopUp()
@@ -44,17 +56,26 @@ namespace C__GC
                 Console.Write(BoxBoder);
             }
         }
-        private void PrintText(List<string> lines)
+        private void PrintText(str_func[] OlInfo)
         {
-            // Adjust position for the text inside the box
             int textX = Box.X + 1; 
             int textY = Box.Y + 1;
 
-            foreach (string line in lines)
+            foreach (str_func option in OlInfo)
             {
                 Console.SetCursorPosition(textX, textY);
-                Console.WriteLine(line);
+                Console.WriteLine(option.Str);
                 textY++;
+                if (option.Str.Trim() == "Exit")
+                {
+                    while (textY <= Box.Bottom)
+                    {
+                        Console.SetCursorPosition(textX, textY);
+                        Console.WriteLine(new string(' ', Box.Width - 2)); // Remplir avec des espaces
+                        textY++;
+                    }
+                    break;
+                }
             }
         }
     }

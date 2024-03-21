@@ -49,7 +49,7 @@ namespace C__GC
                         (x, y) = (1, 0);
                         break;
                     case ConsoleKey.P: 
-                        overlay.InitPopUp();
+                        overlay.InitPopUp(overlay._OlOptions);
                         break;
                     default:
                         continue;
