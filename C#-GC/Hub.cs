@@ -88,7 +88,7 @@ namespace C__GC
         public void NewGame()
         {
             Console.Clear();
-            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Tom\\source\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\tforest\\source\\repos\\Quentinjecte\\C--Gwent\\C#-GC\\assets\\test2.bmp");
 
             // Load the bitmap image using the MapParser
             MapParser parser = new MapParser();
@@ -99,10 +99,11 @@ namespace C__GC
             Console.WriteLine(map);
 
             // Create an instance of the Player class and pass the MapParser and Bitmap objects
-            Player player = new Player(map, parser._mapSize);
-
+            Player player = new Player(map, parser._mapSize, 10, 10);
             // Start taking input from the player
-            player.Input(mapImage, 0, 0);
+            player.Input(mapImage);
+
+            //RessourceAllocator mapAllocator = new RessourceAllocator(map, 0.0);
 
         }
 

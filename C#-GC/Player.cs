@@ -5,17 +5,21 @@ internal class Player
     char _buffer;
     string _map;
     int _size;
-    public int playerX = 10;
-    public int playerY = 10;
+    int _playerX;
+    int _playerY;
 
-    public Player(string map, int size)
+    public Player(string map, int size, int playerX, int playerY)
     {
         _map = map;
         _size = size;
+        _playerX = playerX;
+        _playerY = playerY;
     }
 
-    public void Input(Bitmap img, int x, int y)
+    public void Input(Bitmap img)
     {
+        int x;
+        int y;
         ConsoleKeyInfo keyInfo;
 
         do
@@ -40,13 +44,10 @@ internal class Player
                     continue;
             }
 
-            int newX = playerX + x;
-            int newY = playerY + y;
 
-            if (!IsObstacle(newX, newY))
+            if (IfNoObstacle(_playerX + x, _playerY + y))
             {
-                OverlayOnCase(newX, newY);
-                ReplaceOldCase(playerX, playerY);
+                ReplaceOldCase(_playerX, _playerY);
                 Move(x, y);
             }
 
@@ -55,20 +56,20 @@ internal class Player
 
     private void Move(int x, int y)
     {
-        playerX += x;
-        playerY += y;
-        Console.SetCursorPosition(playerX, playerY);
+        _playerX += x;
+        _playerY += y;
+        Console.SetCursorPosition(_playerX, _playerY);
         Console.Write("P");
     }
-
-    private bool IsObstacle(int x, int y)
+    private bool IfNoObstacle(int x, int y)
     {
-        return _map[y * _size + x] == '#';
-    }
 
-    private void OverlayOnCase(int x, int y)
-    {
         _buffer = _map[y * _size + x];
+        if(_buffer == '#')
+        {
+            return false;
+        }
+        return true;
     }
 
     private void ReplaceOldCase(int x, int y)
