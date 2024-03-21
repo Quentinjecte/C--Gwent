@@ -139,7 +139,7 @@ namespace C__GC.Hub
             Player player = new Player();
 
             // Draw the player on the map
-            player.DrawPlayer();
+            player.DrawPlayer(player.playerX, player.playerY);
 
             // Start taking input from the player
             player.Input(mapImage, 0, 0);
@@ -149,9 +149,9 @@ namespace C__GC.Hub
 
         public void Continue()
         {
-            SaveLoad saveLoad = new SaveLoad();
+            SaveLoad loading = new SaveLoad();
             Console.Clear();
-            saveLoad.Load();
+            loading.Load();
             Console.ReadKey(true);
         }
 
@@ -171,9 +171,9 @@ namespace C__GC.Hub
 
         public void Save()
         {
-            SaveLoad saveLoad = new SaveLoad();
+            //SaveLoad saving = new SaveLoad();
             Console.Clear();
-            saveLoad.Save();
+            /*saving.Save();*/
         }
 
         public void Exit()

@@ -13,21 +13,24 @@ namespace C__GC
         public int PlayerX { get; set; }
         public int PlayerY { get; set; }
 
-        public string fileName = "../../../BloupSaveData.json";
     }
 
     public class SaveLoad
     {
-        Data IDCard = new Data
-        {
-            PlayerX = 0 /*Get playerX*/,
-            PlayerY = 0 /*Get playerY*/
-        };
+        public string fileName = "../../../BloupSaveData.json";
 
-        public void Save()
-        {
+        Data IDCard;
 
-            using (var stream = new StreamWriter(IDCard.fileName))
+
+        public void Save(Player p)
+        {
+            IDCard = new Data
+            {
+                PlayerX = p.playerX,
+                PlayerY = p.playerY
+            };
+
+            using (var stream = new StreamWriter(fileName))
             {
                 stream.Write(JsonSerializer.Serialize(IDCard));
             }
@@ -36,7 +39,13 @@ namespace C__GC
         }
         public void Load()
         {
-            Console.WriteLine(File.ReadAllText(IDCard.fileName));
+            string fileString = File.ReadAllText(fileName);
+
+            Data data = JsonSerializer.Deserialize<Data>(fileString);
+
+            Console.WriteLine($"PosX: {data.PlayerX}");
+            Console.WriteLine($"PosY: {data.PlayerY}");
+
         }
 
     }

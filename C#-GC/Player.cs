@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace C__GC
 {
 
-    struct Inventory
+    public struct Inventory
     {
         int golds;
         int soulTokens;
     }
 
 
-    internal class Player
+    public class Player
     {
 
         MapParser mapParser = new MapParser();
@@ -25,6 +25,7 @@ namespace C__GC
 
         public Protagonist[] team;
         public Inventory inventory;
+
 
         //saveS
         public void Input(Bitmap img, int x, int y)
@@ -49,10 +50,15 @@ namespace C__GC
                     case ConsoleKey.D:
                         (x, y) = (1, 0);
                         break;
-                    case ConsoleKey.E:
-                        SaveLoad saveLoad = new SaveLoad();
-                        saveLoad.Save();
-                        break;
+                    case ConsoleKey.P:
+                        SaveLoad saving = new SaveLoad();
+                        saving.Save(this);
+                        break;/*
+                    case ConsoleKey.L:
+                        SaveLoad loading = new SaveLoad();
+                        Console.Clear();
+                        loading.Load();
+                        break;*/
                     default:
                         continue;
                 }
@@ -71,12 +77,12 @@ namespace C__GC
                 playerX = newX;
                 playerY = newY;
                 Console.SetCursorPosition(playerX, playerY);
-                DrawPlayer();
+                DrawPlayer(playerX, playerY);
             }
         }
-        public void DrawPlayer()
+        public void DrawPlayer(int PosX, int PosY)
         {
-            Console.SetCursorPosition(playerX, playerY);
+            Console.SetCursorPosition(PosX, PosX);
             Console.Write("P");
         }
 
@@ -98,6 +104,7 @@ namespace C__GC
             Console.SetCursorPosition(rightX, rightY);
             Console.Write(rightCharacter);
         }
+
     }
 
 }
