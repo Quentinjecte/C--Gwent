@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Media;
 using NAudio.Wave;
 using C__GC.DataString;
+using System.Drawing;
 
 namespace C__GC.Hub
 {
@@ -121,9 +122,29 @@ namespace C__GC.Hub
 
         public void NewGame()
         {
+
             Console.Clear();
             Console.WriteLine("Clearing the screen!");
+
+            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Askeladd\\Desktop\\CODE\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+
+            // Load the bitmap image using the MapParser
+            MapParser parser = new MapParser();
+            Bitmap mapImage = parser.Load(assetsPath);
+
+            // Print the parsed bitmap to console
+            Console.WriteLine(parser.ParseBitmap(assetsPath, 100));
+
+            // Create an instance of the Player class and pass the MapParser and Bitmap objects
+            Player player = new Player();
+
+            // Draw the player on the map
+            player.DrawPlayer();
+
+            // Start taking input from the player
+            player.Input(mapImage, 0, 0);
         }
+
 
         public void Continue()
         {
