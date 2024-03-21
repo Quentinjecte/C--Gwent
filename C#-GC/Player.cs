@@ -47,9 +47,13 @@ namespace C__GC
                         break;
                     case ConsoleKey.D:
                         (x, y) = (1, 0);
-                        break;
+                        break;                    
                     case ConsoleKey.P: 
                         overlay.InitPopUp(overlay._OlOptions);
+                        if(keyInfo.Key == ConsoleKey.P)
+                        {
+                            Console.Clear();
+                        }
                         break;
                     default:
                         continue;

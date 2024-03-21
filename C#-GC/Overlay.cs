@@ -1,4 +1,5 @@
 ﻿using C__GC.DataString;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,13 +12,15 @@ namespace C__GC
 {
     internal class Overlay
     {
+        private int _OlIndex;
+        private int isClosed;
+
         private const char DefaultBoxBorder = '█';
-        private Rectangle Box = new Rectangle(2,2,20,20);
+        private Rectangle Box = new Rectangle(5,5,20,20);
         private char BoxBoder = DefaultBoxBorder;
 
         str_func[] OlInfo;
         public str_func[] _OlOptions;
-
 
         public Overlay()
         {
@@ -31,13 +34,13 @@ namespace C__GC
                 new str_func("       Exit       "),
             };
         }
-
         public void InitPopUp(str_func[] OlInfo)
         {
+            _OlIndex = 0;
+            _OlOptions = OlInfo;
             MenuPopUp();
             PrintText(_OlOptions);
         }
-
         private void MenuPopUp()
         {
             for (int i = Box.Y; i <= Box.Bottom; i++)
@@ -58,25 +61,82 @@ namespace C__GC
         }
         private void PrintText(str_func[] OlInfo)
         {
-            int textX = Box.X + 1; 
+            SwapIndex();
+        }
+        private void OverlayIG()
+        {
+            int textX = Box.X + 1;
             int textY = Box.Y + 1;
 
-            foreach (str_func option in OlInfo)
+            for (int i = 0; i < _OlOptions.Length; i++)
             {
-                Console.SetCursorPosition(textX, textY);
-                Console.WriteLine(option.Str);
-                textY++;
-                if (option.Str.Trim() == "Exit")
+                string CurrentOption = _OlOptions[i].Str;
+
+                if (i == _OlIndex)
                 {
-                    while (textY <= Box.Bottom)
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
+                Console.SetCursorPosition(textX, textY);
+                Console.WriteLine($"{CurrentOption}");
+                textY++;
+                if (_OlOptions[i].Str.Trim() == "Exit")
+                {
+                    while (textY <= Box.Bottom -1)
                     {
                         Console.SetCursorPosition(textX, textY);
                         Console.WriteLine(new string(' ', Box.Width - 2)); // Remplir avec des espaces
                         textY++;
                     }
-                    break;
                 }
             }
+            Console.ResetColor();
+        }
+        public int SwapIndex()
+        {
+            ConsoleKey KeyPress;
+
+            do
+            {
+                do
+                {
+                    OverlayIG();
+
+                    ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
+                    KeyPress = KeyInfo.Key;
+
+                    if (KeyPress == ConsoleKey.UpArrow)
+                    {
+                        _OlIndex--;
+                        if (_OlIndex == -1)
+                        {
+                            _OlIndex = _OlOptions.Length - 1;
+                        }
+                    }
+                    else if (KeyPress == ConsoleKey.DownArrow)
+                    {
+                        _OlIndex++;
+                        if (_OlIndex == _OlOptions.Length)
+                        {
+                            _OlIndex = 0;
+                        }
+                    }
+                    else if (KeyPress == ConsoleKey.P)
+                    {
+                        isClosed = 1;
+                        break;
+                    }
+                } while (KeyPress != ConsoleKey.Spacebar);
+
+                _OlOptions[_OlIndex].ExecuteAction();
+
+            } while (isClosed != 1);
+
+            return _OlIndex;
         }
     }
 

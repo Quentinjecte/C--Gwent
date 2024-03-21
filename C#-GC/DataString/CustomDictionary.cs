@@ -46,7 +46,7 @@ namespace C__GC
         public void ExecuteAction()
         {
             _func?.Invoke();
-            //Option.DynamicInvoke();
+            //Option?.DynamicInvoke();
         }
 
     }

@@ -27,7 +27,7 @@ namespace C__GC
 
             MainHub.InitHub(CharactereData.Prompt, MainHub._mainMenuPreset);
             
-            int HubIndex = MainHub.SwapIndex();
+             MainHub.SwapIndex();
         }
     }
 }

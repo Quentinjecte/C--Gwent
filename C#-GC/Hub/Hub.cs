@@ -35,7 +35,7 @@ namespace C__GC.Hub
                 new str_func(CharactereData.OptionInfo[0], () => ResizeConsoleWindow(CharactereData.Prompt, _OptionWindows), 0),
                 new str_func(CharactereData.OptionInfo[1], Exit, 1), // Language pas fait
                 new str_func(CharactereData.OptionInfo[2], Music, 2),
-                new str_func(CharactereData.OptionInfo[3], Exit, 3),
+                new str_func(CharactereData.OptionInfo[3], () => Back(CharactereData.Prompt, _mainMenuPreset), 3),
             };
 
             _mainMenuPreset = new[] { 
@@ -56,6 +56,13 @@ namespace C__GC.Hub
             _hubInfo = HubInfo;
             _hubIndex = 0;
         }
+/*        
+         public void InitHub(str_func[] HubInfo)
+            {
+            _hubInfo = HubInfo;
+            _hubIndex = 0;
+            }
+*/ //Constructor Surchage
 
         private void OverlayOption()
         {
@@ -126,7 +133,7 @@ namespace C__GC.Hub
             Console.Clear();
             Console.WriteLine("Clearing the screen!");
 
-            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Askeladd\\Desktop\\CODE\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\qrenaud\\Documents\\GitHub\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
 
             // Load the bitmap image using the MapParser
             MapParser parser = new MapParser();
@@ -167,6 +174,12 @@ namespace C__GC.Hub
         public void Exit()
         {
             Environment.Exit(0);
+        }
+        public void Back(string prompt, str_func[] HubInfo)
+        {
+            Hub HubOptions = new Hub();
+            HubOptions.InitHub(prompt, _mainMenuPreset);
+            _hubIndex = HubOptions.SwapIndex();
         }
 
         private void ResizeConsoleWindow(string prompt, str_func[] HubInfo)
