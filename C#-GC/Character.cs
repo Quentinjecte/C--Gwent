@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace C__GC
 {
-    struct Stats
+    public struct Stats
     {
-        int atk;
-        int hp;
-        int mana;
+        public int atk;
+        public int hp;
+        public int mana;
     }
 
 
@@ -22,29 +22,37 @@ namespace C__GC
     }
 
 
-    internal class Spell
-    {
-        enum Type
-        {
-            demonic,
-            holy,
-            sanity,
-            shadow
-        }
-
-        public string name;
-        public int dmg;
-        public int type;
-
-        public virtual void effect() { }
-    }
+    
 
 
     public class Character
     {
-        Stats stats;
-        string name;
-        Offense[] offenses;
-        Spell[] spells;
+        int _hp;
+        private Stats _stats;
+        public Stats Stats { get => _stats; set => _stats = value; }
+        string _name;
+        Offense[] _offenses;
+        Spell[] _spells;
+
+        public Character(string name, Stats stats) 
+        {
+            _hp = stats.hp;
+            Stats = stats;
+            _name = name;
+            _offenses = [];
+            _spells = [];
+        }
+
+
+        public void TakeDmg(int amount)
+        {
+            _hp -= amount;
+            Console.WriteLine(_hp);
+        }
+
+        public void attack(Character character)
+        {
+            character.TakeDmg(_stats.atk);
+        }
     }
 }
