@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +9,7 @@ namespace C__GC
     internal class RessourceAllocator
     {
         string _map;
-        List<double> _mapCoord;
+        List<double> _mapCoord = new List<double>();
 
         internal RessourceAllocator(string map, List<double> mapCoord)
         {
@@ -17,13 +17,13 @@ namespace C__GC
             _mapCoord = mapCoord;
         }
 
-        private void StockMap(string map)
+*//*        private void StockMap(string map)
         {
             List<double> mapCoord;
-        }
+        }*//*
         private void GetMap(string map)
         {
-            _mapCoord.GetEnumerator();
+            _mapCoord.Find(map);
         }
 
         private double SetMap(double mapCoord)
@@ -33,3 +33,4 @@ namespace C__GC
     }
 }
 
+*/

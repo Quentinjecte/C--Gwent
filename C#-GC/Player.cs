@@ -45,7 +45,7 @@ internal class Player
             }
 
 
-            if (IfNoObstacle(_playerX + x, _playerY + y))
+            if (IfNoObstacle(_playerX + x, _playerY + y) != '#')
             {
                 ReplaceOldCase(_playerX, _playerY);
                 Move(x, y);
@@ -61,15 +61,11 @@ internal class Player
         Console.SetCursorPosition(_playerX, _playerY);
         Console.Write("P");
     }
-    private bool IfNoObstacle(int x, int y)
+    private char IfNoObstacle(int x, int y)
     {
 
-        _buffer = _map[y * _size + x];
-        if(_buffer == '#')
-        {
-            return false;
-        }
-        return true;
+        _buffer = _map[_playerY * _size + _playerX]; // Problem calcul here ! 
+        return _buffer;
     }
 
     private void ReplaceOldCase(int x, int y)

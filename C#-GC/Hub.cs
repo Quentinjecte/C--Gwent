@@ -99,7 +99,7 @@ namespace C__GC
             Console.WriteLine(map);
 
             // Create an instance of the Player class and pass the MapParser and Bitmap objects
-            Player player = new Player(map, parser._mapSize, 10, 10);
+            Player player = new Player(map, parser._mapSize, 44, 16);
             // Start taking input from the player
             player.Input(mapImage);
 
