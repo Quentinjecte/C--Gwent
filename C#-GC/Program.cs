@@ -22,7 +22,7 @@ namespace C__GC
             stats.hp = 100;
             stats.atk = 10;
 
-            Character enemy = new Character("vilain", stats);
+            Enemy enemy = new Enemy("vilain", stats);
             Protagonist prota = new Protagonist("jenti", stats);
 
             

@@ -20,26 +20,28 @@ namespace C__GC
         public string _name;
         public Type _type;
         public int _dmg;
+        public int _manaCost;
 
-        public Action<Character> effect;
+        public Action<Character> Effect;
 
-        public Spell(string name, Type type, Action<Character> eff, int dmg = 0) 
+        public Spell(string name, int manaCost, Type type, Action<Character> eff, int dmg = 0) 
         { 
-            _dmg = dmg;
+            _manaCost = manaCost;
             _name = name;
             _type = type;
-            effect = eff;
+            Effect = eff;
+            _dmg = dmg;
         }
 
         public void Cast(Character target)
         {
             target.TakeDmg(_dmg);
-            effect?.Invoke(target);
+            Effect.Invoke(target);
         }
     }
 
     static public class SpellCollection
     {
-        static public Spell testSpell = new Spell("test", Spell.Type.demonic, (Character) => { }, 20);
+        static public Spell testSpell = new Spell("test", 20, Spell.Type.demonic, (Character target) => { Status.Subscribe(() => { Status.Burn(target); }); });
     }
 }
