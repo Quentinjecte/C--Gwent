@@ -16,7 +16,7 @@ internal class Player
         _playerY = playerY;
     }
 
-    public void Input(Bitmap img)
+    public void Input()
     {
         int x;
         int y;
