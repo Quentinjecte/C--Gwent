@@ -13,6 +13,15 @@ namespace C__GC
 {
     internal class MapParser
     {
+        public string[] _AsciiChars = { "#", "#", "@", "%", "=", "+", "*", ":", "-", ".", "&nbsp;" };
+        public string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Askeladd\\Desktop\\CODE\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+
+        public MapParser() 
+        {
+            //string[] _AsciiChars = { "#", "#", "@", "%", "=", "+", "*", ":", "-", ".", "&nbsp;" };
+            //string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Askeladd\\Desktop\\CODE\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+        }
+
         public string ParseBitmap(string path, int width)
         {
             Bitmap img = null;
@@ -57,9 +66,6 @@ namespace C__GC
             }
             return sb.ToString();
         }
-
-        private string[] _AsciiChars = { "#", "#", "@", "%", "=", "+", "*", ":", "-", ".", "&nbsp;" };
-
 
         internal Bitmap Load(string path)
         {

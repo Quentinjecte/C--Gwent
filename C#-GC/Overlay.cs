@@ -1,5 +1,6 @@
 ﻿using C__GC.DataString;
 using Microsoft.VisualBasic.FileIO;
+using NAudio.CoreAudioApi;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,19 +13,27 @@ namespace C__GC
 {
     internal class Overlay
     {
-        private int _OlIndex;
+        MapParser MapParser = new();
+
+        private int _OlverlayIndex;
         private int isClosed;
 
-        private const char DefaultBoxBorder = '█';
-        private Rectangle Box = new Rectangle(5,5,20,20);
-        private char BoxBoder = DefaultBoxBorder;
+        private char BoxBoder = '█';
+        private bool InFight = true;
+        private char MapCharSaveX;
+        private char MapCharSaveY;
+
+        private Rectangle Box;
+        private List<string> MapStringSave;
 
         str_func[] OlInfo;
-        public str_func[] _OlOptions;
-
+        public str_func[] _OverlayOptions;
+        public str_func[] _OverlayFight;
+        
         public Overlay()
         {
-            _OlOptions = new[] {
+            MapStringSave = new List<string>();
+            _OverlayOptions = new[] {
                 new str_func("     Continue     "),
                 new str_func("       Stat       "),
                 new str_func("       Item       "),
@@ -33,30 +42,90 @@ namespace C__GC
                 new str_func("       Load       "),
                 new str_func("       Exit       "),
             };
+            _OverlayFight = new[] {// Update to do
+                new str_func("     Continue     "),
+                new str_func("       Stat       "),
+                new str_func("       Item       "),
+                new str_func("      Option      "),
+                new str_func("       Save       "),
+                new str_func("       Load       "),
+                new str_func("       Exit       "),
+            };
+            int consoleWidth = Console.WindowWidth;
+            int consoleHeight = Console.WindowHeight;
+            int boxX = 5;
+            int boxY = consoleHeight - 25;
+            int boxWidth = consoleWidth - 5;
+            int boxHeight = 10;
+
+            if (InFight)
+            {
+                Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
+            }
+            else Box = new Rectangle(2, 2, 20, 20);
         }
-        public void InitPopUp(str_func[] OlInfo)
+        public void InitPopUp(str_func[] OlInfo, Bitmap img)
         {
-            _OlIndex = 0;
-            _OlOptions = OlInfo;
-            MenuPopUp();
-            PrintText(_OlOptions);
+            _OlverlayIndex = 0;
+            _OverlayOptions = OlInfo;
+            MenuPopUp(img);
+            PrintText(_OverlayOptions);
+            Console.SetCursorPosition(2, 26);
+            foreach (string aPart in MapStringSave)
+            {
+                Console.Write(aPart);
+            }
         }
-        private void MenuPopUp()
+        /*private void SaveMapage()
         {
+
+        }*/
+        private void MenuPopUp(Bitmap img)
+        {
+            //Save Map en cour
             for (int i = Box.Y; i <= Box.Bottom; i++)
             {
                 Console.SetCursorPosition(Box.X, i);
                 Console.Write(BoxBoder);
-                Console.SetCursorPosition(Box.Right, i);
-                Console.Write(BoxBoder);
+                for (int j = Box.X; j < Box.Right; j++)
+                {
+                    /*                    Console.SetCursorPosition(j, i);
+                                        MapCharSaveY = MapParser.GetWalkingArea(img, i, j);
+                                        MapStringSave.Add(MapCharSaveY);
+                                        MapStringSave = MapParser.ParseBitmap(this,this);*/
+                }
+                //MapStringSave.Add(MapCharSaveY);
             }
 
-            for (int i = Box.X; i <= Box.Right; i++)
+            if (false == InFight)
             {
-                Console.SetCursorPosition(i, Box.Y);
-                Console.Write(BoxBoder);
-                Console.SetCursorPosition(i, Box.Bottom);
-                Console.Write(BoxBoder);
+                for (int i = Box.Y; i <= Box.Bottom; i++)
+                {
+                    Console.SetCursorPosition(Box.X, i);
+                    for (int j = Box.X; j < Box.Right; j++)
+                    {
+                        Console.SetCursorPosition(j, i);
+                        Console.Write(BoxBoder);
+                    }
+                }
+            }
+            else
+            {
+                for (int i = Box.Y; i <= Box.Bottom; i++)
+                {
+                    Console.SetCursorPosition(Box.X, i);
+                    Console.Write(BoxBoder);
+                    Console.SetCursorPosition(Box.Right, i);
+                    Console.Write(BoxBoder);
+                }
+
+                for (int i = Box.X; i <= Box.Right; i++)
+                {
+                    Console.SetCursorPosition(i, Box.Y);
+                    Console.Write(BoxBoder);
+                    Console.SetCursorPosition(i, Box.Bottom);
+                    Console.Write(BoxBoder);
+                }
             }
         }
         private void PrintText(str_func[] OlInfo)
@@ -65,14 +134,15 @@ namespace C__GC
         }
         private void OverlayIG()
         {
+            //Change la couleur de la police
             int textX = Box.X + 1;
             int textY = Box.Y + 1;
 
-            for (int i = 0; i < _OlOptions.Length; i++)
+            for (int i = 0; i < _OverlayOptions.Length; i++)
             {
-                string CurrentOption = _OlOptions[i].Str;
+                string CurrentOption = _OverlayOptions[i].Str;
 
-                if (i == _OlIndex)
+                if (i == _OlverlayIndex)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                 }
@@ -84,12 +154,13 @@ namespace C__GC
                 Console.SetCursorPosition(textX, textY);
                 Console.WriteLine($"{CurrentOption}");
                 textY++;
-                if (_OlOptions[i].Str.Trim() == "Exit")
+                //Change les chars en ' '
+                if (_OverlayOptions[i].Str.Trim() == "Exit")
                 {
                     while (textY <= Box.Bottom -1)
                     {
                         Console.SetCursorPosition(textX, textY);
-                        Console.WriteLine(new string(' ', Box.Width - 2)); // Remplir avec des espaces
+                        Console.WriteLine(new string(' ', Box.Width - 2));
                         textY++;
                     }
                 }
@@ -111,18 +182,18 @@ namespace C__GC
 
                     if (KeyPress == ConsoleKey.UpArrow)
                     {
-                        _OlIndex--;
-                        if (_OlIndex == -1)
+                        _OlverlayIndex--;
+                        if (_OlverlayIndex == -1)
                         {
-                            _OlIndex = _OlOptions.Length - 1;
+                            _OlverlayIndex = _OverlayOptions.Length - 1;
                         }
                     }
                     else if (KeyPress == ConsoleKey.DownArrow)
                     {
-                        _OlIndex++;
-                        if (_OlIndex == _OlOptions.Length)
+                        _OlverlayIndex++;
+                        if (_OlverlayIndex == _OverlayOptions.Length)
                         {
-                            _OlIndex = 0;
+                            _OlverlayIndex = 0;
                         }
                     }
                     else if (KeyPress == ConsoleKey.P)
@@ -132,11 +203,11 @@ namespace C__GC
                     }
                 } while (KeyPress != ConsoleKey.Spacebar);
 
-                _OlOptions[_OlIndex].ExecuteAction();
+                _OverlayOptions[_OlverlayIndex].ExecuteAction();
 
             } while (isClosed != 1);
 
-            return _OlIndex;
+            return _OlverlayIndex;
         }
     }
 

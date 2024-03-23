@@ -14,8 +14,8 @@
             Game game = new Game();
             game.Start();
             //string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "testMap.bmp");
-            //MapParser parser = new MapParser();
-            //Console.WriteLine(parser.ParseBitmap(assetsPath, 100));
+            //MapParser Parser = new MapParser();
+            //Console.WriteLine(Parser.ParseBitmap(assetsPath, 100));
 
             //Protagonist[] prota = {new Protagonist()};
             //Character[] enemy = {new Character()};

@@ -19,7 +19,8 @@ namespace C__GC
     internal class Player
     {
 
-        MapParser mapParser = new MapParser();
+        MapParser Parser = new();
+
         public int playerX = 10;
         public int playerY = 10;
 
@@ -49,10 +50,13 @@ namespace C__GC
                         (x, y) = (1, 0);
                         break;                    
                     case ConsoleKey.P: 
-                        overlay.InitPopUp(overlay._OlOptions);
+                        overlay.InitPopUp(overlay._OverlayOptions, img);
                         if(keyInfo.Key == ConsoleKey.P)
                         {
                             Console.Clear();
+                            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Askeladd\\Desktop\\CODE\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+                            Bitmap mapImage = Parser.Load(assetsPath);
+                            Console.WriteLine(Parser.ParseBitmap(assetsPath, 100));
                         }
                         break;
                     default:
@@ -68,7 +72,7 @@ namespace C__GC
             int newX = playerX + x;
             int newY = playerY + y;
 
-            if (mapParser.GetCollision(img, newX, newY) == false)
+            if (Parser.GetCollision(img, newX, newY) == false)
             {
                 playerX = newX;
                 playerY = newY;
@@ -91,8 +95,8 @@ namespace C__GC
             int rightY = playerY + dy;
 
             // Retrieve the characters from the GetCharacter method
-            char leftCharacter = mapParser.GetWalkingArea(img, leftX, leftY);
-            char rightCharacter = mapParser.GetWalkingArea(img, rightX, rightY);
+            char leftCharacter = Parser.GetWalkingArea(img, leftX, leftY);
+            char rightCharacter = Parser.GetWalkingArea(img, rightX, rightY);
 
             // Print the characters at the calculated positions
             Console.SetCursorPosition(leftX, leftY);
