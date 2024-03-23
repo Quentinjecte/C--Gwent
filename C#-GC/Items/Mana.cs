@@ -8,13 +8,25 @@ namespace C__GC.Items
 {
     internal class Mana : Item
     {
-        public Mana(string name, int value) : base(name, value, ItemType.Mana)
+        private int _mana;
+        public Mana(string name, int value, int manaGivenAmount) : base(name, value, new ItemType{ mana = manaGivenAmount })
         {
+            _mana = manaGivenAmount;
         }
 
-        public override void Use()
+        public override void Use(Character character)
         {
-            Console.WriteLine($"Tu as utilisé {_name} ! ");
+            base.Use(character);
+            Console.WriteLine($"You used {_name}! It gives {character} a bonus of {_mana} Attack !");
+            character.UseMana(_mana);
+        }
+
+        internal static class ManaPotions
+        {
+            // Define healing items
+            public static Mana SmallManaPotion { get; } = new Mana("Small Mana Potion", 10, 20);
+            public static Mana NormalManaPotion { get; } = new Mana("Normal Mana Potion", 20, 50);
+            public static Mana LargeManaPotion { get; } = new Mana("Large Mana Potion", 30, 100); // Damn huge celle la ;)
         }
     }
 }

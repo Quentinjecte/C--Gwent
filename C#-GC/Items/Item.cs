@@ -9,16 +9,16 @@ namespace C__GC.Items
 {
     public struct ItemType
     {
-        public  int Heal;
-        public  int Mana;
-        public int AtkBonus;
-        public int Effect;
+        public  int heal;
+        public  int mana;
+        public int atkBonus;
+        public int effect; // diff than _effect this one is about poison etc 
     }
     internal class Item
     {
         public string _name { get; set; }
         public int _value { get; set; }  // Price or rarity ?
-        public ItemType _effect { get; set; } // Types and values (ex : heal 10hp, hit 10hp)
+        public ItemType _effect { get; set; } // Types and values (ex : heal 10hp, hitBonus 10)
 
 
         public Item(string name, int value, ItemType effect) 
@@ -32,11 +32,10 @@ namespace C__GC.Items
         {
             Console.WriteLine($"You used {_name}!");
 
-            character.Stats.atk += _effect.AtkBonus;
-            character.Stats.hp += _effect.Heal;
-            character.Stats.mana += _effect.Mana;
+            character.TakeDmg(_effect.heal);
+            character.ApplyAttackBonus(_effect.atkBonus);
+            character.UseMana(_effect.mana);
 
-            Console.WriteLine($"Item effects applied to character: ATK +{_effect.AtkBonus}, HP +{_effect.Heal}, Mana +{_effect.Mana}");
         }
 
 

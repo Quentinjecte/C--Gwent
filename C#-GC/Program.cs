@@ -23,12 +23,12 @@ namespace C__GC
             stats.atk = 10;
 
             Enemy enemy = new Enemy("vilain", stats);
-            Protagonist prota = new Protagonist("jenti", stats);
+            //Protagonist prota = new Protagonist("jenti", stats);
 
             
 
-            Battle battle = new Battle([prota], [enemy]);
-            battle.start();
+            //Battle battle = new Battle([prota], [enemy]);
+            //battle.start();
 
 
             //string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "testMap.bmp");
