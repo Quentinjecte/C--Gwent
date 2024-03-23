@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace C__GC.Items
 {
-    internal class Permanent : Item
+    internal class Mana : Item
     {
-        public Permanent(string name, int value) : base(name, value, ItemType.Permanent)
+        public Mana(string name, int value) : base(name, value, ItemType.Mana)
         {
         }
 
         public override void Use()
         {
+            Console.WriteLine($"Tu as utilisé {_name} ! ");
         }
     }
 }

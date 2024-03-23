@@ -7,14 +7,15 @@ using System.Xml.Linq;
 
 namespace C__GC.Items
 {
-    internal class Consumable : Item
+    internal class Effect : Item
     {
-        public Consumable(string  name, int value) : base(name, value, ItemType.Consumable)
+        public Effect(string  name, int value) : base(name, value, ItemType.Effect)
         {
         }
 
         public override void Use()
         {
+            Console.WriteLine($"Tu as utilisé {_name} ! ");
         }
     }
 }
