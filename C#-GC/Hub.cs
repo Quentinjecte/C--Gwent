@@ -88,13 +88,13 @@ namespace C__GC
         public void NewGame()
         {
             Console.Clear();
-            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Tom\\source\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
 
             // Load the bitmap image using the MapParser
             MapParser parser = new MapParser();
             Bitmap mapImage = parser.Load(assetsPath);
 
-            string map = parser.ParseBitmap(assetsPath, 100);
+            string map = parser.ParseBitmap(assetsPath, 101);
             // Print the parsed bitmap to console
             Console.WriteLine(map);
 

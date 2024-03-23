@@ -43,10 +43,9 @@ internal class Player
             int newX = playerX + x;
             int newY = playerY + y;
 
-            if (!IsObstacle(newX, newY))
+            if (IsObstacle(newX, newY) == false)
             {
-                OverlayOnCase(newX, newY);
-                ReplaceOldCase(playerX, playerY);
+                SetBack(playerX, playerY);
                 Move(x, y);
             }
 
@@ -66,14 +65,9 @@ internal class Player
         return _map[y * _size + x] == '#';
     }
 
-    private void OverlayOnCase(int x, int y)
-    {
-        _buffer = _map[y * _size + x];
-    }
-
-    private void ReplaceOldCase(int x, int y)
+    private void SetBack(int x, int y)
     {
         Console.SetCursorPosition(x, y);
-        Console.Write(_buffer);
+        Console.Write(_map[y * _size + x]);
     }
 }
