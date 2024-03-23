@@ -112,11 +112,6 @@ namespace C__GC
             {
                 allocator.StoreMap(kvp.Key, kvp.Value);
             }
-
-            // Create an instance of the Player class and pass the map
-            // Assuming the Player class constructor takes the map string, its length, and coordinates
-            //Player player = new Player(map, map.Length, 0, 0);
-            //player.Input();
         }
 
 
