@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Media;
 using NAudio.Wave;
 using System.Drawing;
+using System.IO;
 
 namespace C__GC
 {
@@ -87,35 +88,45 @@ namespace C__GC
 
         public void NewGame()
         {
-
             ResourceAllocator allocator = new ResourceAllocator();
 
-            // Load maps from JSON file
-            allocator.LoadMapsFromJson("C:\\Users\\Tom\\Source\\Repos\\Quentinjecte\\C--Gwent\\C#-GC\\maps.json"); // Update the path accordingly
-
-            // Get the existing map from the ResourceAllocator
-            string map = allocator.GetMap("map1");
-
-            if (map == null)
+            try
             {
-                Console.WriteLine("Map 'map1' not found.");
+                // Get the directory where the executable is located
+                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+                // Path to the "maps.json" file in the same directory as the executable
+                string mapsJsonPath = Path.Combine(baseDirectory, "../../../maps.json");
+
+                // Load maps from the JSON file
+                allocator.LoadMapsFromJson(mapsJsonPath);
+
+                // Print contents of _mapStorage for debugging
+                Console.WriteLine("Maps loaded:");
+                foreach (var kvp in allocator._mapStorage)
+                {
+                    Console.WriteLine($"Key: {kvp.Key}, Value: {kvp.Value}");
+                }
+
+                // Get the existing map named "map1" from the ResourceAllocator
+                string map = allocator.GetMap("map1");
+
+                if (map == null)
+                {
+                    Console.WriteLine("Map 'map1' not found.");
+                }
+                else
+                {
+                    // Display the existing map
+                    Console.WriteLine("Existing Map:");
+                    Console.WriteLine(map);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Display the existing map
-                Console.WriteLine("Existing Map:");
-                Console.WriteLine(map);
-            }
-
-            // Store the maps obtained from JSON file
-            foreach (var kvp in allocator._mapStorage)
-            {
-                allocator.StoreMap(kvp.Key, kvp.Value);
+                Console.WriteLine("An error occurred while loading maps: " + ex.Message);
             }
         }
-
-
-
 
 
 
