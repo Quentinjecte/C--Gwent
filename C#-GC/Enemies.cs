@@ -1,10 +1,24 @@
-﻿namespace C__GC
+﻿using System.Runtime.Intrinsics.Arm;
+
+namespace C__GC
 {
     public class Enemy : Character
     {
-        public Enemy(string name, Stats stats) : base(name, stats)
+         public Enemy(string name, Stats stats) : base(name, stats)
         {
+            
+        }
 
+        public void RandomAction(ref List<Protagonist> targets)
+        {
+            Random rdm = new();
+            Protagonist target = targets[rdm.Next(0, targets.Count)];
+            switch (rdm.Next(0, 1))
+            {
+                case 0:
+                    attack(target);
+                    break;
+            }
         }
 
     }

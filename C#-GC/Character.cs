@@ -36,9 +36,10 @@ namespace C__GC
         private Stats _stats;
         public Stats Stats { get => _stats; set => _stats = value; }
         string _name;
-        public string Name {get =>_name; }
+        public string Name { get => _name; }
         Offense[] _offenses;
-        Spell[] _spells;
+        List<Spell> _spells;
+        public List<Spell> Spells { get => _spells; set => _spells = value; }
         public Action Suicide { get; set; }
 
         public Character(string name, Stats stats) 
