@@ -37,7 +37,27 @@ namespace C__GC
                     _menu.InitPopUp(nextOverlay); 
                     },0),
 
-                new str_func("      Spell       "),
+                new str_func("      Spell       ", () => {
+                    str_func[] nextOverlay = new str_func[_currentAuthor.Spells.Count];
+                    for(int i = 0; i < _currentAuthor.Spells.Count; i++)
+                    {
+                        nextOverlay[i] = new str_func("      "+_currentAuthor.Spells[i]._name, () =>
+                        {
+                            str_func[] nextOverlay = new str_func[_enemies.Count];
+                            for(int j = 0; j < _enemies.Count; j++)
+                            {
+                                int jCopy = j;
+                                nextOverlay[j] = new str_func(j.ToString(), () =>
+                                {
+                                    _currentAuthor.Spells[jCopy].Cast(_enemies[jCopy]);
+                                }, 0);
+                            }
+                        _menu.InitPopUp(nextOverlay);
+                        }, 0);
+                    }
+                    _menu.InitPopUp(nextOverlay);
+                }, 0),
+
                 new str_func("      Item        "),
             };
 
@@ -63,12 +83,12 @@ namespace C__GC
             DisplaySystem.Subscribe(_hud);
             DisplaySystem.Update();
 
+            Overlay _menu = new Overlay();
 
             while (_protagonists.Count > 0 && _enemies.Count > 0)
             {
                 foreach (Protagonist prota in _protagonists)
                 {
-                    Overlay _menu = new Overlay();
                     _currentAuthor = prota;
                     _currentTarget = _enemies[0];
                     _menu.InitPopUp(_overlay);
@@ -81,7 +101,7 @@ namespace C__GC
                 }
                 foreach (Enemy enemy in _enemies)
                 {
-                    // enemy plays
+                    enemy.RandomAction(ref _protagonists);
                     if (enemy.Hp <= 0)
                     {
                         enemy.Suicide();

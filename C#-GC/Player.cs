@@ -85,14 +85,16 @@ namespace C__GC
                     Move(x, y);
                     if(IsGrass(newX, newY))
                     {
-                        if(rdm.Next(0, 1) == 0)
+                        if(rdm.Next(0, 10) == 0)
                         {
                             Stats stats = new Stats();
                             stats.mana = 200;
                             stats.hp = 100;
-                            stats.atk = 10;
+                            stats.atk = 100;
 
                             Protagonist prota = new Protagonist("jenti", stats);
+                            prota.Spells.Add(SpellCollection.testSpell);
+                            prota.Spells.Add(SpellCollection.testSpell);
 
 
 
