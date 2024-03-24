@@ -91,7 +91,7 @@ namespace C__GC
             ResourceAllocator allocator = new ResourceAllocator();
 
             // Load maps from JSON file
-            allocator.LoadMapsFromJson("C:\\Users\\Tom\\source\\repos\\C--Gwent\\C#-GC\\maps.json"); // Update the path accordingly
+            allocator.LoadMapsFromJson("C:\\Users\\Tom\\Source\\Repos\\Quentinjecte\\C--Gwent\\C#-GC\\maps.json"); // Update the path accordingly
 
             // Get the existing map from the ResourceAllocator
             string map = allocator.GetMap("map1");
@@ -112,11 +112,6 @@ namespace C__GC
             {
                 allocator.StoreMap(kvp.Key, kvp.Value);
             }
-
-            // Create an instance of the Player class and pass the map
-            // Assuming the Player class constructor takes the map string, its length, and coordinates
-            //Player player = new Player(map, map.Length, 0, 0);
-            //player.Input();
         }
 
 
