@@ -22,8 +22,10 @@ namespace C__GC
             //string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Askeladd\\Desktop\\CODE\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
         }
 
+        public int _mapSize;
         public string ParseBitmap(string path, int width)
         {
+            _mapSize = width;
             Bitmap img = null;
             img = Load(path);
             if (img == null) { return null; };
@@ -111,27 +113,6 @@ namespace C__GC
             g.DrawImage(inputBitmap, 0, 0, asciiWidth, asciiHeight);
             g.Dispose();
             return result;
-        }
-
-        public char GetWalkingArea(Bitmap img, int x, int y)
-        {
-            Color pixelColor = img.GetPixel(x, y);
-            int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3; // dark maths to return %
-            int index = (gray * (_AsciiChars.Length - 1)) / 255;
-            return _AsciiChars[index][0]; // return %
-        }
-
-        public bool GetCollision(Bitmap img, int x, int y)
-        {
-            char character = GetWalkingArea(img, x, y);
-            if (character == '#')
-            {
-                Color pixelColor = img.GetPixel(x, y);
-                int gray = (pixelColor.R + pixelColor.G + pixelColor.B) / 3; // dark maths to return #
-                int index = (gray * (_AsciiChars.Length - 1)) / 255;
-                return true; // return #}
-            }
-            return false;
         }
     }
 }

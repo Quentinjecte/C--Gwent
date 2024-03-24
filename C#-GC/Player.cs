@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace C__GC
 {
@@ -23,9 +17,18 @@ namespace C__GC
 
         public int playerX = 10;
         public int playerY = 10;
+internal class Player
+{
+    string _map;
+    int _size;
+    public int playerX = 10;
+    public int playerY = 10;
 
-        public Protagonist[] team;
-        public Inventory inventory;
+    public Player(string map, int size)
+    {
+        _map = map;
+        _size = size;
+    }
 
         //saveS
         public void Input(Bitmap img, int x, int y)
@@ -65,45 +68,34 @@ namespace C__GC
                 Move(img, x, y);
                 OverlayOnCase(img, playerX, playerY, x, y);
 
-            } while (true);
-        }
-        private void Move(Bitmap img, int x, int y)
-        {
             int newX = playerX + x;
             int newY = playerY + y;
 
-            if (Parser.GetCollision(img, newX, newY) == false)
+            if (IsObstacle(newX, newY) == false)
             {
-                playerX = newX;
-                playerY = newY;
-                Console.SetCursorPosition(playerX, playerY);
-                DrawPlayer();
+                SetBack(playerX, playerY);
+                Move(x, y);
             }
-        }
-        public void DrawPlayer()
-        {
-            Console.SetCursorPosition(playerX, playerY);
-            Console.Write("P");
-        }
 
-        private void OverlayOnCase(Bitmap img, int playerX, int playerY, int dx, int dy)
-        {
-
-            int leftX = playerX - dx;
-            int leftY = playerY - dy;
-            int rightX = playerX + dx;
-            int rightY = playerY + dy;
-
-            // Retrieve the characters from the GetCharacter method
-            char leftCharacter = Parser.GetWalkingArea(img, leftX, leftY);
-            char rightCharacter = Parser.GetWalkingArea(img, rightX, rightY);
-
-            // Print the characters at the calculated positions
-            Console.SetCursorPosition(leftX, leftY);
-            Console.Write(leftCharacter);
-            Console.SetCursorPosition(rightX, rightY);
-            Console.Write(rightCharacter);
-        }
+        } while (true);
     }
 
+    private void Move(int x, int y)
+    {
+        playerX += x;
+        playerY += y;
+        Console.SetCursorPosition(playerX, playerY);
+        Console.Write("P");
+    }
+
+    private bool IsObstacle(int x, int y)
+    {
+        return _map[y * _size + x] == '#';
+    }
+
+    private void SetBack(int x, int y)
+    {
+        Console.SetCursorPosition(x, y);
+        Console.Write(_map[y * _size + x]);
+    }
 }

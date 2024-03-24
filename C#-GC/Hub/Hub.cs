@@ -12,6 +12,11 @@ namespace C__GC.Hub
 {
     internal class Hub
     {
+        private int HubIndex;
+        private string[] HubInfo;
+        private string Prompt;
+        int newWidth;
+        int newHeight;
         MapParser Parser = new();
 
         private int _hubIndex;
@@ -133,19 +138,17 @@ namespace C__GC.Hub
         {
 
             Console.Clear();
-            Console.WriteLine("Clearing the screen!");
+            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
 
             // Load the bitmap image using the MapParser
             Bitmap mapImage = Parser.Load(Parser.assetsPath);
 
+            string map = parser.ParseBitmap(assetsPath, 101);
             // Print the parsed bitmap to console
             Console.WriteLine(Parser.ParseBitmap(Parser.assetsPath, 100));
 
             // Create an instance of the Player class and pass the MapParser and Bitmap objects
-            Player player = new Player();
-
-            // Draw the player on the map
-            player.DrawPlayer();
+            Player player = new Player(map, parser._mapSize);
 
             // Start taking input from the player
             player.Input(mapImage, 0, 0);
