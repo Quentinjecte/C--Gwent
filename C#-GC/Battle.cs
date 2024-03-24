@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
@@ -9,120 +9,75 @@ namespace C__GC
 {
     internal class Battle
     {
-        Protagonist[] m_protagonists;
-        Character[] m_enemies;
-        string[] m_BasicHUD = { "attack", "cast", "items" };
-        string[] m_HUD;
-        int m_HUDIndex;
+        List<Protagonist> _protagonists;
+        List<Enemy> _enemies;
+        string[] _BasicHUD = { "attack", "cast", "items" };
+        string[] _HUD;
+        int _HUDIndex;
 
-        public Battle(Protagonist[] protagonists, Character[] enemies)
+        public Battle(List<Protagonist> protagonists, List<Enemy> enemies)
         {
-            m_protagonists = protagonists;
-            m_enemies = enemies;
-            m_HUD = m_BasicHUD;
-            m_HUDIndex = 0;
-        }
-
-        public void start()
-        {
-            bool run = true;
-            while(run)
+            _protagonists = protagonists;
+            _enemies = enemies;
+            _HUD = _BasicHUD;
+            _HUDIndex = 0;
+            foreach(Protagonist prota in _protagonists)
             {
-                foreach(Protagonist currentProta in m_protagonists) 
-                {
-                    SwapIndex();
-                    play(currentProta);
-                }
-                foreach(Character currentEnemy in m_enemies) 
-                {
-                    play(currentEnemy);
-                }
+                prota.Suicide += () => { _protagonists.Remove(prota); };
+            }
+            foreach(Enemy enemy in _enemies)
+            {
+                enemy.Suicide += () => { _enemies.Remove(enemy); };
             }
         }
 
-        private void OverlayOption()
+        public bool start()
         {
-            for (int i = 0; i < m_HUD.Length; i++)
+            // assigner int Run au retour de cette fonction
+            while (_protagonists.Count > 0 && _enemies.Count > 0)
             {
-                string ActChoise;
-                string CurrentOption = m_HUD[i];
-
-                if (i == m_HUDIndex)
+                foreach (Protagonist prota in _protagonists)
                 {
-                    ActChoise = "->";
-                    Console.ForegroundColor = ConsoleColor.Black;
-                    Console.BackgroundColor = ConsoleColor.Gray;
-                }
-                else
-                {
-                    ActChoise = "  ";
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.Black;
-                }
-                Console.WriteLine($"{ActChoise}  {CurrentOption}");
-            }
-            Console.ResetColor();
-        }
-
-       
-
-        public void SwapIndex()
-        {
-            ConsoleKey KeyPress;
-
-            do
-            {
-                Console.Clear();
-                OverlayOption();
-
-                ConsoleKeyInfo KeyInfo = Console.ReadKey(true);
-                KeyPress = KeyInfo.Key;
-
-                if (KeyPress == ConsoleKey.UpArrow)
-                {
-                    m_HUDIndex--;
-                    if (m_HUDIndex == -1)
+                    ConsoleKeyInfo KeyPress = Console.ReadKey();
+                    switch (KeyPress.Key)
                     {
-                        m_HUDIndex = m_HUD.Length - 1;
+                        case ConsoleKey.Z:
+                            //_enemies[0].TakeDmg(_protagonists[0].Stats.atk);
+                            //Status.Subscribe(() => Status.Burn(_protagonists[0]));
+                            SpellCollection.testSpell.Cast(prota);
+                            if(prota.Hp <= 0)
+                            {
+                                _protagonists.Remove(prota);
+                            }
+
+                            break;
                     }
                 }
-                else if (KeyPress == ConsoleKey.DownArrow)
+                foreach (Enemy enemy in _enemies)
                 {
-                    m_HUDIndex++;
-                    if (m_HUDIndex == m_HUD.Length)
+                    // enemy plays
+                    if (enemy.Hp <= 0)
                     {
-                        m_HUDIndex = 0;
+                        _enemies.Remove(enemy);
                     }
                 }
+
+                Status.Tick();
             }
-            while (KeyPress != ConsoleKey.Spacebar);
+            return _protagonists.Count > 0;
+
         }
 
-        private void play(Protagonist prota)
+        private int kill(Enemy target)
         {
-            switch (m_HUDIndex)
-            {
-                case 0:
-                    //attack
-                    break;
-
-                case 1:
-                    Array.Clear(m_HUD, 0, m_HUD.Length);
-                    foreach(Spell spell in prota.spells)
-                    {
-                        m_HUD.Append(spell.name);
-                    }
-                    break;
-
-                case 2:
-                    //open inventory
-                    break;
-            }
+            _enemies.Remove(target);
+            return _enemies.Count;
         }
-        private void play(Character enemy)
+        
+        private int kill(Protagonist target)
         {
-
+            _protagonists.Remove(target);
+            return _protagonists.Count;
         }
     }
 }
-*/

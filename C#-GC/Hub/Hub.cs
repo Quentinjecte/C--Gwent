@@ -27,20 +27,20 @@ namespace C__GC.Hub
 
         public Hub()
         {
-            _OptionWindows = new[] { 
+            _OptionWindows = new[] {
                 new str_func(CharactereData.OptionWindowSize[0]),
                 new str_func(CharactereData.OptionWindowSize[1]), // Language pas fait
                 new str_func(CharactereData.OptionWindowSize[2]),
             };
 
-            _OptionMenuPreset = new[] { 
+            _OptionMenuPreset = new[] {
                 new str_func(CharactereData.OptionInfo[0], () => ResizeConsoleWindow(CharactereData.Prompt, _OptionWindows), 0),
                 new str_func(CharactereData.OptionInfo[1], Exit, 1), // Language pas fait
                 new str_func(CharactereData.OptionInfo[2], Music, 2),
                 new str_func(CharactereData.OptionInfo[3], () => Back(CharactereData.Prompt, _mainMenuPreset), 3),
             };
 
-            _mainMenuPreset = new[] { 
+            _mainMenuPreset = new[] {
                 new str_func(CharactereData.HubInfo[0], NewGame, 0),
                 new str_func(CharactereData.HubInfo[1], Continue, 1),
                 new str_func(CharactereData.HubInfo[2], () => Option(CharactereData.Prompt, _OptionMenuPreset), 2),

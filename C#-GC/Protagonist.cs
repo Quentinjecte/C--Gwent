@@ -8,5 +8,9 @@ namespace C__GC
 {
     internal class Protagonist : Character
     {
+        public Protagonist(string name, Stats stats) : base(name, stats)
+        {
+
+        }
     }
 }

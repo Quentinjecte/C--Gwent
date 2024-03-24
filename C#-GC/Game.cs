@@ -14,11 +14,11 @@ namespace C__GC
     class Game
     {
 
-        public void Start() 
+        public void Start()
         {
             Console.Title = "Closed-Eyes 👁";
             StartHub();
-            
+
         }
 
         public void StartHub()
