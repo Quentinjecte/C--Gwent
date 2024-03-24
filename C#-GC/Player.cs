@@ -91,7 +91,10 @@ namespace C__GC
 
 
                             Battle battle = new Battle([prota], [enemy]);
-                            battle.start();
+                            if(battle.start() == false)
+                            {
+                                return;
+                            }
                         }
                     }
                 }

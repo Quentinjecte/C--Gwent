@@ -49,7 +49,10 @@ namespace C__GC
         static public void ReplaceByValue(DisplayElement value, DisplayElement newValue)
         {
             int index = _elements.IndexOf(value);
-            _elements[index] = newValue;
+            if(index != -1)
+            {
+                _elements[index] = newValue;
+            }
         }
     }
 }

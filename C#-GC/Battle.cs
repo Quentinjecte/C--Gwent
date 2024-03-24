@@ -16,6 +16,7 @@ namespace C__GC
         Character _currentAuthor;
 
         public str_func[] _overlay;
+        DisplayElement _hud;
 
         public Battle(List<Protagonist> protagonists, List<Enemy> enemies)
         {
@@ -40,12 +41,24 @@ namespace C__GC
         public bool start()
         {
             Console.SetCursorPosition(0, 0);
-            Console.WriteLine(_protagonists[0].Hp);
-            Console.WriteLine(_enemies[0].Hp);
             Overlay menu = new Overlay();
             // assigner int Run au retour de cette fonction
+
+            _hud.content = "|----------------------------|" +
+                "| protaHP:" + _protagonists[0].Hp + "                |" +
+                "| enemyHP:" + _enemies[0].Hp + "                |" +
+                "|                            |" +
+                "|----------------------------|";
+            _hud.width = 30;
+            _hud.xOffset = 0;
+            _hud.yOffset = 0;
+            DisplaySystem.Subscribe(_hud);
+            DisplaySystem.Update();
+
+
             while (_protagonists.Count > 0 && _enemies.Count > 0)
             {
+                UpdateHUD();
                 foreach (Protagonist prota in _protagonists)
                 {
                     _currentAuthor = prota;
@@ -60,7 +73,7 @@ namespace C__GC
                     //        SpellCollection.testSpell.Cast(prota);
                             if(prota.Hp <= 0)
                             {
-                                _protagonists.Remove(prota);
+                                prota.Suicide();
                             }
 
                     //        break;
@@ -71,12 +84,15 @@ namespace C__GC
                     // enemy plays
                     if (enemy.Hp <= 0)
                     {
-                        _enemies.Remove(enemy);
+                        enemy.Suicide();
                     }
                 }
 
                 Status.Tick();
+                
             }
+            DisplaySystem.Unsubscribe();
+            DisplaySystem.Update();
             return _protagonists.Count > 0;
 
         }
@@ -92,5 +108,18 @@ namespace C__GC
             _protagonists.Remove(target);
             return _protagonists.Count;
         }
+
+        private void UpdateHUD()
+        {
+            DisplayElement oldHUD = _hud;
+            _hud.content ="|----------------------------|" +
+                "| protaHP:" + _protagonists[0].Hp + "                |" +
+                "| enemyHP:" + _enemies[0].Hp + "                 |" +
+                "|                            |" +
+                "|----------------------------|";
+            DisplaySystem.ReplaceByValue(oldHUD, _hud);
+            DisplaySystem.Update();
+        }
+
     }
 }

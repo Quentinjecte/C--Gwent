@@ -195,6 +195,8 @@ namespace C__GC
                 } while (KeyPress != ConsoleKey.Spacebar);
 
                 _OverlayOptions[_OlverlayIndex].ExecuteAction();
+                // temporary way to close the popup
+                isClosed = 1;
 
             } while (isClosed != 1);
 
