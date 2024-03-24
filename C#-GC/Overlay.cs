@@ -13,15 +13,16 @@ namespace C__GC
 {
     internal class Overlay
     {
-        MapParser MapParser = new();
+        //MapParser MapParser = new();
+        Hub.Hub hub = new();
+        Player Player = new();
 
         private int _OlverlayIndex;
         private int isClosed;
 
         private char BoxBoder = '█';
         private bool InFight = true;
-        private char MapCharSaveX;
-        private char MapCharSaveY;
+        private char MapCharSave;
 
         private Rectangle Box;
         private List<string> MapStringSave;
@@ -32,6 +33,7 @@ namespace C__GC
         
         public Overlay()
         {
+
             MapStringSave = new List<string>();
             _OverlayOptions = new[] {
                 new str_func("     Continue     "),
@@ -72,10 +74,6 @@ namespace C__GC
                 Console.Write(aPart);
             }
         }
-        /*private void SaveMapage()
-        {
-
-        }*/
         private void MenuPopUp()
         {
             //Save Map en cour
@@ -85,10 +83,7 @@ namespace C__GC
                 Console.Write(BoxBoder);
                 for (int j = Box.X; j < Box.Right; j++)
                 {
-                    /*                    Console.SetCursorPosition(j, i);
-                                        MapCharSaveY = MapParser.GetWalkingArea(img, i, j);
-                                        MapStringSave.Add(MapCharSaveY);
-                                        MapStringSave = MapParser.ParseBitmap(this,this);*/
+                    //MapStringSave.Add(Player.SetBack(i, j);
                 }
                 //MapStringSave.Add(MapCharSaveY);
             }
