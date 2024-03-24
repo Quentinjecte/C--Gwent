@@ -15,7 +15,7 @@ namespace C__GC
     {
 
         public void Start()
-        {
+        { 
             Console.Title = "Closed-Eyes 👁";
             StartHub();
 
@@ -23,7 +23,7 @@ namespace C__GC
 
         public void StartHub()
         {
-            Hub.Hub MainHub = new Hub.Hub();
+            Hub.Hub MainHub = new();
 
             MainHub.InitHub(CharactereData.Prompt, MainHub._mainMenuPreset);
             

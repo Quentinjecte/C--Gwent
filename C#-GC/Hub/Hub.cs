@@ -12,23 +12,39 @@ namespace C__GC.Hub
 {
     internal class Hub
     {
-        private int HubIndex;
-        private string[] HubInfo;
-        private string Prompt;
-        int newWidth;
-        int newHeight;
-        MapParser Parser = new();
 
-        private int _hubIndex;
-        private string _prompt;
+        /*
+        ------------------------------------------------------
+        |             Initialize Varialbe Hub.cs             |                     
+        ------------------------------------------------------
+        */
+        //MapParser Parser = new();
+        Player Player = new Player();
+
+        private int HubIndex, 
+            _hubIndex, 
+            newWidth, 
+            newHeight, 
+            Volume, 
+            isClosed;
+
+        private string _prompt, 
+            Prompt;
+        private string[] HubInfo;
+
 
         str_func[] _hubInfo;
-        public str_func[] _mainMenuPreset;
-        public str_func[] _OptionMenuPreset;
-        public str_func[] _OptionWindows;
+        public str_func[] _mainMenuPreset, 
+            _OptionMenuPreset, 
+            _OptionWindows;
 
-        int Volume;
-        int isClosed;
+        public string map;
+
+/*
+    ------------------------------------------------------
+    |             Initialize Function Hub.cs             |                     
+    ------------------------------------------------------
+*/
 
         public Hub()
         {
@@ -53,24 +69,28 @@ namespace C__GC.Hub
                 new str_func(CharactereData.HubInfo[4], Exit, 4),
             };
 
-
             _hubIndex = 0;
-        }
 
+            map = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "%%%%%#########%%%%%%%%%%%%%%%%%%@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#####%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "%%%%%%%%##########%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
+    "####################################################################################################";
+        }
         public void InitHub(string prompt, str_func[] HubInfo)
         {
             _prompt = prompt;
             _hubInfo = HubInfo;
             _hubIndex = 0;
         }
-/*        
-         public void InitHub(str_func[] HubInfo)
-            {
-            _hubInfo = HubInfo;
-            _hubIndex = 0;
-            }
-*/ //Constructor Surchage
-
         private void OverlayOption()
         {
             Console.WriteLine(_prompt);
@@ -94,7 +114,6 @@ namespace C__GC.Hub
             }
             Console.ResetColor();
         }
-
         public int SwapIndex()
         {
             ConsoleKey KeyPress;
@@ -133,71 +152,42 @@ namespace C__GC.Hub
 
             return _hubIndex;
         }
-
-        public void NewGame()
+        private void NewGame()
         {
-
             Console.Clear();
-            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
-
-            
-
-            //string map = Parser.ParseBitmap(assetsPath, 102);
-            // Print the parsed bitmap to console
-
-
-            string map = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#####%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
-                "####################################################################################################";
             Console.WriteLine(map);
 
             // Create an instance of the Player class and pass the MapParser and Bitmap objects
-            Player player = new Player(map, 101);
+            Player.InitPlayer(map, 101);
 
             // Start taking input from the player
-            player.Input(0, 0);
+            Player.Input(0, 0);
         }
-
-
-        public void Continue()
+        private void Continue()
         {
         }
-
-        public void Option(string prompt, str_func[] HubInfo)
+        private void Option(string prompt, str_func[] HubInfo)
         {
             Hub HubOptions = new Hub();
             HubOptions.InitHub(prompt, _OptionMenuPreset);
             _hubIndex = HubOptions.SwapIndex();
         }
-
-        public void Credit()
+        private void Credit()
         {
             Console.Clear();
             Console.WriteLine("\n Game designed by Gwent\n Dev: Tom (holland), Valentin (Saint), Quentin (Avion), Mathieu (Mangemort)");
             Console.ReadKey(true);
         }
-
-        public void Exit()
+        private void Exit()
         {
             Environment.Exit(0);
         }
-        public void Back(string prompt, str_func[] HubInfo)
+        private void Back(string prompt, str_func[] HubInfo)
         {
             Hub HubOptions = new Hub();
             HubOptions.InitHub(prompt, _mainMenuPreset);
             _hubIndex = HubOptions.SwapIndex();
         }
-
         private void ResizeConsoleWindow(string prompt, str_func[] HubInfo)
         {
             //RCW -> ResizeConsoleWindow
@@ -240,7 +230,6 @@ namespace C__GC.Hub
                 Console.WriteLine("Please try again with a smaller window size.");
             }
         }
-
         private void Music()
         {
             ConsoleKeyInfo KeyPress;

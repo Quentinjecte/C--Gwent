@@ -13,16 +13,27 @@ namespace C__GC
 {
     internal class MapParser
     {
-        public string[] _AsciiChars = { "#", "#", "@", "%", "=", "+", "*", ":", "-", ".", "&nbsp;" };
-        public string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+/*
+------------------------------------------------------
+|             Initialize Varialbe Player.cs          |                     
+------------------------------------------------------
+*/
+        StringBuilder sb = new();
 
+        public string[] _AsciiChars = { "#", "#", "@", "%", "=", "+", "*", ":", "-", ".", "&nbsp;" };
+        //public string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Askeladd\\Desktop\\CODE\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+        public int _mapSize;
+
+/*
+------------------------------------------------------
+|             Initialize Function Player.cs          |                     
+------------------------------------------------------
+*/
         public MapParser() 
         {
             //string[] _AsciiChars = { "#", "#", "@", "%", "=", "+", "*", ":", "-", ".", "&nbsp;" };
             //string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Askeladd\\Desktop\\CODE\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
         }
-
-        public int _mapSize;
         public string ParseBitmap(string path, int width)
         {
             _mapSize = width;
@@ -34,11 +45,9 @@ namespace C__GC
             str = str.Replace("&nbsp;", " ").Replace("<BR>", "\n");
             return str;
         }
-
         private string BitmapToStr(Bitmap image)
         {
             Boolean toggle = false;
-            StringBuilder sb = new StringBuilder();
             for (int h = 0; h < image.Height; h++)
             {
                 for (int w = 0; w < image.Width; w++)
@@ -68,7 +77,6 @@ namespace C__GC
             }
             return sb.ToString();
         }
-
         internal Bitmap Load(string path)
         {
             Bitmap img = null;
@@ -98,7 +106,6 @@ namespace C__GC
             }
             return null;
         }
-
         private Bitmap ResizeImg(Bitmap inputBitmap, int asciiWidth)
         {
             //int asciiWidth = 100;
