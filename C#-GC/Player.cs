@@ -38,6 +38,7 @@ namespace C__GC
         {
             _map = map;
             _size = size;
+            _playerRender = new DisplayElement();
             _playerRender.content = "p";
             _playerRender.width = 1;
             _playerRender.xOffset = playerX;
