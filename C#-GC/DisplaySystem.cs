@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace C__GC
 {
-    public struct DisplayElement
+    public struct DisplayElement(string CONTENT, int WIDTH, int XOFFSET, int YOFFSET)
     {
-        public string content;
-        public int width;
-        public int xOffset;
-        public int yOffset;
+        public string content = CONTENT;
+        public int width = WIDTH;
+        public int xOffset = XOFFSET;
+        public int yOffset = YOFFSET;
     }
     static class DisplaySystem
     {

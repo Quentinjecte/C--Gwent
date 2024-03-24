@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,10 +19,24 @@ namespace C__GC
         public str_func[] _overlay;
         DisplayElement _hud;
 
+        Overlay _menu;
+
         public Battle(List<Protagonist> protagonists, List<Enemy> enemies)
         {
+            Overlay _menu = new Overlay();
             _overlay = new[] {// Update to do
-                new str_func("      Attack      ", () => _currentAuthor.attack(_currentTarget), 0),
+                new str_func("      Attack      ", () => { str_func[] nextOverlay = new str_func[_enemies.Count];
+                    for(int i = 0; i < _enemies.Count; i++)
+                    {
+                        int iCopy = i;
+                        nextOverlay[i] = new str_func(i.ToString(), () =>
+                        {
+                            _currentAuthor.attack(_enemies[iCopy]);
+                        }, 0);
+                    }
+                    _menu.InitPopUp(nextOverlay); 
+                    },0),
+
                 new str_func("      Spell       "),
                 new str_func("      Item        "),
             };
@@ -41,43 +56,28 @@ namespace C__GC
         public bool start()
         {
             Console.SetCursorPosition(0, 0);
-            Overlay menu = new Overlay();
+            
             // assigner int Run au retour de cette fonction
-
-            _hud.content = "|----------------------------|" +
-                "| protaHP:" + _protagonists[0].Hp + "                |" +
-                "| enemyHP:" + _enemies[0].Hp + "                |" +
-                "|                            |" +
-                "|----------------------------|";
-            _hud.width = 30;
-            _hud.xOffset = 0;
-            _hud.yOffset = 0;
+            _hud = new DisplayElement("", 30, 0, 0);
+            UpdateHUD();
             DisplaySystem.Subscribe(_hud);
             DisplaySystem.Update();
 
 
             while (_protagonists.Count > 0 && _enemies.Count > 0)
             {
-                UpdateHUD();
                 foreach (Protagonist prota in _protagonists)
                 {
+                    Overlay _menu = new Overlay();
                     _currentAuthor = prota;
                     _currentTarget = _enemies[0];
-                    menu.InitPopUp(_overlay);
-                    //ConsoleKeyInfo KeyPress = Console.ReadKey();
-                    //switch (KeyPress.Key)
-                    //{
-                    //    case ConsoleKey.Z:
-                    //        //_enemies[0].TakeDmg(_protagonists[0].Stats.atk);
-                    //        //Status.Subscribe(() => Status.Burn(_protagonists[0]));
+                    _menu.InitPopUp(_overlay);
+                    //        Status.Subscribe(() => Status.Burn(_protagonists[0]));
                     //        SpellCollection.testSpell.Cast(prota);
-                            if(prota.Hp <= 0)
-                            {
-                                prota.Suicide();
-                            }
-
-                    //        break;
-                    //}
+                    if(prota.Hp <= 0)
+                    {
+                        prota.Suicide();
+                    }
                 }
                 foreach (Enemy enemy in _enemies)
                 {
@@ -89,7 +89,8 @@ namespace C__GC
                 }
 
                 Status.Tick();
-                
+                UpdateHUD();
+
             }
             DisplaySystem.Unsubscribe();
             DisplaySystem.Update();
@@ -97,25 +98,20 @@ namespace C__GC
 
         }
 
-        private int kill(Enemy target)
-        {
-            _enemies.Remove(target);
-            return _enemies.Count;
-        }
-        
-        private int kill(Protagonist target)
-        {
-            _protagonists.Remove(target);
-            return _protagonists.Count;
-        }
-
         private void UpdateHUD()
         {
             DisplayElement oldHUD = _hud;
-            _hud.content ="|----------------------------|" +
-                "| protaHP:" + _protagonists[0].Hp + "                |" +
-                "| enemyHP:" + _enemies[0].Hp + "                 |" +
-                "|                            |" +
+            _hud.content = "|----------------------------|";
+                foreach (Protagonist prota in _protagonists)
+            {
+                _hud.content += "| protaHP:" + _protagonists[0].Hp + "                |"; ;
+            }
+            foreach(Enemy enemy in _enemies)
+            {
+                _hud.content += "| enemyHP:" + enemy.Hp + "                 |";
+            }
+
+            _hud.content += "|                            |" +
                 "|----------------------------|";
             DisplaySystem.ReplaceByValue(oldHUD, _hud);
             DisplaySystem.Update();

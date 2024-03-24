@@ -85,12 +85,11 @@ namespace C__GC
                             stats.hp = 100;
                             stats.atk = 10;
 
-                            Enemy enemy = new Enemy("vilain", stats);
                             Protagonist prota = new Protagonist("jenti", stats);
 
 
 
-                            Battle battle = new Battle([prota], [enemy]);
+                            Battle battle = new Battle([prota], [EnemyFactory.basic(), EnemyFactory.basic()]);
                             if(battle.start() == false)
                             {
                                 return;
