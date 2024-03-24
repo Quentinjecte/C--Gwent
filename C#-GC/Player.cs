@@ -118,6 +118,12 @@ namespace C__GC
         {
             return _map[y * _size + x] == '@';
         }
+
+        private bool IsTransition(int x, int y)
+        {
+            char transitionCharacter = '*'; // Character representing transition
+            return _map[y * _size + x] == transitionCharacter;
+        }
         public void SetBack(int x, int y)
         {
             Console.SetCursorPosition(x, y);
