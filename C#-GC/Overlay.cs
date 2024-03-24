@@ -43,13 +43,9 @@ namespace C__GC
                 new str_func("       Exit       "),
             };
             _OverlayFight = new[] {// Update to do
-                new str_func("     Continue     "),
-                new str_func("       Stat       "),
-                new str_func("       Item       "),
-                new str_func("      Option      "),
-                new str_func("       Save       "),
-                new str_func("       Load       "),
-                new str_func("       Exit       "),
+                new str_func("      Attack      ", (Protagonist prota, Character target) =>(prota.)),
+                new str_func("      Spell       "),
+                new str_func("      Item        "),
             };
             int consoleWidth = Console.WindowWidth;
             int consoleHeight = Console.WindowHeight;

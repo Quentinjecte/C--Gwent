@@ -14,7 +14,7 @@ namespace C__GC
     internal class MapParser
     {
         public string[] _AsciiChars = { "#", "#", "@", "%", "=", "+", "*", ":", "-", ".", "&nbsp;" };
-        public string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Askeladd\\Desktop\\CODE\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+        public string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
 
         public MapParser() 
         {

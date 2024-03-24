@@ -54,7 +54,7 @@ namespace C__GC
                         if(keyInfo.Key == ConsoleKey.P)
                         {
                             Console.Clear();
-                            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "C:\\Users\\Askeladd\\Desktop\\CODE\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+                            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
                             Bitmap mapImage = Parser.Load(assetsPath);
                             Console.WriteLine(Parser.ParseBitmap(assetsPath, 100));
                         }
