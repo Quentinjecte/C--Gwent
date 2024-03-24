@@ -11,16 +11,22 @@ namespace C__GC
     {
         List<Protagonist> _protagonists;
         List<Enemy> _enemies;
-        string[] _BasicHUD = { "attack", "cast", "items" };
-        string[] _HUD;
-        int _HUDIndex;
+
+        Character _currentTarget;
+        Character _currentAuthor;
+
+        public str_func[] _overlay;
 
         public Battle(List<Protagonist> protagonists, List<Enemy> enemies)
         {
+            _overlay = new[] {// Update to do
+                new str_func("      Attack      ", () => _currentAuthor.attack(_currentTarget), 0),
+                new str_func("      Spell       "),
+                new str_func("      Item        "),
+            };
+
             _protagonists = protagonists;
             _enemies = enemies;
-            _HUD = _BasicHUD;
-            _HUDIndex = 0;
             foreach(Protagonist prota in _protagonists)
             {
                 prota.Suicide += () => { _protagonists.Remove(prota); };
@@ -33,25 +39,32 @@ namespace C__GC
 
         public bool start()
         {
+            Console.SetCursorPosition(0, 0);
+            Console.WriteLine(_protagonists[0].Hp);
+            Console.WriteLine(_enemies[0].Hp);
+            Overlay menu = new Overlay();
             // assigner int Run au retour de cette fonction
             while (_protagonists.Count > 0 && _enemies.Count > 0)
             {
                 foreach (Protagonist prota in _protagonists)
                 {
-                    ConsoleKeyInfo KeyPress = Console.ReadKey();
-                    switch (KeyPress.Key)
-                    {
-                        case ConsoleKey.Z:
-                            //_enemies[0].TakeDmg(_protagonists[0].Stats.atk);
-                            //Status.Subscribe(() => Status.Burn(_protagonists[0]));
-                            SpellCollection.testSpell.Cast(prota);
+                    _currentAuthor = prota;
+                    _currentTarget = _enemies[0];
+                    menu.InitPopUp(_overlay);
+                    //ConsoleKeyInfo KeyPress = Console.ReadKey();
+                    //switch (KeyPress.Key)
+                    //{
+                    //    case ConsoleKey.Z:
+                    //        //_enemies[0].TakeDmg(_protagonists[0].Stats.atk);
+                    //        //Status.Subscribe(() => Status.Burn(_protagonists[0]));
+                    //        SpellCollection.testSpell.Cast(prota);
                             if(prota.Hp <= 0)
                             {
                                 _protagonists.Remove(prota);
                             }
 
-                            break;
-                    }
+                    //        break;
+                    //}
                 }
                 foreach (Enemy enemy in _enemies)
                 {

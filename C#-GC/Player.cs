@@ -12,26 +12,19 @@ namespace C__GC
 
     internal class Player
     {
-
-        MapParser Parser = new();
-
+        string _map;
+        int _size;
         public int playerX = 10;
         public int playerY = 10;
-internal class Player
-{
-    string _map;
-    int _size;
-    public int playerX = 10;
-    public int playerY = 10;
 
-    public Player(string map, int size)
-    {
-        _map = map;
-        _size = size;
-    }
+        public Player(string map, int size)
+        {
+            _map = map;
+            _size = size;
+        }
 
         //saveS
-        public void Input(Bitmap img, int x, int y)
+        public void Input(int x, int y)
         {
             ConsoleKeyInfo keyInfo;
             Overlay overlay = new Overlay();
@@ -51,51 +44,66 @@ internal class Player
                         break;
                     case ConsoleKey.D:
                         (x, y) = (1, 0);
-                        break;                    
-                    case ConsoleKey.P: 
-                        overlay.InitPopUp(overlay._OverlayOptions, img);
-                        if(keyInfo.Key == ConsoleKey.P)
-                        {
-                            Console.Clear();
-                            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
-                            Bitmap mapImage = Parser.Load(assetsPath);
-                            Console.WriteLine(Parser.ParseBitmap(assetsPath, 100));
-                        }
                         break;
                     default:
                         continue;
                 }
-                Move(img, x, y);
-                OverlayOnCase(img, playerX, playerY, x, y);
 
-            int newX = playerX + x;
-            int newY = playerY + y;
+                int newX = playerX + x;
+                int newY = playerY + y;
 
-            if (IsObstacle(newX, newY) == false)
-            {
-                SetBack(playerX, playerY);
-                Move(x, y);
-            }
 
-        } while (true);
-    }
 
-    private void Move(int x, int y)
-    {
-        playerX += x;
-        playerY += y;
-        Console.SetCursorPosition(playerX, playerY);
-        Console.Write("P");
-    }
+                if (IsObstacle(newX, newY) == false)
+                {
+                    SetBack(playerX, playerY);
+                    Move(x, y);
+                    if(IsGrass(newX, newY))
+                    {
+                        Random rdm = new Random();
+                        if(rdm.Next(0, 1) == 0)
+                        {
+                            Stats stats = new Stats();
+                            stats.mana = 200;
+                            stats.hp = 100;
+                            stats.atk = 10;
 
-    private bool IsObstacle(int x, int y)
-    {
-        return _map[y * _size + x] == '#';
-    }
+                            Enemy enemy = new Enemy("vilain", stats);
+                            Protagonist prota = new Protagonist("jenti", stats);
 
-    private void SetBack(int x, int y)
-    {
-        Console.SetCursorPosition(x, y);
-        Console.Write(_map[y * _size + x]);
+
+
+                            Battle battle = new Battle([prota], [enemy]);
+                            battle.start();
+                        }
+                    }
+                }
+
+            } while (true);
+        }
+
+        private void Move(int x, int y)
+        {
+            playerX += x;
+            playerY += y;
+            Console.SetCursorPosition(playerX, playerY);
+            Console.Write("P");
+        }
+
+        private bool IsObstacle(int x, int y)
+        {
+            return _map[y * _size + x] == '#';
+        }
+        
+        private bool IsGrass(int x, int y)
+        {
+            return _map[y * _size + x] == '@';
+        }
+
+        private void SetBack(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(_map[y * _size + x]);
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace C__GC
                 new str_func("       Exit       "),
             };
             _OverlayFight = new[] {// Update to do
-                new str_func("      Attack      ", (Protagonist prota, Character target) =>(prota.)),
+                new str_func("      Attack      ", (Character author, Character target) => author.attack(target), 0),
                 new str_func("      Spell       "),
                 new str_func("      Item        "),
             };
@@ -60,11 +60,11 @@ namespace C__GC
             }
             else Box = new Rectangle(2, 2, 20, 20);
         }
-        public void InitPopUp(str_func[] OlInfo, Bitmap img)
+        public void InitPopUp(str_func[] OlInfo)
         {
             _OlverlayIndex = 0;
             _OverlayOptions = OlInfo;
-            MenuPopUp(img);
+            MenuPopUp();
             PrintText(_OverlayOptions);
             Console.SetCursorPosition(2, 26);
             foreach (string aPart in MapStringSave)
@@ -76,7 +76,7 @@ namespace C__GC
         {
 
         }*/
-        private void MenuPopUp(Bitmap img)
+        private void MenuPopUp()
         {
             //Save Map en cour
             for (int i = Box.Y; i <= Box.Bottom; i++)

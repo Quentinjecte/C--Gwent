@@ -6,7 +6,7 @@ namespace C__GC
     {
         public static void Main(string[] args)
         {
-            /*int left = Console.LargestWindowWidth - Console.WindowWidth;
+            int left = Console.LargestWindowWidth - Console.WindowWidth;
             int top = Console.LargestWindowHeight - Console.WindowHeight;
             Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
 
@@ -14,21 +14,21 @@ namespace C__GC
 
 
             Game game = new Game();
-            game.Start();*/
+            game.Start();
 
 
-            Stats stats = new Stats();
-            stats.mana = 200;
-            stats.hp = 100;
-            stats.atk = 10;
+            //Stats stats = new Stats();
+            //stats.mana = 200;
+            //stats.hp = 100;
+            //stats.atk = 10;
 
-            Enemy enemy = new Enemy("vilain", stats);
-            Protagonist prota = new Protagonist("jenti", stats);
+            //Enemy enemy = new Enemy("vilain", stats);
+            //Protagonist prota = new Protagonist("jenti", stats);
 
             
 
-            Battle battle = new Battle([prota], [enemy]);
-            battle.start();
+            //Battle battle = new Battle([prota], [enemy]);
+            //battle.start();
 
 
             //string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "testMap.bmp");
