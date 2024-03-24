@@ -159,7 +159,14 @@ namespace C__GC.Hub
                 "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
                 "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n" +
                 "####################################################################################################";
-            Console.WriteLine(map);
+            //Console.WriteLine(map);
+            DisplayElement mapDisplay = new DisplayElement();
+            mapDisplay.xOffset = 0;
+            mapDisplay.yOffset = 0;
+            mapDisplay.content = map;
+            mapDisplay.width = 101;
+            DisplaySystem.Subscribe(mapDisplay);
+            DisplaySystem.Update();
 
             // Create an instance of the Player class and pass the MapParser and Bitmap objects
             Player player = new Player(map, 101);

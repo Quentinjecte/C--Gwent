@@ -16,11 +16,17 @@ namespace C__GC
         int _size;
         public int playerX = 10;
         public int playerY = 10;
+        DisplayElement _playerRender;
 
         public Player(string map, int size)
         {
             _map = map;
             _size = size;
+            _playerRender.content = "p";
+            _playerRender.width = 1;
+            _playerRender.xOffset = playerX;
+            _playerRender.yOffset = playerY;
+            DisplaySystem.Subscribe(_playerRender);
         }
 
         //saveS
@@ -84,10 +90,14 @@ namespace C__GC
 
         private void Move(int x, int y)
         {
+            DisplayElement oldRender = _playerRender;
             playerX += x;
             playerY += y;
-            Console.SetCursorPosition(playerX, playerY);
-            Console.Write("P");
+            _playerRender.xOffset = playerX;
+            _playerRender.yOffset = playerY;
+            DisplaySystem.ReplaceByValue(oldRender, _playerRender);
+            DisplaySystem.Update();
+            
         }
 
         private bool IsObstacle(int x, int y)
