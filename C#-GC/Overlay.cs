@@ -16,18 +16,23 @@ namespace C__GC
         //MapParser MapParser = new();
         Hub.Hub hub = new();
         Player Player = new();
+        DisplayElement DisplayE;
 
-        private int _OlverlayIndex;
-        private int isClosed;
+        private int _OlverlayIndex, 
+            isClosed, 
+            boxX,
+            boxY, 
+            consoleWidth, 
+            consoleHeight, 
+            boxWidth, 
+            boxHeight;
 
-        private char BoxBoder = '█';
-        private bool InFight = true;
-        private char MapCharSave;
+        private string BoxBoder = "█";
+        private bool InFight = false;
 
         private Rectangle Box;
         private List<string> MapStringSave;
 
-        str_func[] OlInfo;
         public str_func[] _OverlayOptions;
         public str_func[] _OverlayFight;
         
@@ -49,18 +54,26 @@ namespace C__GC
                 new str_func("      Spell       "),
                 new str_func("      Item        "),
             };
-            int consoleWidth = Console.WindowWidth;
-            int consoleHeight = Console.WindowHeight;
-            int boxX = 5;
-            int boxY = consoleHeight - 25;
-            int boxWidth = consoleWidth - 5;
-            int boxHeight = 10;
+
+            consoleWidth = Console.WindowWidth;
+            consoleHeight = Console.WindowHeight;
+
 
             if (InFight)
             {
                 Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
+                boxX = 10;
+                boxY = consoleHeight - 25;
+                boxWidth = consoleWidth - 25;
+                boxHeight = 10;
             }
-            else Box = new Rectangle(2, 2, 20, 20);
+
+                Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
+                boxX = 5;
+                boxY = consoleHeight - 25;
+                boxWidth = consoleWidth - 25;
+                boxHeight = 10;
+            
         }
         public void InitPopUp(str_func[] OlInfo)
         {
@@ -69,55 +82,15 @@ namespace C__GC
             MenuPopUp();
             PrintText(_OverlayOptions);
             Console.SetCursorPosition(2, 26);
-            foreach (string aPart in MapStringSave)
-            {
-                Console.Write(aPart);
-            }
+            DisplaySystem.Unsubscribe();
+            DisplaySystem.Update();
         }
         private void MenuPopUp()
         {
-            //Save Map en cour
-            for (int i = Box.Y; i <= Box.Bottom; i++)
-            {
-                Console.SetCursorPosition(Box.X, i);
-                Console.Write(BoxBoder);
-                for (int j = Box.X; j < Box.Right; j++)
-                {
-                    //MapStringSave.Add(Player.SetBack(i, j);
-                }
-                //MapStringSave.Add(MapCharSaveY);
-            }
+            DisplayE = new DisplayElement(BoxBoder, 20, boxX, boxWidth);
 
-            if (false == InFight)
-            {
-                for (int i = Box.Y; i <= Box.Bottom; i++)
-                {
-                    Console.SetCursorPosition(Box.X, i);
-                    for (int j = Box.X; j < Box.Right; j++)
-                    {
-                        Console.SetCursorPosition(j, i);
-                        Console.Write(BoxBoder);
-                    }
-                }
-            }
-            else
-            {
-                for (int i = Box.Y; i <= Box.Bottom; i++)
-                {
-                    Console.SetCursorPosition(Box.X, i);
-                    Console.Write(BoxBoder);
-                    Console.SetCursorPosition(Box.Right, i);
-                    Console.Write(BoxBoder);
-                }
-
-                for (int i = Box.X; i <= Box.Right; i++)
-                {
-                    Console.SetCursorPosition(i, Box.Y);
-                    Console.Write(BoxBoder);
-                    Console.SetCursorPosition(i, Box.Bottom);
-                    Console.Write(BoxBoder);
-                }
-            }
+            DisplaySystem.Subscribe(DisplayE);
+            DisplaySystem.Update();
         }
         private void PrintText(str_func[] OlInfo)
         {

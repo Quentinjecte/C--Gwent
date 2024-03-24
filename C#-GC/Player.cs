@@ -23,7 +23,6 @@ namespace C__GC
         public int playerY = 10;
         DisplayElement _playerRender;
 
-        //Overlay overlay = new();
         Random rdm = new();
 
 /*
@@ -47,6 +46,7 @@ namespace C__GC
         //saveS
         public void Input(int x, int y)
         {
+            Overlay overlay = new();
             ConsoleKeyInfo keyInfo;
             do
             {
@@ -64,6 +64,13 @@ namespace C__GC
                         break;
                     case ConsoleKey.D:
                         (x, y) = (1, 0);
+                        break;
+                    case ConsoleKey.P:
+                        overlay.InitPopUp(overlay._OverlayOptions);
+                        if(keyInfo.Key == ConsoleKey.P)
+                        {
+                            Console.ReadKey(true);
+                        }
                         break;
                     default:
                         continue;
