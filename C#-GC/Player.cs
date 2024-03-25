@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Runtime.CompilerServices;
 
 namespace C__GC
 {
@@ -23,6 +24,9 @@ namespace C__GC
         public int playerY = 10;
         DisplayElement _playerRender;
 
+        List<Protagonist> _team;
+        public List<Protagonist> Team { get => _team; }
+
         Random rdm = new();
 
 /*
@@ -41,7 +45,18 @@ namespace C__GC
             _playerRender.width = 1;
             _playerRender.xOffset = playerX;
             _playerRender.yOffset = playerY;
+            _team = new List<Protagonist>();
             DisplaySystem.Subscribe(_playerRender);
+
+            Stats stats = new Stats();
+            stats.mana = 200;
+            stats.hp = 100;
+            stats.atk = 100;
+
+            Protagonist prota = new Protagonist("jenti", stats);
+            prota.Spells.Add(SpellCollection.testSpell);
+            prota.Spells.Add(SpellCollection.testSpell);
+            Recruite(prota);
         }
         //saveS
         public void Input(int x, int y)
@@ -87,23 +102,24 @@ namespace C__GC
                     {
                         if(rdm.Next(0, 10) == 0)
                         {
-                            Stats stats = new Stats();
-                            stats.mana = 200;
-                            stats.hp = 100;
-                            stats.atk = 100;
-
-                            Protagonist prota = new Protagonist("jenti", stats);
-                            prota.Spells.Add(SpellCollection.testSpell);
-                            prota.Spells.Add(SpellCollection.testSpell);
-
-
-
-                            Battle battle = new Battle([prota], [EnemyFactory.basic(), EnemyFactory.basic()]);
+                            Battle battle = new Battle(_team, [EnemyFactory.basic(), EnemyFactory.basic()]);
                             if(battle.start() == false)
                             {
                                 return;
                             }
                         }
+                    }
+                    else if(IsTavern(newX, newY))
+                    {
+                        Stats stats = new Stats();
+                        stats.mana = 200;
+                        stats.hp = 100;
+                        stats.atk = 100;
+
+                        Protagonist prota = new Protagonist("jenti", stats);
+                        prota.Spells.Add(SpellCollection.testSpell);
+                        prota.Spells.Add(SpellCollection.testSpell);
+                        Recruite(prota);
                     }
                 }
 
@@ -128,10 +144,20 @@ namespace C__GC
         {
             return _map[y * _size + x] == '@';
         }
+        private bool IsTavern(int x, int y)
+        {
+            return _map[y * _size + x] == '&';
+        }
         public void SetBack(int x, int y)
         {
             Console.SetCursorPosition(x, y);
             Console.Write(_map[y * _size + x]);
+        }
+
+        public void Recruite(Protagonist prota)
+        {
+            _team.Add(prota);
+            prota.Suicide += ()=> { _team.Remove(prota); };
         }
     }
 }

@@ -24,8 +24,11 @@ namespace C__GC
         public Battle(List<Protagonist> protagonists, List<Enemy> enemies)
         {
             Overlay _menu = new Overlay();
-            _overlay = new[] {// Update to do
-                new str_func("      Attack      ", () => { str_func[] nextOverlay = new str_func[_enemies.Count];
+            _overlay = new[] {
+                // Attack option
+                new str_func("      Attack      ", () => { 
+                    // Select target
+                    str_func[] nextOverlay = new str_func[_enemies.Count];
                     for(int i = 0; i < _enemies.Count; i++)
                     {
                         int iCopy = i;
@@ -37,19 +40,23 @@ namespace C__GC
                     _menu.InitPopUp(nextOverlay); 
                     },0),
 
+                // Spell option
                 new str_func("      Spell       ", () => {
+                    // Select spell
                     str_func[] nextOverlay = new str_func[_currentAuthor.Spells.Count];
                     for(int i = 0; i < _currentAuthor.Spells.Count; i++)
                     {
-                        nextOverlay[i] = new str_func("      "+_currentAuthor.Spells[i]._name, () =>
+                        int iCopy = i;
+                        nextOverlay[i] = new str_func("      "+_currentAuthor.Spells[iCopy]._name, () =>
                         {
+                            // Select target
                             str_func[] nextOverlay = new str_func[_enemies.Count];
                             for(int j = 0; j < _enemies.Count; j++)
                             {
                                 int jCopy = j;
                                 nextOverlay[j] = new str_func(j.ToString(), () =>
                                 {
-                                    _currentAuthor.Spells[jCopy].Cast(_enemies[jCopy]);
+                                    _currentAuthor.Cast(_currentAuthor.Spells[iCopy], _enemies[jCopy]);
                                 }, 0);
                             }
                         _menu.InitPopUp(nextOverlay);

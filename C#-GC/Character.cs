@@ -22,32 +22,30 @@ namespace C__GC
         public virtual void effect() { }
     }
 
-    ref struct RefList
-    {
-        ref List<Character> _refList;
-    }
-
 
 
     public class Character
     {
         int _hp;
-        public int Hp { get => _hp; }
+        public int Hp { get => _hp; set => _hp = value; }
+        int _mana;
+        public int Mana { get => _mana; set => _mana = value; }
         private Stats _stats;
         public Stats Stats { get => _stats; set => _stats = value; }
         string _name;
         public string Name { get => _name; }
-        Offense[] _offenses;
         List<Spell> _spells;
         public List<Spell> Spells { get => _spells; set => _spells = value; }
         public Action Suicide { get; set; }
+        int _lvl;
+        public int Lvl { get => _lvl; }
 
         public Character(string name, Stats stats) 
         {
             _hp = stats.hp;
+            _mana = stats.mana;
             Stats = stats;
             _name = name;
-            _offenses = [];
             _spells = [];
         }
 
@@ -66,6 +64,33 @@ namespace C__GC
         public void attack(Character character)
         {
             character.TakeDmg(_stats.atk);
+        }
+
+        public void Cast(Spell spell, Character target)
+        {
+            if (_spells.Contains(spell))
+            {
+                if (_mana >= spell._manaCost)
+                {
+                    spell.Cast(target);
+                    _mana -= spell._manaCost;
+                }
+            }
+        }
+
+        public void LevelUp(Stats gain, Spell[] learn = null)
+        {
+            _lvl += 1;
+            _stats.hp += gain.hp;
+            _stats.mana += gain.mana;
+            _stats.atk += gain.atk;
+            _hp += gain.hp;
+            _mana += gain.mana;
+
+            foreach(Spell spell in learn)
+            {
+                _spells.Add(spell);
+            }
         }
     }
 }
