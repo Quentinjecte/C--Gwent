@@ -13,7 +13,6 @@ namespace C__GC
 {
     internal class Overlay
     {
-        //MapParser MapParser = new();
         Hub.Hub hub = new();
         Player Player = new();
         DisplayElement DisplayE;
@@ -31,7 +30,6 @@ namespace C__GC
         private bool InFight = false;
 
         private Rectangle Box;
-        private List<string> MapStringSave;
 
         public str_func[] _OverlayOptions;
         public str_func[] _OverlayFight;
@@ -39,7 +37,6 @@ namespace C__GC
         public Overlay()
         {
 
-            MapStringSave = new List<string>();
             _OverlayOptions = new[] {
                 new str_func("     Continue     "),
                 new str_func("       Stat       "),
@@ -98,7 +95,7 @@ namespace C__GC
                     Console.Write(BoxBoder);
                 }
             }
-            DisplayE = new DisplayElement(BoxBoder.ToString(), 20, 2, 18);
+            DisplayE = new DisplayElement(BoxBoder.ToString(), boxWidth, boxX, boxY);
             DisplaySystem.Subscribe(DisplayE);
             DisplaySystem.Update();
         }
