@@ -26,7 +26,6 @@ namespace C__GC
             boxWidth, 
             boxHeight;
 
-        private char BoxBoder = '█';
         private bool InFight = false;
 
         private Rectangle Box;
@@ -70,7 +69,7 @@ namespace C__GC
             boxWidth = 20;
             boxHeight = 20;
 
-            Box = new Rectangle(2, 2, 20, 20);
+            Box = new Rectangle(2, 2, 20, 10);
         }
         public void InitPopUp(str_func[] OlInfo)
         {
@@ -84,19 +83,9 @@ namespace C__GC
         }
         private void MenuPopUp()
         {
-            DisplayElement displayElement = DisplayE;
+            DisplayE = new DisplayElement(CharactereData.OverlayMenu, 240, 2 , boxY - 1);
 
-            for (int i = Box.Y; i <= Box.Bottom; i++)
-            {
-                Console.SetCursorPosition(Box.X, i);
-                for (int j = Box.X; j < Box.Right + 1; j++)
-                {
-                    Console.SetCursorPosition(j, i);
-                    Console.Write(BoxBoder);
-                }
-            }
-            DisplayE = new DisplayElement(BoxBoder.ToString(), boxWidth, boxX, boxY);
-            DisplaySystem.Subscribe(DisplayE);
+            DisplaySystem.Subscribe((DisplayE));
             DisplaySystem.Update();
         }
         private void PrintText(str_func[] OlInfo)
@@ -128,7 +117,7 @@ namespace C__GC
                 //Change les chars en ' '
                 if (_OverlayOptions[i].Str.Trim() == "Exit")
                 {
-                    while (textY <= Box.Bottom -1)
+                    while (textY <= Box.Bottom - 1)
                     {
                         Console.SetCursorPosition(textX, textY);
                         Console.WriteLine(new string(' ', Box.Width - 2));
