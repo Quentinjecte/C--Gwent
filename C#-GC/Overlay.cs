@@ -59,23 +59,21 @@ namespace C__GC
             consoleHeight = Console.WindowHeight;
 
 
-            if (InFight)
+/*            if (InFight)
             {
                 Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
-                boxX = 10;
-                boxY = consoleHeight - 25;
-                boxWidth = consoleWidth - 25;
-                boxHeight = 10;
-            }
-            else
-            {
+            boxX = 4;
+            boxY = 2;
+            boxWidth = 10;
+            boxHeight = 10;            
+            }*/
 
-                Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
-                boxX = 5;
-                boxY = consoleHeight - 25;
-                boxWidth = 10;
-                boxHeight = 10;            
-            }
+            boxX = 3;
+            boxY = 3;
+            boxWidth = 20;
+            boxHeight = 20;
+
+            Box = new Rectangle(2, 2, 20, 20);
         }
         public void InitPopUp(str_func[] OlInfo)
         {
@@ -89,8 +87,18 @@ namespace C__GC
         }
         private void MenuPopUp()
         {
-            DisplayE = new DisplayElement(BoxBoder.ToString(), 20,boxX, boxWidth);
+            DisplayElement displayElement = DisplayE;
 
+            for (int i = Box.Y; i <= Box.Bottom; i++)
+            {
+                Console.SetCursorPosition(Box.X, i);
+                for (int j = Box.X; j < Box.Right + 1; j++)
+                {
+                    Console.SetCursorPosition(j, i);
+                    Console.Write(BoxBoder);
+                }
+            }
+            DisplayE = new DisplayElement(BoxBoder.ToString(), 20, 2, 18);
             DisplaySystem.Subscribe(DisplayE);
             DisplaySystem.Update();
         }
@@ -101,8 +109,8 @@ namespace C__GC
         private void OverlayIG()
         {
             //Change la couleur de la police
-            int textX = Box.X + 1;
-            int textY = Box.Y + 1;
+            int textX = boxX;
+            int textY = boxY;
 
             for (int i = 0; i < _OverlayOptions.Length; i++)
             {
