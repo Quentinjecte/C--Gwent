@@ -27,7 +27,7 @@ namespace C__GC
             boxWidth, 
             boxHeight;
 
-        private string BoxBoder = "█";
+        private char BoxBoder = '█';
         private bool InFight = false;
 
         private Rectangle Box;
@@ -67,13 +67,15 @@ namespace C__GC
                 boxWidth = consoleWidth - 25;
                 boxHeight = 10;
             }
+            else
+            {
 
                 Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
                 boxX = 5;
                 boxY = consoleHeight - 25;
-                boxWidth = consoleWidth - 25;
-                boxHeight = 10;
-            
+                boxWidth = 10;
+                boxHeight = 10;            
+            }
         }
         public void InitPopUp(str_func[] OlInfo)
         {
@@ -87,7 +89,7 @@ namespace C__GC
         }
         private void MenuPopUp()
         {
-            DisplayE = new DisplayElement(BoxBoder, 20, boxX, boxWidth);
+            DisplayE = new DisplayElement(BoxBoder.ToString(), 20,boxX, boxWidth);
 
             DisplaySystem.Subscribe(DisplayE);
             DisplaySystem.Update();

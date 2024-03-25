@@ -15,7 +15,7 @@ namespace C__GC
     }
     static class DisplaySystem
     {
-        static List<DisplayElement> _elements = new List<DisplayElement>();
+        static public List<DisplayElement> _elements = new List<DisplayElement>();
 
         static public void Update()
         {

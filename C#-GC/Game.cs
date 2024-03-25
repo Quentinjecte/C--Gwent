@@ -23,11 +23,17 @@ namespace C__GC
 
         public void StartHub()
         {
+
+            while(DisplaySystem._elements.Count !=0)
+            {
+                DisplaySystem.Unsubscribe();
+            }
+
+
             Hub.Hub MainHub = new();
 
             MainHub.InitHub(CharactereData.Prompt, MainHub._mainMenuPreset);
-            
-             MainHub.SwapIndex();
+            MainHub.SwapIndex();
         }
     }
 }
