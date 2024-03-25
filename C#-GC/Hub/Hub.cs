@@ -138,15 +138,22 @@ namespace C__GC.Hub
 
             return _hubIndex;
         }
+
+
         private void NewGame()
         {
             Console.Clear();
 
-            ResourceAllocator allocator = new ResourceAllocator();
-            string map = null; // Declare map variable outside of try block
+            DisplayElement mapDisplay = new DisplayElement(); // Declare mapDisplay before try block
+
+            string initialMap = null;
 
             try
             {
+                // Initialize allocator and map manager
+                ResourceAllocator allocator = new ResourceAllocator();
+                MapManager mapManager = new MapManager(allocator, mapDisplay); // Pass mapDisplay to MapManager constructor
+
                 // Get the directory where the executable is located
                 string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -156,24 +163,24 @@ namespace C__GC.Hub
                 // Load maps from the JSON file
                 allocator.LoadMapsFromJson(mapsJsonPath);
 
-                // Get the existing map named "map1" from the ResourceAllocator
-                map = allocator.GetMap("map1");
+                // Get the initial map named "map1" from the ResourceAllocator
+                initialMap = allocator.GetMap("map1");
 
-                if (map == null)
+                if (initialMap == null)
                 {
                     Console.WriteLine("Map 'map1' not found.");
-                    return; // Exit the method if map is not found
+                    return;
                 }
 
-                // Create a DisplayElement for the map
-                DisplayElement mapDisplay = new DisplayElement();
+                // Set the content of the map display
                 mapDisplay.xOffset = 0;
                 mapDisplay.yOffset = 0;
-                mapDisplay.content = map;
+                mapDisplay.content = initialMap;
                 mapDisplay.width = 101;
 
                 // Subscribe the map to the DisplaySystem
                 DisplaySystem.Subscribe(mapDisplay);
+                DisplaySystem.SetMapDisplay(mapDisplay);
 
                 // Update the display
                 DisplaySystem.Update();
@@ -184,12 +191,19 @@ namespace C__GC.Hub
                 return; // Exit the method if an error occurs
             }
 
-            // Create an instance of the Player class and pass the MapParser and Bitmap objects
-            Player.InitPlayer(map, 101);
+            // Initialize player after loading maps successfully
+            if (initialMap != null)
+            {
+                // Initialize allocator and map manager
+                ResourceAllocator allocator = new ResourceAllocator();
+                MapManager mapManager = new MapManager(allocator, mapDisplay);
 
-            // Start taking input from the player
-            Player.Input(0, 0);
+                Player.InitPlayer(initialMap, 101, mapManager);
+                Player.Input(0, 0);
+            }
         }
+
+
 
         private void Continue()
         {

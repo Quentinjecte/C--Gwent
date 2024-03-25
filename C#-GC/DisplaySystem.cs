@@ -15,6 +15,7 @@ namespace C__GC
     }
     static class DisplaySystem
     {
+        private static DisplayElement _mapDisplay;
         static List<DisplayElement> _elements = new List<DisplayElement>();
 
         static public void Update()
@@ -34,7 +35,7 @@ namespace C__GC
         {
             _elements.Add(element);
         }
-        static public void Unsubscribe()
+        static public void Unsubscribe(DisplayElement _mapDisplay)
         {
             _elements.Remove(_elements.Last<DisplayElement>());
         }
@@ -50,6 +51,16 @@ namespace C__GC
         {
             int index = _elements.IndexOf(value);
             _elements[index] = newValue;
+        }
+
+        public static void SetMapDisplay(DisplayElement mapDisplay)
+        {
+            _mapDisplay = mapDisplay;
+        }
+
+        public static DisplayElement GetMapDisplay()
+        {
+            return _mapDisplay;
         }
     }
 }

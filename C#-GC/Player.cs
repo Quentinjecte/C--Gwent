@@ -22,9 +22,10 @@ namespace C__GC
         public int playerX = 10;
         public int playerY = 10;
         DisplayElement _playerRender;
+        MapManager _mapManager;
 
         //Overlay overlay = new();
-        Random rdm = new();
+        Random rdm = new(); 
 
 /*
 ------------------------------------------------------
@@ -34,7 +35,7 @@ namespace C__GC
         public Player()
         {
         }
-        public void InitPlayer(string map, int size)
+        public void InitPlayer(string map, int size, MapManager mapManager)
         {
             _map = map;
             _size = size;
@@ -44,6 +45,7 @@ namespace C__GC
             _playerRender.xOffset = playerX;
             _playerRender.yOffset = playerY;
             DisplaySystem.Subscribe(_playerRender);
+            _mapManager = mapManager;
         }
         //saveS
         public void Input(int x, int y)
@@ -95,6 +97,10 @@ namespace C__GC
                             battle.start();
                         }
                     }
+                    if (IsTransition(newX, newY))
+                    {
+                        _mapManager.ChangeMap("map2"); // Call a method to change the map
+                    }
                 }
 
             } while (true);
@@ -121,8 +127,7 @@ namespace C__GC
 
         private bool IsTransition(int x, int y)
         {
-            char transitionCharacter = '*'; // Character representing transition
-            return _map[y * _size + x] == transitionCharacter;
+            return _map[y * _size + x] == '*';
         }
         public void SetBack(int x, int y)
         {
