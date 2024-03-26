@@ -7,6 +7,8 @@ using System.Media;
 using NAudio.Wave;
 using C__GC.DataString;
 using System.Drawing;
+using System.Security.Principal;
+using System.Diagnostics;
 
 namespace C__GC.Hub
 {
@@ -241,6 +243,8 @@ namespace C__GC.Hub
                 Console.WriteLine("The new window size would force the console buffer size to be too large.");
                 Console.WriteLine("Please try again with a smaller window size.");
             }
+
+            Option(CharactereData.Prompt, _OptionWindows);
         }
         private void ResizeConsoleWindow2()
         {
@@ -260,6 +264,8 @@ namespace C__GC.Hub
                 Console.WriteLine("The new window size would force the console buffer size to be too large.");
                 Console.WriteLine("Please try again with a smaller window size.");
             }
+
+            Option(CharactereData.Prompt, _OptionWindows);
         }
         private void ResizeConsoleWindow3()
         {
@@ -279,6 +285,8 @@ namespace C__GC.Hub
                 Console.WriteLine("The new window size would force the console buffer size to be too large.");
                 Console.WriteLine("Please try again with a smaller window size.");
             }
+
+            Option(CharactereData.Prompt, _OptionWindows);
         }
         private void Music()
         {
