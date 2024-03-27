@@ -21,17 +21,10 @@ namespace C__GC
         }
         public void StartMap() 
         {
-            // Get the directory where the executable is located
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-            // Path to the "maps.json" file in the same directory as the executable
-            string mapsJsonPath = Path.Combine(baseDirectory, "../../../maps/maps.json");
-
-            // Load maps from the JSON file
-            _allocator.LoadMapsFromJson(mapsJsonPath);
 
             // Get the initial map named "map1" from the ResourceAllocator
-            string initialMap = _allocator.GetMap("map1");
+            string initialMap = _allocator.GetBackMap("map1");
+            // Add FrontMap
 
             if (initialMap == null)
             {
@@ -56,15 +49,9 @@ namespace C__GC
 
         public void ChangeMap(string mapName)
         {
-            // Get the directory where the executable is located
-            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
 
-            // Path to the "maps.json" file in the same directory as the executable
-            string mapsJsonPath = Path.Combine(baseDirectory, "../../../maps/maps.json");
-
-            // Load maps from the JSON file
-            _allocator.LoadMapsFromJson(mapsJsonPath);
-            string newMap = _allocator.GetMap(mapName);
+            string newMap = _allocator.GetBackMap(mapName);
+            // Add FrontMap
 
             if (newMap == null)
             {
