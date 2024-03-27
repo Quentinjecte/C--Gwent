@@ -1,11 +1,12 @@
-﻿using NAudio.Dmo.Effect;
+﻿using C__GC.Entity;
+using NAudio.Dmo.Effect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C__GC
+namespace C__GC.Combats
 {
     public class Spell
     {
@@ -24,8 +25,8 @@ namespace C__GC
 
         public Action<Character> Effect;
 
-        public Spell(string name, int manaCost, Type type, Action<Character> eff, int dmg = 0) 
-        { 
+        public Spell(string name, int manaCost, Type type, Action<Character> eff, int dmg = 0)
+        {
             _manaCost = manaCost;
             _name = name;
             _type = type;
@@ -42,6 +43,6 @@ namespace C__GC
 
     static public class SpellCollection
     {
-        static public Spell testSpell = new Spell("test", 20, Spell.Type.demonic, (Character target) => { Status.Subscribe(() => { Status.Burn(target); }); });
+        static public Spell testSpell = new Spell("test", 20, Spell.Type.demonic, (target) => { Status.Subscribe(() => { Status.Burn(target); }); });
     }
 }

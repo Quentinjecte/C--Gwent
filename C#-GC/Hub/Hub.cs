@@ -5,39 +5,46 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Media;
 using NAudio.Wave;
-using C__GC.DataString;
 using System.Drawing;
 using System.Security.Principal;
 using System.Diagnostics;
+
+using C__GC.DataString;
+using C__GC.Combats;
+using System.Runtime.InteropServices;
 
 namespace C__GC.Hub
 {
     internal class Hub
     {
-
         /*
         ------------------------------------------------------
         |             Initialize Varialbe Hub.cs             |                     
         ------------------------------------------------------
         */
-        //MapParser Parser = new();
-        Player Player = new Player();
+        [DllImport("kernel32")]
+        static extern IntPtr GetConsoleWindow();
+
+        [DllImport("User32")]
+        static extern void SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int width, int height, uint flags);
+        IntPtr ConsoleHandle = GetConsoleWindow();
+
+
+        Player.Player Player = new();
+        Difficulty Difficulty = new();
 
         private int HubIndex, 
             _hubIndex, 
-            newWidth, 
-            newHeight, 
             Volume, 
             isClosed;
 
         private string _prompt, 
             Prompt;
-        private string[] HubInfo;
-
 
         str_func[] _hubInfo;
-        public str_func[] _mainMenuPreset, 
-            _OptionMenuPreset, 
+        public str_func[] _mainMenuPreset,
+            _OptionMenuPreset,
+            _OptionDifficult,
             _OptionWindows;
 
         public string map;
@@ -55,20 +62,23 @@ namespace C__GC.Hub
                 new str_func(CharactereData.OptionWindowSize[1], ResizeConsoleWindow2, 1), // Language pas fait
                 new str_func(CharactereData.OptionWindowSize[2], ResizeConsoleWindow3, 2),
             };
-
             _OptionMenuPreset = new[] {
                 new str_func(CharactereData.OptionInfo[0], () => ConsoleWindow(CharactereData.Prompt, _OptionWindows), 0),
                 new str_func(CharactereData.OptionInfo[1], Exit, 1), // Language pas fait
                 new str_func(CharactereData.OptionInfo[2], Music, 2),
                 new str_func(CharactereData.OptionInfo[3], () => Back(CharactereData.Prompt, _mainMenuPreset), 3),
             };
-
             _mainMenuPreset = new[] {
                 new str_func(CharactereData.HubInfo[0], NewGame, 0),
                 new str_func(CharactereData.HubInfo[1], Continue, 1),
                 new str_func(CharactereData.HubInfo[2], () => Option(CharactereData.Prompt, _OptionMenuPreset), 2),
                 new str_func(CharactereData.HubInfo[3], Credit, 3),
                 new str_func(CharactereData.HubInfo[4], Exit, 4),
+            };
+            _OptionDifficult = new[] {
+                new str_func(CharactereData.InfoDifficult[0], EasyDifficult,0),
+                new str_func(CharactereData.InfoDifficult[1], MediumDifficult, 1),
+                new str_func(CharactereData.InfoDifficult[2], HardDifficult, 3),
             };
 
             _hubIndex = 0;
@@ -135,6 +145,7 @@ namespace C__GC.Hub
                 } while (KeyPress != ConsoleKey.Spacebar);
 
                 _hubInfo[_hubIndex].ExecuteAction();
+                isClosed = 1;
 
             } while (isClosed != 1);
 
@@ -145,19 +156,26 @@ namespace C__GC.Hub
         private void NewGame()
         {
             Console.Clear();
+            Hub HubOptions = new Hub();
+            HubOptions.InitHub(this._prompt, _OptionDifficult);
+            _hubIndex = HubOptions.SwapIndex();
+            /*Console.Clear();
+            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
 
-
-            // Initialize allocator and map manager
-            ResourceAllocator allocator = new ResourceAllocator();
-            MapManager mapManager = new MapManager(allocator);
-            mapManager.StartMap();
+            
 
         }
 
 
 
+            // Start taking input from the player
+            Player.Input(0, 0);*/
+        }
         private void Continue()
         {
+            Hub HubOptions = new Hub();
+            HubOptions.InitHub(this._prompt, _mainMenuPreset);
+            _hubIndex = HubOptions.SwapIndex();
         }
         private void Option(string prompt, str_func[] HubInfo)
         {
@@ -170,6 +188,8 @@ namespace C__GC.Hub
             Console.Clear();
             Console.WriteLine("\n Game designed by Gwent\n Dev: Tom (holland), Valentin (Saint), Quentin (Avion), Mathieu (Mangemort)");
             Console.ReadKey(true);
+            InitHub(this._prompt, _mainMenuPreset);
+            SwapIndex();
         }
         private void Exit()
         {
@@ -196,6 +216,9 @@ namespace C__GC.Hub
             int consoleWidth = (int)Math.Ceiling((double)newWidth); // Convert Pixel to Console Size
             int consoleHeight = (int)Math.Ceiling((double)newHeight);
 
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 1920, 1080, 0);
+
             try
             {
                 Console.SetWindowSize(Math.Min(consoleWidth, Console.LargestWindowWidth), Math.Min(consoleHeight, Console.LargestWindowHeight));
@@ -212,10 +235,13 @@ namespace C__GC.Hub
         private void ResizeConsoleWindow2()
         {
             int newWidth = 1600;
-            int newHeight = 1200;
+            int newHeight = 1080;
 
             int consoleWidth = (int)Math.Ceiling((double)newWidth / 8); // Convert Pixel to Console Size
             int consoleHeight = (int)Math.Ceiling((double)newHeight / 16);
+
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+            SetWindowPos(ConsoleHandle, 0, 150 ,0, 0, 0, 0);
 
             try
             {
@@ -233,10 +259,13 @@ namespace C__GC.Hub
         private void ResizeConsoleWindow3()
         {
             int newWidth = 1280;
-            int newHeight = 1024;
+            int newHeight = 840;
 
             int consoleWidth = (int)Math.Ceiling((double)newWidth / 8); // Convert Pixel to Console Size
             int consoleHeight = (int)Math.Ceiling((double)newHeight / 16);
+
+            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+            SetWindowPos(ConsoleHandle, 0, 250, 40, 0, 0, 0);
 
             try
             {
@@ -250,6 +279,53 @@ namespace C__GC.Hub
             }
 
             Option(CharactereData.Prompt, _OptionWindows);
+        }
+        private void EasyDifficult() 
+        {
+            Difficulty.Easy = true;
+            Difficulty.EnemyCount();
+        }
+        private void MediumDifficult() 
+        {
+            Difficulty.Medium = true;
+            Difficulty.EnemyCount();
+        }
+        private void HardDifficult() 
+        {
+            Difficulty.Hard = true;
+            Difficulty.EnemyCount();
+            Console.Clear();
+            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+
+
+
+            //string map = Parser.ParseBitmap(assetsPath, 102);
+            // Print the parsed bitmap to console
+
+
+            string map = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%#########%%%%%%%%%%%%%%%%%%@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#####%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%##########%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "#####################################################################################################";
+            //Console.WriteLine(map);zs
+            DisplayElement mapDisplay = new DisplayElement(map, 101, 0, 0);
+            DisplaySystem.Subscribe(mapDisplay);
+            DisplaySystem.Update();
+
+            // Create an instance of the Player class and pass the MapParser and Bitmap objects
+            Player.InitPlayer(map, 101);
+
+            // Start taking input from the player
+            Player.Input(0, 0);
         }
         private void Music()
         {
@@ -319,6 +395,7 @@ namespace C__GC.Hub
                     }
                 }
             } while (KeyPress.Key != ConsoleKey.Spacebar); // Sortir de la boucle lorsque l'utilisateur appuie sur Escape
+            Option(this._prompt, _OptionMenuPreset);
         }
     }
 }

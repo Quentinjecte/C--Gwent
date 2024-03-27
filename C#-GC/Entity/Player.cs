@@ -1,7 +1,11 @@
 ﻿using System.Drawing;
 using System.Runtime.CompilerServices;
+using C__GC.Combats;
+using C__GC.DataString;
+using C__GC.Entity;
+using C__GC.Hub;
 
-namespace C__GC
+namespace C__GC.Player
 {
 
     struct Inventory
@@ -13,11 +17,11 @@ namespace C__GC
 
     internal class Player
     {
-/*
-------------------------------------------------------
-|             Initialize Varialbe Player.cs          |                     
-------------------------------------------------------
-*/
+        /*
+        ------------------------------------------------------
+        |             Initialize Varialbe Player.cs          |                     
+        ------------------------------------------------------
+        */
         private string _map;
         private int _size;
         public int playerX = 5;
@@ -26,15 +30,17 @@ namespace C__GC
         MapManager _mapManager;
 
         List<Protagonist> _team;
+        List<Enemy> _enemies;
         public List<Protagonist> Team { get => _team; }
+        public List<Enemy> Enemies { get => _enemies; }
 
         Random rdm = new();
 
-/*
-------------------------------------------------------
-|             Initialize Function Player.cs          |                     
-------------------------------------------------------
-*/
+        /*
+        ------------------------------------------------------
+        |             Initialize Function Player.cs          |                     
+        ------------------------------------------------------
+        */
         public Player()
         {
         }
@@ -81,7 +87,7 @@ namespace C__GC
                         break;
                     case ConsoleKey.P:
                         overlay.InitPopUp(overlay._OverlayOptions, 20, 25);
-                        if(keyInfo.Key == ConsoleKey.P)
+                        if (keyInfo.Key == ConsoleKey.P)
                         {
                             Console.ReadKey(true);
                         }
@@ -96,18 +102,19 @@ namespace C__GC
                 if (IsObstacle(newX, newY) == false)
                 {
                     Move(x, y);
-                    if(IsGrass(newX, newY))
+                    if (IsGrass(newX, newY))
                     {
-                        if(rdm.Next(0, 10) == 0)
+                        if (rdm.Next(0, 10) == 0)
                         {
-                            Battle battle = new Battle(_team, [EnemyFactory.basic(), EnemyFactory.basic()]);
-                            if(battle.start() == false)
+                            Battle battle = new Battle(_team, Difficulty.Enemy);
+                            
+                            if (battle.start() == false)
                             {
                                 return;
                             }
                         }
                     }
-                    else if(IsTavern(newX, newY))
+                    else if (IsTavern(newX, newY))
                     {
                         Stats stats = new Stats();
                         stats.mana = 200;
@@ -136,7 +143,7 @@ namespace C__GC
             _playerRender.yOffset = playerY;
             DisplaySystem.ReplaceByValue(oldRender, _playerRender);
             DisplaySystem.Update();
-            
+
         }
 
         private bool IsObstacle(int x, int y)

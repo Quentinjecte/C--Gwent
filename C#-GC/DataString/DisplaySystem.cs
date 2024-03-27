@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C__GC
+namespace C__GC.DataString
 {
     public struct DisplayElement(
         string CONTENT,
@@ -29,7 +29,7 @@ namespace C__GC
 
         static public void Update()
         {
-            foreach (DisplayElement element in _elements) 
+            foreach (DisplayElement element in _elements)
             {
                 Console.ForegroundColor = element.fgColor;
                 Console.BackgroundColor = element.bgColor;
@@ -39,7 +39,7 @@ namespace C__GC
                     for (int i = 0; i < height; i++)
                     {
                         string subElement = element.content.Substring(i * element.width, element.width);
-                        for(int j=0; j<subElement.Length; j++)
+                        for (int j = 0; j < subElement.Length; j++)
                         {
                             if (subElement[j] != ' ')
                             {
@@ -66,7 +66,7 @@ namespace C__GC
         }
         static public void Unsubscribe()
         {
-            _elements.Remove(_elements.Last<DisplayElement>());
+            _elements.Remove(_elements.Last());
         }
         static public void Clear()
         {
@@ -79,7 +79,7 @@ namespace C__GC
         static public void ReplaceByValue(DisplayElement value, DisplayElement newValue)
         {
             int index = _elements.IndexOf(value);
-            if(index != -1)
+            if (index != -1)
             {
                 _elements[index] = newValue;
             }
