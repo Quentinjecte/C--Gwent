@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq.Expressions;
 
 namespace C__GC
 {
@@ -104,6 +105,7 @@ namespace C__GC
                 }
 
             } while (true);
+            new AbandonedMutexException();
         }
         private void Move(int x, int y)
         {

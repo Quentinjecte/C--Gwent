@@ -180,10 +180,13 @@ namespace C__GC.Hub
                 // Initialize player after loading maps successfully
                 Player.InitPlayer(initialMap, 101, mapManager);
                 Player.Input(0, 0);
+
+
+                Console.WriteLine("lllll");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred while loading maps: " + ex.Message);
+                //Console.WriteLine("An error occurred while loading maps: " + ex.Message);
                 return;
             }
         }

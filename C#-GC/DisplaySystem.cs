@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,8 +50,12 @@ namespace C__GC
         }
         static public void ReplaceByValue(DisplayElement value, DisplayElement newValue)
         {
-            int index = _elements.IndexOf(value);
-            _elements[index] = newValue;
+            try
+            {
+                int index = _elements.IndexOf(value);
+                _elements[index] = newValue;
+            }
+            catch (Exception ex) { throw new ArgumentException(ex.Message, ex); }
         }
 
         public static void SetMapDisplay(DisplayElement mapDisplay)
