@@ -1,12 +1,14 @@
 ﻿using System.Runtime.Intrinsics.Arm;
+using C__GC.Entity;
+using C__GC.Player;
 
-namespace C__GC
+namespace C__GC.Combats
 {
     public class Enemy : Character
     {
-         public Enemy(string name, Stats stats) : base(name, stats)
+        public Enemy(string name, Stats stats) : base(name, stats)
         {
-            
+
         }
 
         public void RandomAction(ref List<Protagonist> targets)

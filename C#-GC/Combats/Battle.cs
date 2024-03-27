@@ -79,7 +79,6 @@ namespace C__GC
                 enemy.Suicide += () => { _enemies.Remove(enemy); };
             }
         }
-
         public bool start()
         {
             Console.SetCursorPosition(0, 0);

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using C__GC.Entity;
 
-namespace C__GC
+namespace C__GC.Combats
 {
     static class Status
     {
@@ -24,6 +25,6 @@ namespace C__GC
         {
             target.TakeDmg(15);
         }
-        
+
     }
 }

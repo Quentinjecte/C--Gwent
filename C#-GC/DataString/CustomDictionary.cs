@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.FileIO;
+﻿using C__GC.Entity;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,7 @@ namespace C__GC
         public str_func(string str, Action<string[]> option, int i)
         {
             _str = str;
+            _i = i;
             _func = null; // Func is not used here
             _option = option;
             _interaction = null;
@@ -42,6 +44,7 @@ namespace C__GC
         public str_func(string str, Action<Character, Character> interaction, int i)
         {
             _str = str;
+            _i = i;
             _func = null; // Func is not used here
             _option = null;
             _interaction = interaction;
@@ -52,7 +55,6 @@ namespace C__GC
         public Action Func { get { return _func; } }
         public Action<string[]> Option { get { return _option; } }
         public Action<Character, Character> Interaction { get { return _interaction; } }
-
         public string V { get; }
 
         public void ExecuteAction()

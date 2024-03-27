@@ -9,7 +9,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C__GC
+namespace C__GC.Hub
 {
     internal class Overlay
     {
@@ -32,7 +32,7 @@ namespace C__GC
 
         public str_func[] _OverlayOptions;
         public str_func[] _OverlayFight;
-        
+
         public Overlay()
         {
 
@@ -51,23 +51,20 @@ namespace C__GC
                 new str_func("      Item        "),
             };
 
-            consoleWidth = Console.WindowWidth;
-            consoleHeight = Console.WindowHeight;
-
-
-/*            if (InFight)
+            if (InFight)
             {
-                Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
-            boxX = 4;
-            boxY = 2;
-            boxWidth = 10;
-            boxHeight = 10;            
-            }*/
-
-            _boxX = 0;
-            _boxY = 0;
-            boxWidth = 20;
-            boxHeight = 20;
+                _boxX = 4;
+                _boxY = 2;
+                boxWidth = 10;
+                boxHeight = 10;
+                Box = new Rectangle(_boxX + 5, _boxY, boxWidth - 20, boxHeight);
+            }
+            else
+            {
+                _boxX = 0;
+                _boxY = 0;
+                boxWidth = 20;
+                boxHeight = 20;
 
             Box = new Rectangle(2, 2, 20, 10);
         }
@@ -86,7 +83,7 @@ namespace C__GC
         {
             DisplayE = new DisplayElement(CharactereData.OverlayMenu, 20, _boxX , _boxY);
 
-            DisplaySystem.Subscribe((DisplayE));
+            DisplaySystem.Subscribe(DisplayE);
             DisplaySystem.Update();
         }
         private void PrintText(str_func[] OlInfo)
