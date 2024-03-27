@@ -159,17 +159,6 @@ namespace C__GC.Hub
             Hub HubOptions = new Hub();
             HubOptions.InitHub(this._prompt, _OptionDifficult);
             _hubIndex = HubOptions.SwapIndex();
-            /*Console.Clear();
-            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
-
-            
-
-        }
-
-
-
-            // Start taking input from the player
-            Player.Input(0, 0);*/
         }
         private void Continue()
         {
@@ -321,8 +310,14 @@ namespace C__GC.Hub
             DisplaySystem.Subscribe(mapDisplay);
             DisplaySystem.Update();
 
-            // Create an instance of the Player class and pass the MapParser and Bitmap objects
-            Player.InitPlayer(map, 101);
+
+            // Initialize allocator and map manager
+            ResourceAllocator allocator = new ResourceAllocator();
+            MapManager mapManager = new MapManager(allocator);
+            mapManager.StartMap();
+
+        // Create an instance of the Player class and pass the MapParser and Bitmap objects
+        Player.InitPlayer(map, 101, mapManager);
 
             // Start taking input from the player
             Player.Input(0, 0);

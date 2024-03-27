@@ -15,7 +15,7 @@ namespace C__GC.Player
     }
 
 
-    internal class Player
+    public class Player
     {
         /*
         ------------------------------------------------------
