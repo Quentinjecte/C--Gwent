@@ -20,9 +20,10 @@ namespace C__GC
 */
         private string _map;
         private int _size;
-        public int playerX = 10;
-        public int playerY = 10;
+        public int playerX = 5;
+        public int playerY = 5;
         DisplayElement _playerRender;
+        MapManager _mapManager;
 
         List<Protagonist> _team;
         public List<Protagonist> Team { get => _team; }
@@ -37,7 +38,7 @@ namespace C__GC
         public Player()
         {
         }
-        public void InitPlayer(string map, int size)
+        public void InitPlayer(string map, int size, MapManager mapManager)
         {
             _map = map;
             _size = size;
@@ -54,6 +55,7 @@ namespace C__GC
             prota.Spells.Add(SpellCollection.testSpell);
             prota.Spells.Add(SpellCollection.testSpell);
             Recruite(prota);
+            _mapManager = mapManager;
         }
         //saveS
         public void Input(int x, int y)
@@ -117,6 +119,10 @@ namespace C__GC
                         prota.Spells.Add(SpellCollection.testSpell);
                         Recruite(prota);
                     }
+                    if (IsTransition(newX, newY))
+                    {
+                        _map = _mapManager.ChangeMap("map2"); // Call a method to change the map
+                    }
                 }
 
             } while (true);
@@ -132,6 +138,7 @@ namespace C__GC
             DisplaySystem.Update();
             
         }
+
         private bool IsObstacle(int x, int y)
         {
             return _map[y * _size + x] == '#';
@@ -146,6 +153,20 @@ namespace C__GC
         }
 
         public void Recruite(Protagonist prota)
+
+        private bool IsTransition(int x, int y)
+        {
+            return _map[y * _size + x] == '*';
+        }
+        public void SetPlayerPosition(int x, int y) 
+        {
+            DisplayElement oldRender = _playerRender;
+            playerX = x;
+            playerY = y;
+            DisplaySystem.ReplaceByValue(oldRender, _playerRender);
+            DisplaySystem.Update();
+        }
+        public void SetBack(int x, int y)
         {
             _team.Add(prota);
             prota.Suicide += ()=> { _team.Remove(prota); };
