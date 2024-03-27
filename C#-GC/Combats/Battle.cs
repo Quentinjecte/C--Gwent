@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C__GC
+namespace C__GC.Combats
 {
     internal class Battle
     {
@@ -37,7 +37,7 @@ namespace C__GC
                             _currentAuthor.attack(_enemies[iCopy]);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay, 3, 25); 
+                    _menu.InitPopUp(nextOverlay, 3, 25);
                     },0),
 
                 // Spell option
@@ -70,11 +70,11 @@ namespace C__GC
 
             _protagonists = protagonists;
             _enemies = enemies;
-            foreach(Protagonist prota in _protagonists)
+            foreach (Protagonist prota in _protagonists)
             {
                 prota.Suicide += () => { _protagonists.Remove(prota); };
             }
-            foreach(Enemy enemy in _enemies)
+            foreach (Enemy enemy in _enemies)
             {
                 enemy.Suicide += () => { _enemies.Remove(enemy); };
             }
@@ -83,7 +83,7 @@ namespace C__GC
         public bool start()
         {
             Console.SetCursorPosition(0, 0);
-            
+
             // assigner int Run au retour de cette fonction
             _hud = new DisplayElement("", 30, 0, 0);
             UpdateHUD();
@@ -101,7 +101,7 @@ namespace C__GC
                     _menu.InitPopUp(_overlay, 3, 25);
                     //        Status.Subscribe(() => Status.Burn(_protagonists[0]));
                     //        SpellCollection.testSpell.Cast(prota);
-                    if(prota.Hp <= 0)
+                    if (prota.Hp <= 0)
                     {
                         prota.Suicide();
                     }
@@ -129,11 +129,11 @@ namespace C__GC
         {
             DisplayElement oldHUD = _hud;
             _hud.content = "|----------------------------|";
-                foreach (Protagonist prota in _protagonists)
+            foreach (Protagonist prota in _protagonists)
             {
                 _hud.content += "| protaHP:" + _protagonists[0].Hp + "                |"; ;
             }
-            foreach(Enemy enemy in _enemies)
+            foreach (Enemy enemy in _enemies)
             {
                 _hud.content += "| enemyHP:" + enemy.Hp + "                 |";
             }
