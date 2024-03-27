@@ -29,7 +29,9 @@ namespace C__GC.Player
         DisplayElement _playerRender;
 
         List<Protagonist> _team;
+        List<Enemy> _enemies;
         public List<Protagonist> Team { get => _team; }
+        public List<Enemy> Enemies { get => _enemies; }
 
         Random rdm = new();
 
@@ -102,7 +104,8 @@ namespace C__GC.Player
                     {
                         if (rdm.Next(0, 10) == 0)
                         {
-                            Battle battle = new Battle(_team, [EnemyFactory.basic(), EnemyFactory.basic()]);
+                            Battle battle = new Battle(_team, Difficulty.Enemy);
+                            
                             if (battle.start() == false)
                             {
                                 return;
