@@ -39,7 +39,6 @@ namespace C__GC
             _mapDisplay.width = 100;
             // Update the display
             DisplaySystem.Subscribe(_mapDisplay);
-            DisplaySystem.SetMapDisplay(_mapDisplay);
             DisplaySystem.Update();
 
             // Initialize player after loading maps successfully
@@ -47,7 +46,7 @@ namespace C__GC
             _player.Input(0, 0);
         }
 
-        public void ChangeMap(string mapName)
+        public string ChangeMap(string mapName)
         {
 
             string newMap = _allocator.GetBackMap(mapName);
@@ -55,8 +54,7 @@ namespace C__GC
 
             if (newMap == null)
             {
-                Console.WriteLine($"Map '{mapName}' not found.");
-                return;
+                throw new Exception("failed to load map");
             }
 
             _mapDisplay.xOffset = 0;
@@ -65,12 +63,10 @@ namespace C__GC
             _mapDisplay.width = 100;
 
             // Subscribe the map to the DisplaySystem
-            DisplaySystem.Subscribe(_mapDisplay);
-            DisplaySystem.SetMapDisplay(_mapDisplay);
+            DisplaySystem.ReplaceByIndex(0, _mapDisplay);
             DisplaySystem.Update();
 
-            _player.SetPlayerPosition(_player.playerX, _player.playerY);
-            _player.Input(0, 0);
+            return newMap;
         }
     }
 
