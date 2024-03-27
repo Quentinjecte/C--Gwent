@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace C__GC
 {
-    public struct DisplayElement(string CONTENT, int WIDTH, int XOFFSET, int YOFFSET)
+    public struct DisplayElement(string CONTENT, int WIDTH, int XOFFSET, int YOFFSET, bool ALPHA = false)
     {
         public string content = CONTENT;
         public int width = WIDTH;
         public int xOffset = XOFFSET;
         public int yOffset = YOFFSET;
+        public bool alpha = ALPHA;
     }
     static class DisplaySystem
     {
@@ -20,12 +21,30 @@ namespace C__GC
         static public void Update()
         {
             foreach (DisplayElement element in _elements) 
-            { 
+            {
                 int height = element.content.Length / element.width;
-                for(int i = 0 ; i < height; i++)
+                if (element.alpha)
                 {
-                    Console.SetCursorPosition(element.xOffset, element.yOffset + i);
-                    Console.Write(element.content.Substring(i*element.width, element.width)) ;
+                    for (int i = 0; i < height; i++)
+                    {
+                        string subElement = element.content.Substring(i * element.width, element.width);
+                        for(int j=0; j<subElement.Length; j++)
+                        {
+                            if (subElement[j] != ' ')
+                            {
+                                Console.SetCursorPosition(element.xOffset + j, element.yOffset + i * element.width);
+                                Console.Write(subElement[j]);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < height; i++)
+                    {
+                        Console.SetCursorPosition(element.xOffset, element.yOffset + i);
+                        Console.Write(element.content.Substring(i * element.width, element.width));
+                    }
                 }
             }
         }
