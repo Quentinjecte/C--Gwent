@@ -68,8 +68,7 @@ namespace C__GC
 
             if (newMap == null)
             {
-                Console.WriteLine($"Map '{mapName}' not found.");
-                return;
+                throw new Exception("map not found");
             }
 
             _mapDisplay.xOffset = 0;
@@ -78,8 +77,7 @@ namespace C__GC
             _mapDisplay.width = 100;
 
             // Subscribe the map to the DisplaySystem
-            DisplaySystem.Subscribe(_mapDisplay);
-            DisplaySystem.SetMapDisplay(_mapDisplay);
+            DisplaySystem.ReplaceByIndex(0, _mapDisplay);
             DisplaySystem.Update();
 
             _player.SetPlayerPosition(_player.playerX, _player.playerY);

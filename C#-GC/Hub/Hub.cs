@@ -155,7 +155,7 @@ namespace C__GC.Hub
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred while loading maps: " + ex.Message);
+                //Console.WriteLine("An error occurred while loading maps: " + ex.Message);
                 return;
             }
         }
