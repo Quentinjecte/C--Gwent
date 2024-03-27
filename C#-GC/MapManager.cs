@@ -43,8 +43,8 @@ namespace C__GC
             _mapDisplay.content = newMap;
             _mapDisplay.width = 101;
 
-            //_player.InitPlayer(mapName, 101, this);
-            //_player.Input(0, 0);
+            _player.InitPlayer(mapName, 101, this);
+            _player.Input(0, 0);
 
             // Subscribe the map to the DisplaySystem
             DisplaySystem.Subscribe(_mapDisplay);

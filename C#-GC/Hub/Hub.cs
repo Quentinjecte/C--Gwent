@@ -148,20 +148,17 @@ namespace C__GC.Hub
 
             try
             {
-                // Initialize allocator and map manager
                 ResourceAllocator allocator = new ResourceAllocator();
                 MapManager mapManager = new MapManager(allocator, mapDisplay);
 
                 // Get the directory where the executable is located
                 string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-
-                // Path to the "maps.json" file in the same directory as the executable
                 string mapsJsonPath = Path.Combine(baseDirectory, "../../../maps/maps.json");
 
                 // Load maps from the JSON file
                 allocator.LoadMapsFromJson(mapsJsonPath);
 
-                // Get the initial map named "map1" from the ResourceAllocator
+                // Get the initial map from the ResourceAllocator
                 string initialMap = allocator.GetMap("map1");
 
                 if (initialMap == null)
