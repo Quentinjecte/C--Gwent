@@ -53,7 +53,6 @@ namespace C__GC
         public void TakeDmg(int amount)
         {
             _hp -= amount;
-            Console.WriteLine(_hp);
 
             if(_hp <= 0)
             {

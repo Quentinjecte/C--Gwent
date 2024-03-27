@@ -71,20 +71,20 @@ namespace C__GC
 
             Box = new Rectangle(2, 2, 20, 10);
         }
-        public void InitPopUp(str_func[] OlInfo, int x, int y)
+        public void InitPopUp(str_func[] OlInfo, int x, int y, bool backGround = false)
         {
             _boxX = x;
             _boxY = y;
             _OlverlayIndex = 0;
             _OverlayOptions = OlInfo;
-            MenuPopUp();
+            if (backGround) { MenuPopUp(); };
             PrintText(_OverlayOptions);
             DisplaySystem.Unsubscribe();
             DisplaySystem.Update();
         }
         private void MenuPopUp()
         {
-            DisplayE = new DisplayElement(CharactereData.OverlayMenu, 240, _boxX , _boxY);
+            DisplayE = new DisplayElement(CharactereData.OverlayMenu, 20, _boxX , _boxY);
 
             DisplaySystem.Subscribe((DisplayE));
             DisplaySystem.Update();
@@ -96,7 +96,7 @@ namespace C__GC
         private void OverlayIG()
         {
             //Change la couleur de la police
-            int textX = _boxX;
+            int textX = _boxX + 1;
             int textY = _boxY + 1;
 
             for (int i = 0; i < _OverlayOptions.Length; i++)

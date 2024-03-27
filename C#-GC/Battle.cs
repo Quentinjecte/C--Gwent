@@ -26,7 +26,7 @@ namespace C__GC
             Overlay _menu = new Overlay();
             _overlay = new[] {
                 // Attack option
-                new str_func("      Attack      ", () => { 
+                new str_func("Attack          ", () => { 
                     // Select target
                     str_func[] nextOverlay = new str_func[_enemies.Count];
                     for(int i = 0; i < _enemies.Count; i++)
@@ -37,17 +37,17 @@ namespace C__GC
                             _currentAuthor.attack(_enemies[iCopy]);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay, 3, 25); 
+                    _menu.InitPopUp(nextOverlay, 10, 25); 
                     },0),
 
                 // Spell option
-                new str_func("      Spell       ", () => {
+                new str_func("Spell           ", () => {
                     // Select spell
                     str_func[] nextOverlay = new str_func[_currentAuthor.Spells.Count];
                     for(int i = 0; i < _currentAuthor.Spells.Count; i++)
                     {
                         int iCopy = i;
-                        nextOverlay[i] = new str_func("      "+_currentAuthor.Spells[iCopy]._name, () =>
+                        nextOverlay[i] = new str_func(_currentAuthor.Spells[iCopy]._name, () =>
                         {
                             // Select target
                             str_func[] nextOverlay = new str_func[_enemies.Count];
@@ -59,13 +59,13 @@ namespace C__GC
                                     _currentAuthor.Cast(_currentAuthor.Spells[iCopy], _enemies[jCopy]);
                                 }, 0);
                             }
-                        _menu.InitPopUp(nextOverlay, 3, 25);
+                        _menu.InitPopUp(nextOverlay, 15, 25);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay, 3, 25);
+                    _menu.InitPopUp(nextOverlay, 10, 25);
                 }, 0),
 
-                new str_func("      Item        "),
+                new str_func("Item            "),
             };
 
             _protagonists = protagonists;
@@ -98,7 +98,7 @@ namespace C__GC
                 {
                     _currentAuthor = prota;
                     _currentTarget = _enemies[0];
-                    _menu.InitPopUp(_overlay, 3, 25);
+                    _menu.InitPopUp(_overlay, 3, 25, true);
                     //        Status.Subscribe(() => Status.Burn(_protagonists[0]));
                     //        SpellCollection.testSpell.Cast(prota);
                     if(prota.Hp <= 0)
