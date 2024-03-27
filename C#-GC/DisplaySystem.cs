@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 
 namespace C__GC
 {
-    public struct DisplayElement(string CONTENT, int WIDTH, int XOFFSET, int YOFFSET, bool ALPHA = false)
+    public struct DisplayElement(
+        string CONTENT,
+        int WIDTH,
+        int XOFFSET,
+        int YOFFSET,
+        ConsoleColor FGCOLOR = ConsoleColor.White,
+        ConsoleColor BGCOLOR = ConsoleColor.Black,
+        bool ALPHA = false)
     {
         public string content = CONTENT;
         public int width = WIDTH;
         public int xOffset = XOFFSET;
         public int yOffset = YOFFSET;
+        public ConsoleColor fgColor = FGCOLOR;
+        public ConsoleColor bgColor = BGCOLOR;
         public bool alpha = ALPHA;
     }
     static class DisplaySystem
@@ -22,6 +31,8 @@ namespace C__GC
         {
             foreach (DisplayElement element in _elements) 
             {
+                Console.ForegroundColor = element.fgColor;
+                Console.BackgroundColor = element.bgColor;
                 int height = element.content.Length / element.width;
                 if (element.alpha)
                 {

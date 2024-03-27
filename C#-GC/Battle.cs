@@ -37,7 +37,7 @@ namespace C__GC
                             _currentAuthor.attack(_enemies[iCopy]);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay); 
+                    _menu.InitPopUp(nextOverlay, 3, 25); 
                     },0),
 
                 // Spell option
@@ -59,10 +59,10 @@ namespace C__GC
                                     _currentAuthor.Cast(_currentAuthor.Spells[iCopy], _enemies[jCopy]);
                                 }, 0);
                             }
-                        _menu.InitPopUp(nextOverlay);
+                        _menu.InitPopUp(nextOverlay, 3, 25);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay);
+                    _menu.InitPopUp(nextOverlay, 3, 25);
                 }, 0),
 
                 new str_func("      Item        "),
@@ -98,7 +98,7 @@ namespace C__GC
                 {
                     _currentAuthor = prota;
                     _currentTarget = _enemies[0];
-                    _menu.InitPopUp(_overlay);
+                    _menu.InitPopUp(_overlay, 3, 25);
                     //        Status.Subscribe(() => Status.Burn(_protagonists[0]));
                     //        SpellCollection.testSpell.Cast(prota);
                     if(prota.Hp <= 0)

@@ -19,8 +19,8 @@ namespace C__GC
 
         private int _OlverlayIndex, 
             isClosed, 
-            boxX,
-            boxY, 
+            _boxX,
+            _boxY, 
             consoleWidth, 
             consoleHeight, 
             boxWidth, 
@@ -64,26 +64,27 @@ namespace C__GC
             boxHeight = 10;            
             }*/
 
-            boxX = 3;
-            boxY = 3;
+            _boxX = 0;
+            _boxY = 0;
             boxWidth = 20;
             boxHeight = 20;
 
             Box = new Rectangle(2, 2, 20, 10);
         }
-        public void InitPopUp(str_func[] OlInfo)
+        public void InitPopUp(str_func[] OlInfo, int x, int y)
         {
+            _boxX = x;
+            _boxY = y;
             _OlverlayIndex = 0;
             _OverlayOptions = OlInfo;
             MenuPopUp();
             PrintText(_OverlayOptions);
-            Console.SetCursorPosition(2, 26);
             DisplaySystem.Unsubscribe();
             DisplaySystem.Update();
         }
         private void MenuPopUp()
         {
-            DisplayE = new DisplayElement(CharactereData.OverlayMenu, 240, 2 , boxY - 1);
+            DisplayE = new DisplayElement(CharactereData.OverlayMenu, 240, _boxX , _boxY);
 
             DisplaySystem.Subscribe((DisplayE));
             DisplaySystem.Update();
@@ -95,36 +96,37 @@ namespace C__GC
         private void OverlayIG()
         {
             //Change la couleur de la police
-            int textX = boxX;
-            int textY = boxY;
+            int textX = _boxX;
+            int textY = _boxY + 1;
 
             for (int i = 0; i < _OverlayOptions.Length; i++)
             {
                 string CurrentOption = _OverlayOptions[i].Str;
 
+                DisplayElement element = new DisplayElement(CurrentOption, CurrentOption.Length, textX, textY);
                 if (i == _OlverlayIndex)
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                    element.fgColor = ConsoleColor.Red;
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.BackgroundColor = ConsoleColor.Black;
+                    element.fgColor = ConsoleColor.White;
+                    element.bgColor = ConsoleColor.Black;
                 }
-                Console.SetCursorPosition(textX, textY);
-                Console.WriteLine($"{CurrentOption}");
+                DisplaySystem.Subscribe(element);
                 textY++;
                 //Change les chars en ' '
                 if (_OverlayOptions[i].Str.Trim() == "Exit")
                 {
                     while (textY <= Box.Bottom - 1)
                     {
-                        Console.SetCursorPosition(textX, textY);
-                        Console.WriteLine(new string(' ', Box.Width - 2));
+
+                        DisplayElement emptyElement = new DisplayElement(new string(' ', Box.Width - 2), CurrentOption.Length, textX, textY);
                         textY++;
                     }
                 }
             }
+            DisplaySystem.Update();
             Console.ResetColor();
         }
         public int SwapIndex()

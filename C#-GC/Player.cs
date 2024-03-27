@@ -81,7 +81,7 @@ namespace C__GC
                         (x, y) = (1, 0);
                         break;
                     case ConsoleKey.P:
-                        overlay.InitPopUp(overlay._OverlayOptions);
+                        overlay.InitPopUp(overlay._OverlayOptions, 20, 25);
                         if(keyInfo.Key == ConsoleKey.P)
                         {
                             Console.ReadKey(true);
