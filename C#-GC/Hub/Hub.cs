@@ -7,6 +7,8 @@ using System.Media;
 using NAudio.Wave;
 using C__GC.DataString;
 using System.Drawing;
+using System.Security.Principal;
+using System.Diagnostics;
 
 namespace C__GC.Hub
 {
@@ -49,13 +51,13 @@ namespace C__GC.Hub
         public Hub()
         {
             _OptionWindows = new[] {
-                new str_func(CharactereData.OptionWindowSize[0]),
-                new str_func(CharactereData.OptionWindowSize[1]), // Language pas fait
-                new str_func(CharactereData.OptionWindowSize[2]),
+                new str_func(CharactereData.OptionWindowSize[0], ResizeConsoleWindow1, 0),
+                new str_func(CharactereData.OptionWindowSize[1], ResizeConsoleWindow2, 1), // Language pas fait
+                new str_func(CharactereData.OptionWindowSize[2], ResizeConsoleWindow3, 2),
             };
 
             _OptionMenuPreset = new[] {
-                new str_func(CharactereData.OptionInfo[0], () => ResizeConsoleWindow(CharactereData.Prompt, _OptionWindows), 0),
+                new str_func(CharactereData.OptionInfo[0], () => ConsoleWindow(CharactereData.Prompt, _OptionWindows), 0),
                 new str_func(CharactereData.OptionInfo[1], Exit, 1), // Language pas fait
                 new str_func(CharactereData.OptionInfo[2], Music, 2),
                 new str_func(CharactereData.OptionInfo[3], () => Back(CharactereData.Prompt, _mainMenuPreset), 3),
@@ -198,33 +200,38 @@ namespace C__GC.Hub
             HubOptions.InitHub(prompt, _mainMenuPreset);
             _hubIndex = HubOptions.SwapIndex();
         }
-        private void ResizeConsoleWindow(string prompt, str_func[] HubInfo)
+        private void ConsoleWindow(string prompt, str_func[] HubInfo)
         {
             //RCW -> ResizeConsoleWindow
             Hub HubOptionsRCW = new Hub();
             HubOptionsRCW.InitHub(prompt, _OptionWindows);
             _hubIndex = HubOptionsRCW.SwapIndex();
+        }
+        private void ResizeConsoleWindow1()
+        {
+            int newWidth = Console.LargestWindowWidth;
+            int newHeight = Console.LargestWindowHeight;
 
-            int newWidth = 0;
-            int newHeight = 0;
+            int consoleWidth = (int)Math.Ceiling((double)newWidth); // Convert Pixel to Console Size
+            int consoleHeight = (int)Math.Ceiling((double)newHeight);
 
-            switch (_hubIndex)
+            try
             {
-                case 0:
-                    newWidth = Console.LargestWindowWidth;
-                    newHeight = Console.LargestWindowHeight;
-                    break;
-
-                case 1:
-                    newWidth = 1600;
-                    newHeight = 1200;
-                    break;
-
-                case 2:
-                    newWidth = 1280;
-                    newHeight = 1024;
-                    break;
+                Console.SetWindowSize(Math.Min(consoleWidth, Console.LargestWindowWidth), Math.Min(consoleHeight, Console.LargestWindowHeight));
+                Console.WriteLine($"Window size set to {newWidth} x {newHeight}.");
             }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("The new window size would force the console buffer size to be too large.");
+                Console.WriteLine("Please try again with a smaller window size.");
+            }
+
+            Option(CharactereData.Prompt, _OptionWindows);
+        }
+        private void ResizeConsoleWindow2()
+        {
+            int newWidth = 1600;
+            int newHeight = 1200;
 
             int consoleWidth = (int)Math.Ceiling((double)newWidth / 8); // Convert Pixel to Console Size
             int consoleHeight = (int)Math.Ceiling((double)newHeight / 16);
@@ -239,6 +246,29 @@ namespace C__GC.Hub
                 Console.WriteLine("The new window size would force the console buffer size to be too large.");
                 Console.WriteLine("Please try again with a smaller window size.");
             }
+
+            Option(CharactereData.Prompt, _OptionWindows);
+        }
+        private void ResizeConsoleWindow3()
+        {
+            int newWidth = 1280;
+            int newHeight = 1024;
+
+            int consoleWidth = (int)Math.Ceiling((double)newWidth / 8); // Convert Pixel to Console Size
+            int consoleHeight = (int)Math.Ceiling((double)newHeight / 16);
+
+            try
+            {
+                Console.SetWindowSize(Math.Min(consoleWidth, Console.LargestWindowWidth), Math.Min(consoleHeight, Console.LargestWindowHeight));
+                Console.WriteLine($"Window size set to {newWidth} x {newHeight}.");
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.WriteLine("The new window size would force the console buffer size to be too large.");
+                Console.WriteLine("Please try again with a smaller window size.");
+            }
+
+            Option(CharactereData.Prompt, _OptionWindows);
         }
         private void Music()
         {
