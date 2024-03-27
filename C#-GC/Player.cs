@@ -19,8 +19,8 @@ namespace C__GC
 */
         private string _map;
         private int _size;
-        public int playerX = 10;
-        public int playerY = 10;
+        public int playerX = 5;
+        public int playerY = 5;
         DisplayElement _playerRender;
         MapManager _mapManager;
 
@@ -129,6 +129,14 @@ namespace C__GC
         private bool IsTransition(int x, int y)
         {
             return _map[y * _size + x] == '*';
+        }
+        public void SetPlayerPosition(int x, int y) 
+        {
+            DisplayElement oldRender = _playerRender;
+            playerX = x;
+            playerY = y;
+            DisplaySystem.ReplaceByValue(oldRender, _playerRender);
+            DisplaySystem.Update();
         }
         public void SetBack(int x, int y)
         {
