@@ -146,8 +146,6 @@ namespace C__GC.Hub
 
             DisplayElement mapDisplay = new DisplayElement(); // Declare mapDisplay before try block
 
-            try
-            {
                 // Initialize allocator and map manager
                 ResourceAllocator allocator = new ResourceAllocator();
                 MapManager mapManager = new MapManager(allocator, mapDisplay);
