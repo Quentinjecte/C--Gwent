@@ -20,7 +20,7 @@ namespace C__GC
             _player = new Player();
         }
 
-        public void ChangeMap(string mapName)
+        public string ChangeMap(string mapName)
         {
             // Get the directory where the executable is located
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -34,33 +34,19 @@ namespace C__GC
 
             if (newMap == null)
             {
-                Console.WriteLine($"Map '{mapName}' not found.");
-                return;
+                throw new Exception("map not found");
             }
-
-            DisplayElement oldMap = _mapDisplay;
 
             _mapDisplay.xOffset = 0;
             _mapDisplay.yOffset = 0;
-            _mapDisplay.content = "###############%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                "*****%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                "%%%%%#########%%%%%%%%%%%%%%%%%%@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#####%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                "####################################################################################################" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                "####################################################################################################";
-            _mapDisplay.width = 100;
+            _mapDisplay.content = newMap;
+            _mapDisplay.width = 101;
 
             // Subscribe the map to the DisplaySystem
-            //DisplaySystem.Subscribe(_mapDisplay);
-            //DisplaySystem.SetMapDisplay(_mapDisplay);
-            DisplaySystem.ReplaceByValue(oldMap, _mapDisplay);
+            DisplaySystem.ReplaceByIndex(0, _mapDisplay);
             DisplaySystem.Update();
+
+            return newMap;
         }
     }
 

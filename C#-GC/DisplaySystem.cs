@@ -16,7 +16,6 @@ namespace C__GC
     }
     static class DisplaySystem
     {
-        private static DisplayElement _mapDisplay;
         static List<DisplayElement> _elements = new List<DisplayElement>();
 
         static public void Update()
@@ -56,16 +55,6 @@ namespace C__GC
                 _elements[index] = newValue;
             }
             catch (Exception ex) { throw new ArgumentException(ex.Message, ex); }
-        }
-
-        public static void SetMapDisplay(DisplayElement mapDisplay)
-        {
-            _mapDisplay = mapDisplay;
-        }
-
-        public static DisplayElement GetMapDisplay()
-        {
-            return _mapDisplay;
         }
     }
 }

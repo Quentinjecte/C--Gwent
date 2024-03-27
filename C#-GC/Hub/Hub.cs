@@ -174,7 +174,6 @@ namespace C__GC.Hub
                 mapDisplay.width = 101;
                 // Update the display
                 DisplaySystem.Subscribe(mapDisplay);
-                DisplaySystem.SetMapDisplay(mapDisplay);
                 DisplaySystem.Update();
 
                 // Initialize player after loading maps successfully

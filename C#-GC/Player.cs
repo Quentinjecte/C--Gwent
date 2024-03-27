@@ -100,7 +100,7 @@ namespace C__GC
                     }
                     if (IsTransition(newX, newY))
                     {
-                        _mapManager.ChangeMap("map2"); // Call a method to change the map
+                        _map = _mapManager.ChangeMap("map2"); // Call a method to change the map
                     }
                 }
 
