@@ -9,12 +9,15 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
+using C__GC.Entity;
+
+
 namespace C__GC.Hub
 {
     internal class Overlay
     {
-        Hub.Hub hub = new();
-        Player Player = new();
+        Hub hub = new();
+        Player.Player Player = new();
         DisplayElement DisplayE;
 
         private int _OlverlayIndex, 
@@ -65,8 +68,8 @@ namespace C__GC.Hub
                 _boxY = 0;
                 boxWidth = 20;
                 boxHeight = 20;
-
-            Box = new Rectangle(2, 2, 20, 10);
+                Box = new Rectangle(2, 2, 20, 10);
+            }
         }
         public void InitPopUp(str_func[] OlInfo, int x, int y, bool backGround = false)
         {
