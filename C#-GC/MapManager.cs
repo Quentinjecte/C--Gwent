@@ -10,13 +10,11 @@ namespace C__GC
     public class MapManager
     {
         private ResourceAllocator _allocator;
-        private DisplayElement _mapDisplay;
         private Player _player;
 
-        internal MapManager(ResourceAllocator allocator, DisplayElement mapDisplay)
+        internal MapManager(ResourceAllocator allocator)
         {
             _allocator = allocator;
-            _mapDisplay = mapDisplay;
             _player = new Player();
         }
         public void StartMap() 
@@ -33,12 +31,9 @@ namespace C__GC
             }
 
             // Set the content of the map display
-            _mapDisplay.xOffset = 0;
-            _mapDisplay.yOffset = 0;
-            _mapDisplay.content = initialMap;
-            _mapDisplay.width = 100;
+            DisplayElement map = new DisplayElement(initialMap, 100, 0, 0);
             // Update the display
-            DisplaySystem.Subscribe(_mapDisplay);
+            DisplaySystem.Subscribe(map);
             DisplaySystem.Update();
 
             // Initialize player after loading maps successfully
@@ -57,13 +52,10 @@ namespace C__GC
                 throw new Exception("failed to load map");
             }
 
-            _mapDisplay.xOffset = 0;
-            _mapDisplay.yOffset = 0;
-            _mapDisplay.content = newMap;
-            _mapDisplay.width = 100;
+            DisplayElement mapDisplay = new DisplayElement(newMap, 100, 0, 0);
 
             // Subscribe the map to the DisplaySystem
-            DisplaySystem.ReplaceByIndex(0, _mapDisplay);
+            DisplaySystem.ReplaceByIndex(0, mapDisplay);
             DisplaySystem.Update();
 
             return newMap;

@@ -64,7 +64,7 @@ namespace C__GC
         {
             _elements.Add(element);
         }
-        static public void Unsubscribe(DisplayElement _mapDisplay)
+        static public void Unsubscribe()
         {
             _elements.Remove(_elements.Last<DisplayElement>());
         }

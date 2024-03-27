@@ -153,6 +153,10 @@ namespace C__GC
         }
 
         public void Recruite(Protagonist prota)
+        {
+            _team.Add(prota);
+            prota.Suicide += () => { _team.Remove(prota); };
+        }
 
         private bool IsTransition(int x, int y)
         {
@@ -165,11 +169,6 @@ namespace C__GC
             playerY = y;
             DisplaySystem.ReplaceByValue(oldRender, _playerRender);
             DisplaySystem.Update();
-        }
-        public void SetBack(int x, int y)
-        {
-            _team.Add(prota);
-            prota.Suicide += ()=> { _team.Remove(prota); };
         }
     }
 }

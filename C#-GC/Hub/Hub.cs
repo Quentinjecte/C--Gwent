@@ -146,12 +146,11 @@ namespace C__GC.Hub
         {
             Console.Clear();
 
-            DisplayElement mapDisplay = new DisplayElement(); // Declare mapDisplay before try block
 
-                // Initialize allocator and map manager
-                ResourceAllocator allocator = new ResourceAllocator();
-                MapManager mapManager = new MapManager(allocator, mapDisplay);
-                mapManager.StartMap();
+            // Initialize allocator and map manager
+            ResourceAllocator allocator = new ResourceAllocator();
+            MapManager mapManager = new MapManager(allocator);
+            mapManager.StartMap();
 
         }
 
