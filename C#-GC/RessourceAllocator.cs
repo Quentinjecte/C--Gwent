@@ -13,7 +13,7 @@ public class ResourceAllocator
     }
 
     // Load maps from JSON files
-    public void LoadMapsFromJson(string jsonFilePath)
+    private void LoadMapsFromJson(string jsonFilePath)
     {
         try
         {
@@ -31,8 +31,26 @@ public class ResourceAllocator
         }
     }
 
+    public void LoadMapsFromAnsiTxt(string pathFile)
+    {
+        try
+        {
+            string jsonData = File.ReadAllText(pathFile);
+            _mapStorage = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonData);
+            //Console.WriteLine("Maps loaded successfully.");
+        }
+        catch (FileNotFoundException)
+        {
+            Console.WriteLine("File not found.");
+        }
+        catch (Exception)
+        {
+            Console.WriteLine("An error occurred while loading maps");
+        }
+    }
+
     // Get map data by name
-    public string GetMap(string mapName)
+    public string GetBackMap(string mapName)
     {
         if (_mapStorage.ContainsKey(mapName))
         {
@@ -40,14 +58,21 @@ public class ResourceAllocator
         }
         else
         {
-            Console.WriteLine($"Map '{mapName}' not found.");
-            return null;
+            LoadMapsFromJson(mapName);
+            return _mapStorage[mapName];
         }
     }
 
-    // Store map data by name
-    public void StoreMap(string mapName, string mapData)
+    public string GetFrontMap(string mapName)
     {
-        _mapStorage[mapName] = mapData;
+        if (_mapStorage.ContainsKey(mapName))
+        {
+            return _mapStorage[mapName];
+        }
+        else
+        {
+            LoadMapsFromJson(mapName);
+            return _mapStorage[mapName];
+        }
     }
 }
