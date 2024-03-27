@@ -146,13 +146,11 @@ namespace C__GC.Hub
 
             DisplayElement mapDisplay = new DisplayElement(); // Declare mapDisplay before try block
 
-            string initialMap = null;
-
             try
             {
                 // Initialize allocator and map manager
                 ResourceAllocator allocator = new ResourceAllocator();
-                MapManager mapManager = new MapManager(allocator, mapDisplay); // Pass mapDisplay to MapManager constructor
+                MapManager mapManager = new MapManager(allocator, mapDisplay);
 
                 // Get the directory where the executable is located
                 string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -164,7 +162,7 @@ namespace C__GC.Hub
                 allocator.LoadMapsFromJson(mapsJsonPath);
 
                 // Get the initial map named "map1" from the ResourceAllocator
-                initialMap = allocator.GetMap("map1");
+                string initialMap = allocator.GetMap("map1");
 
                 if (initialMap == null)
                 {
@@ -177,29 +175,19 @@ namespace C__GC.Hub
                 mapDisplay.yOffset = 0;
                 mapDisplay.content = initialMap;
                 mapDisplay.width = 101;
-
-                // Subscribe the map to the DisplaySystem
+                // Update the display
                 DisplaySystem.Subscribe(mapDisplay);
                 DisplaySystem.SetMapDisplay(mapDisplay);
-
-                // Update the display
                 DisplaySystem.Update();
+
+                // Initialize player after loading maps successfully
+                Player.InitPlayer(initialMap, 101, mapManager);
+                Player.Input(0, 0);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred while loading maps: " + ex.Message);
-                return; // Exit the method if an error occurs
-            }
-
-            // Initialize player after loading maps successfully
-            if (initialMap != null)
-            {
-                // Initialize allocator and map manager
-                ResourceAllocator allocator = new ResourceAllocator();
-                MapManager mapManager = new MapManager(allocator, mapDisplay);
-
-                Player.InitPlayer(initialMap, 101, mapManager);
-                Player.Input(0, 0);
+                return;
             }
         }
 

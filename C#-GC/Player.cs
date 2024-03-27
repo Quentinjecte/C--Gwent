@@ -116,6 +116,7 @@ namespace C__GC
             DisplaySystem.Update();
             
         }
+
         private bool IsObstacle(int x, int y)
         {
             return _map[y * _size + x] == '#';

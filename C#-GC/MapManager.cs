@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,11 +11,13 @@ namespace C__GC
     {
         private ResourceAllocator _allocator;
         private DisplayElement _mapDisplay;
+        private Player _player;
 
-        public MapManager(ResourceAllocator allocator, DisplayElement mapDisplay)
+        internal MapManager(ResourceAllocator allocator, DisplayElement mapDisplay)
         {
             _allocator = allocator;
             _mapDisplay = mapDisplay;
+            _player = new Player();
         }
 
         public void ChangeMap(string mapName)
@@ -35,14 +38,18 @@ namespace C__GC
                 return;
             }
 
-            // Unload the old map by removing its display element
-            DisplaySystem.Unsubscribe(_mapDisplay);
-
-            // Update the map display properties with the new map
+            _mapDisplay.xOffset = 0;
+            _mapDisplay.yOffset = 0;
             _mapDisplay.content = newMap;
+            _mapDisplay.width = 101;
 
-            // Subscribe the new map to the DisplaySystem
+            //_player.InitPlayer(mapName, 101, this);
+            //_player.Input(0, 0);
+
+            // Subscribe the map to the DisplaySystem
             DisplaySystem.Subscribe(_mapDisplay);
+            DisplaySystem.SetMapDisplay(_mapDisplay);
+            DisplaySystem.Update();
         }
     }
 

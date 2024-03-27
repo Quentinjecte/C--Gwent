@@ -19,7 +19,7 @@ public class ResourceAllocator
         {
             string jsonData = File.ReadAllText(jsonFilePath);
             _mapStorage = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonData);
-            Console.WriteLine("Maps loaded successfully.");
+            //Console.WriteLine("Maps loaded successfully.");
         }
         catch (FileNotFoundException)
         {
