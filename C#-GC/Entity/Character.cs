@@ -60,6 +60,17 @@ namespace C__GC.Entity
                 Suicide.Invoke();
             }
         }
+        
+        public void Healed(int amount)
+        {
+            if (_hp <= Stats.hp - amount)
+            {
+                _hp += amount;
+            } else
+            {
+                _hp = Stats.hp;
+            }
+        }
 
         public void attack(Character character)
         {
