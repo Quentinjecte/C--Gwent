@@ -1,5 +1,7 @@
 ﻿using C__GC.Combats;
 using C__GC.DataString;
+using C__GC.Entity;
+
 using Microsoft.VisualBasic.FileIO;
 using NAudio.CoreAudioApi;
 using System;
@@ -10,21 +12,19 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C__GC
+namespace C__GC.Hub
 {
     internal class Overlay
     {
-        Hub.Hub hub = new();
-        Player Player = new();
+        Hub hub = new();
+        Player.Player Player = new();
         DisplayElement DisplayE;
 
-        private int _OlverlayIndex, 
-            isClosed, 
+        private int _OlverlayIndex,
+            isClosed,
             _boxX,
-            _boxY, 
-            consoleWidth, 
-            consoleHeight, 
-            boxWidth, 
+            _boxY,
+            boxWidth,
             boxHeight;
 
         private bool InFight = false;
@@ -33,7 +33,7 @@ namespace C__GC
 
         public str_func[] _OverlayOptions;
         public str_func[] _OverlayFight;
-        
+
         public Overlay()
         {
 
@@ -47,30 +47,29 @@ namespace C__GC
                 new str_func("       Exit       "),
             };
             _OverlayFight = new[] {// Update to do
-                new str_func("      Attack      ", (Character author, Character target) => author.attack(target), 0),
+                new str_func("      Attack      ", (author, target) => author.attack(target), 0),
                 new str_func("      Spell       "),
                 new str_func("      Item        "),
             };
 
-            consoleWidth = Console.WindowWidth;
-            consoleHeight = Console.WindowHeight;
-
-
-/*            if (InFight)
+            if (InFight)
             {
-                Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
-            boxX = 4;
-            boxY = 2;
-            boxWidth = 10;
-            boxHeight = 10;            
-            }*/
+                _boxX = 4;
+                _boxY = 2;
+                boxWidth = 10;
+                boxHeight = 10;
+                Box = new Rectangle(_boxX + 5, _boxY, boxWidth - 20, boxHeight);
+            }
+            else
+            {
+                _boxX = 0;
+                _boxY = 0;
+                boxWidth = 20;
+                boxHeight = 20;
 
-            _boxX = 0;
-            _boxY = 0;
-            boxWidth = 20;
-            boxHeight = 20;
+                Box = new Rectangle(2, 2, 20, 10);
+            }
 
-            Box = new Rectangle(2, 2, 20, 10);
         }
         public void InitPopUp(str_func[] OlInfo, int x, int y)
         {
@@ -85,9 +84,9 @@ namespace C__GC
         }
         private void MenuPopUp()
         {
-            DisplayE = new DisplayElement(CharactereData.OverlayMenu, 240, _boxX , _boxY);
+            DisplayE = new DisplayElement(CharactereData.OverlayMenu, 240, _boxX, _boxY);
 
-            DisplaySystem.Subscribe((DisplayE));
+            DisplaySystem.Subscribe(DisplayE);
             DisplaySystem.Update();
         }
         private void PrintText(str_func[] OlInfo)

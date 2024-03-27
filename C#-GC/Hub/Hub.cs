@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Media;
 using NAudio.Wave;
-using C__GC.DataString;
 using System.Drawing;
 using System.Security.Principal;
 using System.Diagnostics;
-using C__GC.Combats;
+
+using C__GC.DataString;
+
 
 namespace C__GC.Hub
 {
@@ -22,7 +23,7 @@ namespace C__GC.Hub
         ------------------------------------------------------
         */
         //MapParser Parser = new();
-        Player Player = new Player();
+        Player.Player Player = new();
 
         private int HubIndex, 
             _hubIndex, 
@@ -66,12 +67,10 @@ namespace C__GC.Hub
                 new str_func(CharactereData.HubInfo[3], Credit, 3),
                 new str_func(CharactereData.HubInfo[4], Exit, 4),
             };
-            _mainMenuPreset = new[] {
-                new str_func(CharactereData.HubInfo[0], NewGame, 0),
-                new str_func(CharactereData.HubInfo[1], Continue, 1),
-                new str_func(CharactereData.HubInfo[2], () => Option(CharactereData.Prompt, _OptionMenuPreset), 2),
-                new str_func(CharactereData.HubInfo[3], Credit, 3),
-                new str_func(CharactereData.HubInfo[4], Exit, 4),
+            _OptionDifficult = new[] {
+                new str_func(CharactereData.InfoDifficult[0]),
+                new str_func(CharactereData.InfoDifficult[1]),
+                new str_func(CharactereData.InfoDifficult[2]),
             };
 
             _hubIndex = 0;
@@ -138,6 +137,7 @@ namespace C__GC.Hub
                 } while (KeyPress != ConsoleKey.Spacebar);
 
                 _hubInfo[_hubIndex].ExecuteAction();
+                isClosed = 1;
 
             } while (isClosed != 1);
 
@@ -192,6 +192,8 @@ namespace C__GC.Hub
             Console.Clear();
             Console.WriteLine("\n Game designed by Gwent\n Dev: Tom (holland), Valentin (Saint), Quentin (Avion), Mathieu (Mangemort)");
             Console.ReadKey(true);
+            InitHub(this._prompt, _mainMenuPreset);
+            SwapIndex();
         }
         private void Exit()
         {
@@ -273,6 +275,15 @@ namespace C__GC.Hub
 
             Option(CharactereData.Prompt, _OptionWindows);
         }
+        private void ChoiseDifficult(string prompt, str_func[] HubInfo) 
+        {
+            Hub HubOptions = new Hub();
+            HubOptions.InitHub(prompt, _OptionDifficult);
+            _hubIndex = HubOptions.SwapIndex();
+        }
+        private void EasyDifficult() { }
+        private void MediumDifficult() { }
+        private void HardDifficult() { }
         private void Music()
         {
             ConsoleKeyInfo KeyPress;
@@ -341,6 +352,7 @@ namespace C__GC.Hub
                     }
                 }
             } while (KeyPress.Key != ConsoleKey.Spacebar); // Sortir de la boucle lorsque l'utilisateur appuie sur Escape
+            Option(this._prompt, _OptionMenuPreset);
         }
     }
 }

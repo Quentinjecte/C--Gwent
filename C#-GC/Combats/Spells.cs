@@ -1,4 +1,5 @@
-﻿using NAudio.Dmo.Effect;
+﻿using C__GC.Entity;
+using NAudio.Dmo.Effect;
 using System;
 using System.Collections.Generic;
 using System.Linq;

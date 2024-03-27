@@ -5,6 +5,10 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using C__GC.DataString;
+using C__GC.Entity;
+using C__GC.Hub;
+using C__GC.Player;
 
 namespace C__GC.Combats
 {
@@ -79,7 +83,6 @@ namespace C__GC.Combats
                 enemy.Suicide += () => { _enemies.Remove(enemy); };
             }
         }
-
         public bool start()
         {
             Console.SetCursorPosition(0, 0);
@@ -124,7 +127,6 @@ namespace C__GC.Combats
             return _protagonists.Count > 0;
 
         }
-
         private void UpdateHUD()
         {
             DisplayElement oldHUD = _hud;

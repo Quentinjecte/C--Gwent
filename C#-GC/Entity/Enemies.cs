@@ -1,4 +1,6 @@
 ﻿using System.Runtime.Intrinsics.Arm;
+using C__GC.Entity;
+using C__GC.Player;
 
 namespace C__GC.Combats
 {
