@@ -41,10 +41,7 @@ namespace C__GC
         {
             _map = map;
             _size = size;
-            _playerRender.content = "p";
-            _playerRender.width = 1;
-            _playerRender.xOffset = playerX;
-            _playerRender.yOffset = playerY;
+            _playerRender = new DisplayElement("p", 1, playerX, playerY);
             _team = new List<Protagonist>();
             DisplaySystem.Subscribe(_playerRender);
 
@@ -96,7 +93,6 @@ namespace C__GC
 
                 if (IsObstacle(newX, newY) == false)
                 {
-                    SetBack(playerX, playerY);
                     Move(x, y);
                     if(IsGrass(newX, newY))
                     {
@@ -147,11 +143,6 @@ namespace C__GC
         private bool IsTavern(int x, int y)
         {
             return _map[y * _size + x] == '&';
-        }
-        public void SetBack(int x, int y)
-        {
-            Console.SetCursorPosition(x, y);
-            Console.Write(_map[y * _size + x]);
         }
 
         public void Recruite(Protagonist prota)
