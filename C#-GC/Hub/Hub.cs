@@ -148,38 +148,10 @@ namespace C__GC.Hub
 
             try
             {
+                // Initialize allocator and map manager
                 ResourceAllocator allocator = new ResourceAllocator();
                 MapManager mapManager = new MapManager(allocator, mapDisplay);
-
-                // Get the directory where the executable is located
-                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                string mapsJsonPath = Path.Combine(baseDirectory, "../../../maps/maps.json");
-
-                // Load maps from the JSON file
-                allocator.LoadMapsFromJson(mapsJsonPath);
-
-                // Get the initial map from the ResourceAllocator
-                string initialMap = allocator.GetMap("map1");
-
-                if (initialMap == null)
-                {
-                    Console.WriteLine("Map 'map1' not found.");
-                    return;
-                }
-
-                // Set the content of the map display
-                mapDisplay.xOffset = 0;
-                mapDisplay.yOffset = 0;
-                mapDisplay.content = initialMap;
-                mapDisplay.width = 101;
-                // Update the display
-                DisplaySystem.Subscribe(mapDisplay);
-                DisplaySystem.SetMapDisplay(mapDisplay);
-                DisplaySystem.Update();
-
-                // Initialize player after loading maps successfully
-                Player.InitPlayer(initialMap, 101, mapManager);
-                Player.Input(0, 0);
+                mapManager.StartMap();
             }
             catch (Exception ex)
             {
