@@ -311,6 +311,7 @@ namespace C__GC.Hub
                     break;
             }
 
+            Console.Clear();
             string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
 
             //string map = Parser.ParseBitmap(assetsPath, 102);
@@ -338,7 +339,6 @@ namespace C__GC.Hub
 
             // Initialize allocator and map manager
             MapManager mapManager = new MapManager();
-            MapManager mapManager = new MapManager(allocator);
             mapManager.StartMap();
 
             // Create an instance of the Player class and pass the MapParser and Bitmap objects
