@@ -13,12 +13,12 @@ namespace C__GC
     public class MapManager
     {
         private ResourceAllocator _allocator;
-        private Player _player;
+        private Player.Player _player;
 
         internal MapManager(ResourceAllocator allocator)
         {
             _allocator = allocator;
-            _player = new Player();
+            _player = new();
         }
         public void StartMap() 
         {
