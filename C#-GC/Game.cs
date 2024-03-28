@@ -29,7 +29,6 @@ namespace C__GC
                 DisplaySystem.Unsubscribe();
             }
 
-
             Hub.Hub MainHub = new();
 
             MainHub.InitHub(CharactereData.Prompt, MainHub._mainMenuPreset);
