@@ -119,6 +119,7 @@ namespace C__GC.Player
                     }
                     else if (IsTavern(newX, newY))
                     {
+                        DisplayTavernDialogue();
                         Stats stats = new Stats();
                         stats.mana = 200;
                         stats.hp = 100;
@@ -158,12 +159,18 @@ namespace C__GC.Player
         }
         private bool IsTavern(int x, int y)
         {
-            return _map[y * _size + x] == '&';
+            return _map[y * _size + x] == '$';
         }
         public void Recruite(Protagonist prota)
         {
             _team.Add(prota);
             prota.Suicide += () => { _team.Remove(prota); };
+        }
+
+        private void DisplayTavernDialogue()
+        {
+            Dialogue tavernDialogue = new Dialogue();
+            tavernDialogue.Start();
         }
         private bool IsTransition(int x, int y)
         {
