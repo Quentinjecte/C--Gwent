@@ -147,7 +147,6 @@ namespace C__GC.Player
             DisplaySystem.Update();
 
         }
-
         private bool IsObstacle(int x, int y)
         {
             return _map[y * _size + x] == '#';
@@ -160,13 +159,11 @@ namespace C__GC.Player
         {
             return _map[y * _size + x] == '&';
         }
-
         public void Recruite(Protagonist prota)
         {
             _team.Add(prota);
             prota.Suicide += () => { _team.Remove(prota); };
         }
-
         private bool IsTransition(int x, int y)
         {
             return _map[y * _size + x] == '*';
