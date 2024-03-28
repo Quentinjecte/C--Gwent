@@ -86,10 +86,10 @@ namespace C__GC.Player
                         (x, y) = (1, 0);
                         break;
                     case ConsoleKey.P:
-                        overlay.InitPopUp(overlay._OverlayOptions, 20, 25);
+                        overlay.InitPopUp(overlay._OverlayOptions, 2, 2);
                         if (keyInfo.Key == ConsoleKey.P)
                         {
-                            Console.ReadKey(true);
+                            break;
                         }
                         break;
                     default:
