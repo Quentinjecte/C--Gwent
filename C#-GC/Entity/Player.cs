@@ -85,6 +85,15 @@ namespace C__GC.Player
                     case ConsoleKey.D:
                         (x, y) = (1, 0);
                         break;
+                    case ConsoleKey.M:
+                        SaveLoad saving = new SaveLoad();
+                        saving.Save(this);
+                        break;
+                    case ConsoleKey.L:
+                        SaveLoad loading = new SaveLoad();
+                        loading.Load();
+                        (x, y) = (loading.Load().Item1, loading.Load().Item2);
+                        break;
                     case ConsoleKey.P:
                         overlay.InitPopUp(overlay._OverlayOptions, 2, 2);
                         if (keyInfo.Key == ConsoleKey.P)
