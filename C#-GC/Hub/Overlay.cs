@@ -20,6 +20,8 @@ namespace C__GC.Hub
         Player.Player Player = new();
         DisplayElement DisplayE;
         DisplayElement element;
+        private DisplayElement _renderer;
+        private Dialogue _dialogue;
 
         private int _OlverlayIndex, 
             isClosed, 
@@ -37,6 +39,11 @@ namespace C__GC.Hub
 
         public Overlay()
         {
+
+            _renderer = new DisplayElement("", boxWidth, 90, 20);
+            _dialogue = new Dialogue();
+
+            _dialogue.DialogueResponseReceived += DialogueResponseHandler;
 
             _OverlayOptions = new[] {
                 new str_func("     Continue     "),
@@ -172,6 +179,35 @@ namespace C__GC.Hub
             } while (isClosed != 1);
 
             return _OlverlayIndex;
+        }
+        public void InitDialogueOverlay()
+        {
+            Dialogue dialogue = new Dialogue();
+            dialogue.Start();
+
+            // Subscribe the dialogue display element to the DisplaySystem
+            DisplaySystem.Subscribe(dialogue._renderer);
+
+            // Update the display system to show the dialogue
+            DisplaySystem.Update();
+        }
+
+        private void DialogueResponseHandler(object sender, string response)
+        {
+            // Traiter la réponse du dialogue ici
+            Console.WriteLine($"Vous avez répondu : {response}");
+
+            // Fermer l'overlay du dialogue
+            ClearDialogueOverlay();
+        }
+
+        private void ClearDialogueOverlay()
+        {
+            // Supprimer l'élément de rendu du dialogue
+            DisplaySystem.Unsubscribe(_renderer);
+
+            // Mettre à jour l'affichage
+            DisplaySystem.Update();
         }
     }
     public class Rectangle
