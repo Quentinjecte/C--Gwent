@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Runtime.CompilerServices;
+using C__GC.Entity;
 
 namespace C__GC
 {

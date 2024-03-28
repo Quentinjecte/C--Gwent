@@ -1,4 +1,5 @@
 ﻿using C__GC.DataString;
+using C__GC.Entity;
 using Microsoft.VisualBasic.FileIO;
 using NAudio.CoreAudioApi;
 using System;
@@ -9,7 +10,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C__GC
+namespace C__GC.Hub
 {
     internal class Overlay
     {
@@ -18,11 +19,11 @@ namespace C__GC
         DisplayElement DisplayE;
         DisplayElement element;
 
-        private int _OlverlayIndex, 
-            isClosed, 
+        private int _OlverlayIndex,
+            isClosed,
             _boxX,
-            _boxY, 
-            boxWidth, 
+            _boxY,
+            boxWidth,
             boxHeight;
 
         public static bool InFight;
@@ -31,7 +32,7 @@ namespace C__GC
 
         public str_func[] _OverlayOptions;
         public str_func[] _OverlayFight;
-        
+
         public Overlay()
         {
 
@@ -45,13 +46,32 @@ namespace C__GC
                 new str_func("       Exit       "),
             };
             _OverlayFight = new[] {// Update to do
-                new str_func("      Attack      ", (Character author, Character target) => author.attack(target), 0),
+                new str_func("      Attack      ", (author, target) => author.attack(target), 0),
                 new str_func("      Spell       "),
                 new str_func("      Item        "),
             };
 
-            if (InFight)
-            {
+            consoleWidth = Console.WindowWidth;
+            consoleHeight = Console.WindowHeight;
+
+
+            /*            if (InFight)
+                        {
+            <<<<<<< HEAD:C#-GC/Overlay.cs
+                            Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
+                        boxX = 4;
+                        boxY = 2;
+                        boxWidth = 10;
+                        boxHeight = 10;            
+                        }*/
+
+            _boxX = 0;
+            _boxY = 0;
+            boxWidth = 20;
+            boxHeight = 20;
+
+            Box = new Rectangle(2, 2, 20, 10);
+=======
                 _boxX = 20;
                 _boxY = 20;
                 boxWidth = Console.WindowWidth - 25;
@@ -66,6 +86,7 @@ namespace C__GC
                 boxHeight = 20;
                 Box = new Rectangle(2, 2, 20, 10);
             }
+>>>>>>> SAVEcOMMIT:C#-GC/Hub/Overlay.cs
         }
         public void InitPopUp(str_func[] OlInfo, int x, int y, bool backGround = false)
         {
@@ -80,7 +101,7 @@ namespace C__GC
         }
         private void MenuPopUp()
         {
-            if (InFight) 
+            if (InFight)
             {
                 _boxX = 20;
                 _boxY = 20;
@@ -156,7 +177,7 @@ namespace C__GC
                     else if (KeyPress == ConsoleKey.P || KeyPress == ConsoleKey.Escape)
                     {
                         isClosed = 1;
-                        for(int i = 0 ; i < _OverlayOptions.Length; i++)
+                        for (int i = 0; i < _OverlayOptions.Length; i++)
                             DisplaySystem.Unsubscribe();
                         break;
                     }

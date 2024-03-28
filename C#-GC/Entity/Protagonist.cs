@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace C__GC
+namespace C__GC.Entity
 {
     public class Protagonist : Character
     {

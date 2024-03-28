@@ -5,6 +5,8 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using C__GC.Entity;
+using C__GC.Hub;
 
 namespace C__GC
 {
@@ -40,7 +42,11 @@ namespace C__GC
                             _currentAuthor.attack(_enemies[Icopy]);
                         }, 0);
                     }
+<<<<<<< HEAD:C#-GC/Battle.cs
+                    _menu.InitPopUp(nextOverlay, 10, 15); 
+=======
                     _menu.InitPopUp(nextOverlay, 0, 0); 
+>>>>>>> SAVEcOMMIT:C#-GC/Combats/Battle.cs
                     },0),
 
                 // Spell option
@@ -62,10 +68,17 @@ namespace C__GC
                                     _currentAuthor.Cast(_currentAuthor.Spells[iCopy], _enemies[jCopy]);
                                 }, 0);
                             }
+<<<<<<< HEAD:C#-GC/Battle.cs
+                        _menu.InitPopUp(nextOverlay, 15, 15);
+                        }, 0);
+                    }
+                    _menu.InitPopUp(nextOverlay, 10, 15);
+=======
                         _menu.InitPopUp(nextOverlay, 0, 0);
                         }, 0);
                     }
                     _menu.InitPopUp(nextOverlay, 0, 0);
+>>>>>>> SAVEcOMMIT:C#-GC/Combats/Battle.cs
                 }, 0),
 
                 new str_func("  Item            "),
@@ -89,7 +102,14 @@ namespace C__GC
         {
             
             // assigner int Run au retour de cette fonction
+<<<<<<< HEAD:C#-GC/Battle.cs
             InitHud();
+=======
+            _hud = new DisplayElement(" ", 30, 0, 0);
+            UpdateHUD();
+            DisplaySystem.Subscribe(_hud);
+            DisplaySystem.Update();
+>>>>>>> SAVEcOMMIT:C#-GC/Combats/Battle.cs
 
             Overlay _menu = new Overlay();
             DisplayElement map = DisplaySystem.GetById(0);
@@ -102,7 +122,11 @@ namespace C__GC
                 {
                     _currentAuthor = prota;
                     _currentTarget = _enemies[0];
+<<<<<<< HEAD:C#-GC/Battle.cs
                     _menu.InitPopUp(_overlay, 3, 15, true);
+=======
+                    _menu.InitPopUp(_overlay, 3, 0, true);
+>>>>>>> SAVEcOMMIT:C#-GC/Combats/Battle.cs
                     //        Status.Subscribe(() => Status.Burn(_protagonists[0]));
                     //        SpellCollection.testSpell.Cast(prota);
                     if(prota.Hp <= 0)
@@ -130,10 +154,19 @@ namespace C__GC
             return _protagonists.Count > 0;
 
         }
+<<<<<<< HEAD:C#-GC/Battle.cs
 
         private void DeleteHUD()
         {
             foreach(DisplayElement sprite in _protaSprites)
+=======
+        private void UpdateHUD()
+        {
+            Console.Clear();
+            DisplayElement oldHUD = _hud;
+            _hud.content = "|----------------------------|";
+                foreach (Protagonist prota in _protagonists)
+>>>>>>> SAVEcOMMIT:C#-GC/Combats/Battle.cs
             {
                 DisplaySystem.Unsubscribe(sprite);
             }
