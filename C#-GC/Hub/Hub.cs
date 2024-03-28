@@ -176,6 +176,20 @@ namespace C__GC.Hub
             Hub HubOptions = new Hub();
             HubOptions.InitHub(this._prompt, _mainMenuPreset);
             _hubIndex = HubOptions.SwapIndex();
+
+            Console.Clear();
+            // Initialize allocator and map manager
+
+            ResourceAllocator allocator = new ResourceAllocator();
+            MapManager mapManager = new MapManager(allocator);
+            mapManager.StartMap();
+
+            // Create an instance of the Player class and pass the MapParser and Bitmap objects
+            Player.InitPlayer(map, 101, mapManager);
+
+            // Start taking input from the player and give the positions of data.json file
+            SaveLoad saveLoad = new SaveLoad();
+            Player.Input(saveLoad.Load().Item1, saveLoad.Load().Item2);
         }
         private void Option(string prompt, str_func[] HubInfo)
         {

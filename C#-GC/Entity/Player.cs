@@ -91,7 +91,6 @@ namespace C__GC.Player
                         break;
                     case ConsoleKey.L:
                         SaveLoad loading = new SaveLoad();
-                        loading.Load();
                         (x, y) = (loading.Load().Item1, loading.Load().Item2);
                         break;
                     case ConsoleKey.P:
