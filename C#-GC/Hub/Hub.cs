@@ -157,7 +157,7 @@ namespace C__GC.Hub
             Hub HubOptions = new Hub();
             HubOptions.InitHub(this._prompt, _OptionDifficult);
             _hubIndex = HubOptions.SwapIndex();
-            ChooseUrDifficulty();
+            ChoiseUrDifficulty();
         }
         private void Continue()
         {
@@ -242,7 +242,7 @@ namespace C__GC.Hub
             Option(CharactereData.Prompt, _OptionWindows);
 
         }
-        private void ChooseUrDifficulty()
+        private void ChoiseUrDifficulty()
         {
             switch (_hubIndex)
             {

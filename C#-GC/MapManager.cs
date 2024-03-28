@@ -24,8 +24,7 @@ namespace C__GC
         {
 
             // Get the initial map named "map1" from the ResourceAllocator
-            //string initialMap = _allocator.GetBackMap("map1");
-            string initialMap = _allocator.GetFrontMap("mapMask.txt", 48);
+            string initialMap = _allocator.GetBackMap("map1");
             // Add FrontMap
 
             if (initialMap == null)
@@ -35,7 +34,7 @@ namespace C__GC
             }
 
             // Set the content of the map display
-            DisplayElement map = new DisplayElement(initialMap, 983, 0, 0);
+            DisplayElement map = new DisplayElement(initialMap, 100, 0, 0);
             // Update the display
             DisplaySystem.Subscribe(map);
             DisplaySystem.Update();
