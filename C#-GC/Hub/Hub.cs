@@ -58,7 +58,7 @@ namespace C__GC.Hub
         public Hub()
         {
             _OptionWindows = new[] {
-                new str_func(CharactereData.OptionWindowSize[0]),
+                new str_func(CharactereData.OptionWindowSize[0], ResizeConsoleWindow1, 0),
                 new str_func(CharactereData.OptionWindowSize[1]), // Language pas fait
                 new str_func(CharactereData.OptionWindowSize[2]),
             };
