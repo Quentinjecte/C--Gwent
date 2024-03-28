@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace C__GC
-
+{ 
     public class Dialogue
     {
         DisplayElement _renderer;
@@ -27,7 +27,7 @@ namespace C__GC
 
             WriteDialogue("Perso 1", "Chill", ConsoleColor.Green);
 
-            WriteDialogue("Personnage 1", "Voulez-vous venir avec moi ?", ConsoleColor.Green);
+            WriteDialogue("Personnage 1", "Tu veux venir avec moi ?", ConsoleColor.Green);
 
             // Attendre la réponse
             string response = GetResponse(() => Console.ReadLine());
