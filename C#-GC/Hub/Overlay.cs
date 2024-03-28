@@ -14,7 +14,7 @@ namespace C__GC.Hub
 {
     internal class Overlay
     {
-        Hub.Hub hub = new();
+        Hub hub = new();
         Player Player = new();
         DisplayElement DisplayE;
         DisplayElement element;
@@ -51,27 +51,8 @@ namespace C__GC.Hub
                 new str_func("      Item        "),
             };
 
-            consoleWidth = Console.WindowWidth;
-            consoleHeight = Console.WindowHeight;
-
-
-            /*            if (InFight)
-                        {
-            <<<<<<< HEAD:C#-GC/Overlay.cs
-                            Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
-                        boxX = 4;
-                        boxY = 2;
-                        boxWidth = 10;
-                        boxHeight = 10;            
-                        }*/
-
-            _boxX = 0;
-            _boxY = 0;
-            boxWidth = 20;
-            boxHeight = 20;
-
-            Box = new Rectangle(2, 2, 20, 10);
-=======
+            if (InFight) 
+            { 
                 _boxX = 20;
                 _boxY = 20;
                 boxWidth = Console.WindowWidth - 25;
@@ -86,8 +67,8 @@ namespace C__GC.Hub
                 boxHeight = 20;
                 Box = new Rectangle(2, 2, 20, 10);
             }
->>>>>>> SAVEcOMMIT:C#-GC/Hub/Overlay.cs
         }
+
         public void InitPopUp(str_func[] OlInfo, int x, int y, bool backGround = false)
         {
             _boxX = x;
