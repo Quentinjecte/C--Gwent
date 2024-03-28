@@ -277,21 +277,18 @@ namespace C__GC.Hub
         }
         private void ChooseUrHeroes()
         {
-
-            //string map = Parser.ParseBitmap(assetsPath, 102);
-            // Print the parsed bitmap to console
-
-
-            // Initialize allocator and map manager
-            ResourceAllocator allocator = new ResourceAllocator();
-            MapManager mapManager = new MapManager(allocator);
-            mapManager.StartMap();
-
-            // Create an instance of the Player class and pass the MapParser and Bitmap objects
-            Player.InitPlayer(map, 101, mapManager);
-
-            // Start taking input from the player
-            Player.Input(0, 0);
+            switch (_hubIndex)
+            {
+                case 0:
+                    Difficulty.Easy = true;
+                    break;
+                case 1:
+                    Difficulty.Medium = true;
+                    break;
+                case 2:
+                    Difficulty.Hard = true;
+                    break;
+            }
         }
         private void ChoiseUrHeroes()
         {
