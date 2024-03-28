@@ -1,4 +1,4 @@
-﻿/*using C__GC.Entity;
+﻿using C__GC.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,4 +31,4 @@ namespace C__GC.Items
             public static Mana LargeManaPotion { get; } = new Mana("Large Mana Potion", 30, 100); // Damn huge celle la ;)
         }
     }
-}*/
+}
