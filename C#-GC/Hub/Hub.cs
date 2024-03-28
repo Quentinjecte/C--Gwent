@@ -58,9 +58,9 @@ namespace C__GC.Hub
         public Hub()
         {
             _OptionWindows = new[] {
-                new str_func(CharactereData.OptionWindowSize[0], ResizeConsoleWindow1, 0),
-                new str_func(CharactereData.OptionWindowSize[1], ResizeConsoleWindow2, 1), // Language pas fait
-                new str_func(CharactereData.OptionWindowSize[2], ResizeConsoleWindow3, 2),
+                new str_func(CharactereData.OptionWindowSize[0]),
+                new str_func(CharactereData.OptionWindowSize[1]), // Language pas fait
+                new str_func(CharactereData.OptionWindowSize[2]),
             };
             _OptionMenuPreset = new[] {
                 new str_func(CharactereData.OptionInfo[0], () => ConsoleWindow(CharactereData.Prompt, _OptionWindows), 0),
@@ -76,9 +76,9 @@ namespace C__GC.Hub
                 new str_func(CharactereData.HubInfo[4], Exit, 4),
             };
             _OptionDifficult = new[] {
-                new str_func(CharactereData.InfoDifficult[0], EasyDifficult,0),
-                new str_func(CharactereData.InfoDifficult[1], MediumDifficult, 1),
-                new str_func(CharactereData.InfoDifficult[2], HardDifficult, 3),
+                new str_func(CharactereData.InfoDifficult[0]),
+                new str_func(CharactereData.InfoDifficult[1]),
+                new str_func(CharactereData.InfoDifficult[2]),
             };
 
             _hubIndex = 0;
@@ -153,41 +153,11 @@ namespace C__GC.Hub
         }
         private void NewGame()
         {
+            Console.Clear();
             Hub HubOptions = new Hub();
             HubOptions.InitHub(this._prompt, _OptionDifficult);
             _hubIndex = HubOptions.SwapIndex();
-            /*Console.Clear();
-            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
-
-            
-
-            //string map = Parser.ParseBitmap(assetsPath, 102);
-            // Print the parsed bitmap to console
-
-
-            string map = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "%%%%%#########%%%%%%%%%%%%%%%%%%@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#####%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "%%%%%%%%##########%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
-                        "#####################################################################################################";
-            //Console.WriteLine(map);zs
-            DisplayElement mapDisplay = new DisplayElement(map, 101, 0, 0);
-            DisplaySystem.Subscribe(mapDisplay);
-            DisplaySystem.Update();
-
-            // Create an instance of the Player class and pass the MapParser and Bitmap objects
-            Player.InitPlayer(map, 101);
-
-            // Start taking input from the player
-            Player.Input(0, 0);*/
+            ChoiseUrDifficulty();
         }
         private void Continue()
         {
@@ -225,18 +195,39 @@ namespace C__GC.Hub
             Hub HubOptionsRCW = new Hub();
             HubOptionsRCW.InitHub(prompt, _OptionWindows);
             _hubIndex = HubOptionsRCW.SwapIndex();
-        }
-        private void ResizeConsoleWindow1()
-        {
-            int newWidth = Console.LargestWindowWidth;
-            int newHeight = Console.LargestWindowHeight;
+
+            int newWidth = 0;
+            int newHeight = 0;
+
+            switch (_hubIndex)
+            {
+                case 0:
+                    newWidth = Console.LargestWindowWidth;
+                    newHeight = Console.LargestWindowHeight;
+
+                    SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+                    SetWindowPos(ConsoleHandle, 0, 0, 0, 1920, 1080, 0);
+
+                    break;
+                case 1:
+                    newWidth = 1600;
+                    newHeight = 1080;
+
+                    SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+                    SetWindowPos(ConsoleHandle, 0, 150, 0, 0, 0, 0);
+                    break;
+                case 2:
+                    newWidth = 1280;
+                    newHeight = 840;
+
+                    SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
+                    SetWindowPos(ConsoleHandle, 0, 250, 40, 0, 0, 0);
+                    break;
+            }
 
             int consoleWidth = (int)Math.Ceiling((double)newWidth); // Convert Pixel to Console Size
             int consoleHeight = (int)Math.Ceiling((double)newHeight);
 
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 1920, 1080, 0);
-
             try
             {
                 Console.SetWindowSize(Math.Min(consoleWidth, Console.LargestWindowWidth), Math.Min(consoleHeight, Console.LargestWindowHeight));
@@ -249,73 +240,25 @@ namespace C__GC.Hub
             }
 
             Option(CharactereData.Prompt, _OptionWindows);
+
         }
-        private void ResizeConsoleWindow2()
+        private void ChoiseUrDifficulty()
         {
-            int newWidth = 1600;
-            int newHeight = 1080;
-
-            int consoleWidth = (int)Math.Ceiling((double)newWidth / 8); // Convert Pixel to Console Size
-            int consoleHeight = (int)Math.Ceiling((double)newHeight / 16);
-
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
-            SetWindowPos(ConsoleHandle, 0, 150 ,0, 0, 0, 0);
-
-            try
+            switch (_hubIndex)
             {
-                Console.SetWindowSize(Math.Min(consoleWidth, Console.LargestWindowWidth), Math.Min(consoleHeight, Console.LargestWindowHeight));
-                Console.WriteLine($"Window size set to {newWidth} x {newHeight}.");
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                Console.WriteLine("The new window size would force the console buffer size to be too large.");
-                Console.WriteLine("Please try again with a smaller window size.");
+                case 0:
+                    Difficulty.Easy = true;
+                    break;
+                case 1:
+                    Difficulty.Medium = true;
+                    break;
+                case 2:
+                    Difficulty.Hard = true;
+                    break;
             }
 
-            Option(CharactereData.Prompt, _OptionWindows);
-        }
-        private void ResizeConsoleWindow3()
-        {
-            int newWidth = 1280;
-            int newHeight = 840;
-
-            int consoleWidth = (int)Math.Ceiling((double)newWidth / 8); // Convert Pixel to Console Size
-            int consoleHeight = (int)Math.Ceiling((double)newHeight / 16);
-
-            SetWindowPos(ConsoleHandle, 0, 0, 0, 0, 0, 0);
-            SetWindowPos(ConsoleHandle, 0, 250, 40, 0, 0, 0);
-
-            try
-            {
-                Console.SetWindowSize(Math.Min(consoleWidth, Console.LargestWindowWidth), Math.Min(consoleHeight, Console.LargestWindowHeight));
-                Console.WriteLine($"Window size set to {newWidth} x {newHeight}.");
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                Console.WriteLine("The new window size would force the console buffer size to be too large.");
-                Console.WriteLine("Please try again with a smaller window size.");
-            }
-
-            Option(CharactereData.Prompt, _OptionWindows);
-        }
-        private void EasyDifficult() 
-        {
-            Difficulty.Easy = true;
-            Difficulty.EnemyCount();
-        }
-        private void MediumDifficult() 
-        {
-            Difficulty.Medium = true;
-            Difficulty.EnemyCount();
-        }
-        private void HardDifficult() 
-        {
-            Difficulty.Hard = true;
-            Difficulty.EnemyCount();
             Console.Clear();
             string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
-
-
 
             //string map = Parser.ParseBitmap(assetsPath, 102);
             // Print the parsed bitmap to console
@@ -339,8 +282,66 @@ namespace C__GC.Hub
             DisplaySystem.Subscribe(mapDisplay);
             DisplaySystem.Update();
 
+
+            // Initialize allocator and map manager
+            ResourceAllocator allocator = new ResourceAllocator();
+            MapManager mapManager = new MapManager(allocator);
+            mapManager.StartMap();
+
             // Create an instance of the Player class and pass the MapParser and Bitmap objects
-            Player.InitPlayer(map, 101);
+            Player.InitPlayer(map, 101, mapManager);
+
+            // Start taking input from the player
+            Player.Input(0, 0);
+        }
+        private void ChoiseUrHeroes()
+        {
+            switch (_hubIndex)
+            {
+                case 0:
+                    Difficulty.Easy = true;
+                    break;
+                case 1:
+                    Difficulty.Medium = true;
+                    break;
+                case 2:
+                    Difficulty.Hard = true;
+                    break;
+            }
+
+            Console.Clear();
+            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
+
+            //string map = Parser.ParseBitmap(assetsPath, 102);
+            // Print the parsed bitmap to console
+
+
+            string map = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%#########%%%%%%%%%%%%%%%%%%@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#####%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%##########%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "#####################################################################################################";
+            //Console.WriteLine(map);zs
+            DisplayElement mapDisplay = new DisplayElement(map, 101, 0, 0);
+            DisplaySystem.Subscribe(mapDisplay);
+            DisplaySystem.Update();
+
+
+            // Initialize allocator and map manager
+            ResourceAllocator allocator = new ResourceAllocator();
+            MapManager mapManager = new MapManager(allocator);
+            mapManager.StartMap();
+
+            // Create an instance of the Player class and pass the MapParser and Bitmap objects
+            Player.InitPlayer(map, 101, mapManager);
 
             // Start taking input from the player
             Player.Input(0, 0);

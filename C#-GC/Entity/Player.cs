@@ -15,7 +15,7 @@ namespace C__GC.Player
     }
 
 
-    internal class Player
+    public class Player
     {
         /*
         ------------------------------------------------------
@@ -24,9 +24,10 @@ namespace C__GC.Player
         */
         private string _map;
         private int _size;
-        public int playerX = 10;
-        public int playerY = 10;
+        public int playerX = 5;
+        public int playerY = 5;
         DisplayElement _playerRender;
+        MapManager _mapManager;
 
         List<Protagonist> _team;
         List<Enemy> _enemies;
@@ -43,7 +44,7 @@ namespace C__GC.Player
         public Player()
         {
         }
-        public void InitPlayer(string map, int size)
+        public void InitPlayer(string map, int size, MapManager mapManager)
         {
             _map = map;
             _size = size;
@@ -60,6 +61,7 @@ namespace C__GC.Player
             prota.Spells.Add(SpellCollection.testSpell);
             prota.Spells.Add(SpellCollection.testSpell);
             Recruite(prota);
+            _mapManager = mapManager;
         }
         //saveS
         public void Input(int x, int y)
@@ -104,6 +106,8 @@ namespace C__GC.Player
                     {
                         if (rdm.Next(0, 10) == 0)
                         {
+                            Difficulty difficulty = new();
+                            difficulty.EnemyCount();
                             Battle battle = new Battle(_team, Difficulty.Enemy);
                             
                             if (battle.start() == false)
@@ -124,6 +128,10 @@ namespace C__GC.Player
                         prota.Spells.Add(SpellCollection.testSpell);
                         Recruite(prota);
                     }
+                    if (IsTransition(newX, newY))
+                    {
+                        _map = _mapManager.ChangeMap("map2"); // Call a method to change the map
+                    }
                 }
 
             } while (true);
@@ -139,6 +147,7 @@ namespace C__GC.Player
             DisplaySystem.Update();
 
         }
+
         private bool IsObstacle(int x, int y)
         {
             return _map[y * _size + x] == '#';
@@ -156,6 +165,19 @@ namespace C__GC.Player
         {
             _team.Add(prota);
             prota.Suicide += () => { _team.Remove(prota); };
+        }
+
+        private bool IsTransition(int x, int y)
+        {
+            return _map[y * _size + x] == '*';
+        }
+        public void SetPlayerPosition(int x, int y) 
+        {
+            DisplayElement oldRender = _playerRender;
+            playerX = x;
+            playerY = y;
+            DisplaySystem.ReplaceByValue(oldRender, _playerRender);
+            DisplaySystem.Update();
         }
     }
 }

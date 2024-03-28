@@ -1,3 +1,4 @@
+
 ﻿using C__GC.DataString;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace C__GC
-{
+
     public class Dialogue
     {
         DisplayElement _renderer;
