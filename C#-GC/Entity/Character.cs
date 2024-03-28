@@ -78,6 +78,18 @@ namespace C__GC.Entity
             }
         }
 
+        public void RestoreMana(int amount)
+        {
+            _mana += amount;
+            Console.WriteLine(_mana);
+        }
+
+        public void ApplyAttackBonus(int bonus)
+        {
+            // Apply the attack bonus to the character's attributes or stats
+            _stats.atk += bonus;
+        }
+
         public void LevelUp(Stats gain, Spell[] learn = null)
         {
             _lvl += 1;
