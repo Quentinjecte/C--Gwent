@@ -37,6 +37,8 @@ namespace C__GC.Entity
         public string Name { get => _name; }
         List<Spell> _spells;
         public List<Spell> Spells { get => _spells; set => _spells = value; }
+        List<Item> _items;
+        public List<Item> Items { get => _items; set => _items = value; }
         public Action Suicide { get; set; }
         int _lvl;
         public int Lvl { get => _lvl; }
@@ -48,6 +50,7 @@ namespace C__GC.Entity
             Stats = stats;
             _name = name;
             _spells = [];
+            _items = [];
         }
 
 
@@ -75,6 +78,16 @@ namespace C__GC.Entity
         public void RestoreMana(int amount)
         {
             _mana += amount;
+        }
+
+        public virtual void Use(Character character)
+        {
+            Console.WriteLine($"You used {_name}!");
+
+            character.TakeDmg(_stats.atk);
+            character.ApplyAttackBonus(_stats.atk);
+            character.RestoreMana(_mana);
+
         }
 
         public void Cast(Spell spell, Character target)

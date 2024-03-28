@@ -26,5 +26,24 @@ namespace C__GC.Combats
             target.TakeDmg(15);
         }
 
+        public static void Poison(Character target)
+        {
+            target.TakeDmg(25);
+        }
+
+        public static void Heal(Character target)
+        {
+            target.TakeDmg(-25);
+        }
+
+        public static void RestoreManaTarget(Character target)
+        {
+            target.RestoreMana(25);
+        }
+
+        public static void AttackBonus(Character target) 
+        {
+            target.ApplyAttackBonus(15);
+        }
     }
 }

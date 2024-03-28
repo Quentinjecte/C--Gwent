@@ -35,6 +35,7 @@ namespace C__GC.Hub
 
         public str_func[] _OverlayOptions;
         public str_func[] _OverlayFight;
+        public str_func[] _OverlayInventory;
 
         public Overlay()
         {
@@ -53,6 +54,7 @@ namespace C__GC.Hub
                 new str_func("      Spell       "),
                 new str_func("      Item        "),
             };
+
 
             if (InFight)
             {

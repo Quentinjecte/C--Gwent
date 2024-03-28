@@ -43,6 +43,6 @@ namespace C__GC.Combats
 
     static public class SpellCollection
     {
-        static public Spell testSpell = new Spell("test", 20, Spell.Type.demonic, (target) => { Status.Subscribe(() => { Status.Burn(target); }); });
+        static public Spell BurningHand = new Spell("Burning Hand", 20, Spell.Type.demonic, (target) => { Status.Subscribe(() => { Status.Burn(target); }); });
     }
 }

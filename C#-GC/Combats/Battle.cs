@@ -10,6 +10,7 @@ using C__GC.DataString;
 using C__GC.Entity;
 using C__GC.Hub;
 using C__GC.Player;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace C__GC
 {
@@ -42,7 +43,7 @@ namespace C__GC
                             _currentAuthor.attack(_enemies[iCopy]);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay, 10, 25); 
+                    _menu.InitPopUp(nextOverlay, 10, 25);
                     },0),
 
                 // Spell option
@@ -70,9 +71,21 @@ namespace C__GC
                     _menu.InitPopUp(nextOverlay, 10, 25);
                 }, 0),
 
-                new str_func("Item            "),
+                                new str_func("Item           ", () => {
+                    // Select spell
+                    str_func[] nextOverlay = new str_func[_currentAuthor.Items.Count];
+                    for(int i = 0; i < _currentAuthor.Items.Count; i++)
+                    {
+                        int iCopy = i;
+                        nextOverlay[i] = new str_func(_currentAuthor.Items[iCopy]._name, () =>
+                        {
+                             //_currentAuthor.Use(_currentAuthor.Items[iCopy]);
+                        _menu.InitPopUp(nextOverlay, 15, 25);
+                        }, 0);
+                    }
+                    _menu.InitPopUp(nextOverlay, 10, 25);
+                }, 0),
             };
-
             _protagonists = protagonists;
             _enemies = enemies;
             foreach(Protagonist prota in _protagonists)
@@ -80,10 +93,10 @@ namespace C__GC
                 prota.Suicide += () => { _protagonists.Remove(prota); };
             }
             foreach(Enemy enemy in _enemies)
-            {
+           
                 enemy.Suicide += () => { _enemies.Remove(enemy); };
             }
-        }
+
         public bool start()
         {
             Console.SetCursorPosition(0, 0);

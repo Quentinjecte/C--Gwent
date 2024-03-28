@@ -24,8 +24,8 @@ namespace C__GC
         {
 
             // Get the initial map named "map1" from the ResourceAllocator
-            //string initialMap = _allocator.GetBackMap("map1");
-            string initialMap = _allocator.GetFrontMap("mapMask.txt", 48);
+            string initialMap = _allocator.GetBackMap("map1");
+            //string initialMap = _allocator.GetFrontMap("mapMask.txt", 48);
             // Add FrontMap
 
             if (initialMap == null)

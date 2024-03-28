@@ -28,6 +28,7 @@ namespace C__GC.Player
         public int playerY = 5;
         DisplayElement _playerRender;
         MapManager _mapManager;
+        Item items;
 
         List<Protagonist> _team;
         List<Enemy> _enemies;
@@ -58,8 +59,12 @@ namespace C__GC.Player
             stats.atk = 100;
 
             Protagonist prota = new Protagonist("jenti", stats);
-            prota.Spells.Add(SpellCollection.testSpell);
-            prota.Spells.Add(SpellCollection.testSpell);
+            prota.Spells.Add(SpellCollection.BurningHand);
+            prota.Spells.Add(SpellCollection.BurningHand);
+            prota.Items.Add(ItemCollection.HealPotion);
+            prota.Items.Add(ItemCollection.testItemM);
+            prota.Items.Add(ItemCollection.testItemAB);
+            prota.Items.Add(ItemCollection.testItemE);
             Recruite(prota);
             _mapManager = mapManager;
         }
@@ -124,8 +129,12 @@ namespace C__GC.Player
                         stats.atk = 100;
 
                         Protagonist prota = new Protagonist("jenti", stats);
-                        prota.Spells.Add(SpellCollection.testSpell);
-                        prota.Spells.Add(SpellCollection.testSpell);
+                        prota.Spells.Add(SpellCollection.BurningHand);
+                        prota.Spells.Add(SpellCollection.BurningHand);
+                        prota.Items.Add(ItemCollection.HealPotion);
+                        prota.Items.Add(ItemCollection.testItemM);
+                        prota.Items.Add(ItemCollection.testItemAB);
+                        prota.Items.Add(ItemCollection.testItemE);
                         Recruite(prota);
                     }
                     if (IsTransition(newX, newY))

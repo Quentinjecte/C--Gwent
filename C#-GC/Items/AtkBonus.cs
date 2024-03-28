@@ -1,4 +1,5 @@
-﻿using C__GC.Entity;
+﻿/*using C__GC.Entity;
+using C__GC.Combats;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,15 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace C__GC.Items
+namespace C__GC
 {
     internal class AtkBonus : Item
     {
-        private int _atkbonus;
-        public AtkBonus(string name, int value, int atkbonus) : base(name, value, new ItemType { atkBonus = atkbonus })
-        {
-            _atkbonus = atkbonus;
-        }
 
         public override void Use(Character character)
         {
@@ -30,4 +26,4 @@ namespace C__GC.Items
             public static AtkBonus TaperTresFortPotion { get; } = new AtkBonus("TAPER TRES FORT Potion", 5, 10);
         }
     }
-}
+}*/

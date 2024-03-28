@@ -1,4 +1,5 @@
-﻿using C__GC.Entity;
+﻿/*using C__GC.Combats;
+using C__GC.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace C__GC.Items
+namespace C__GC
 {
     internal class Mana : Item
     {
@@ -31,4 +32,4 @@ namespace C__GC.Items
             public static Mana LargeManaPotion { get; } = new Mana("Large Mana Potion", 30, 100); // Damn huge celle la ;)
         }
     }
-}
+}*/
