@@ -12,43 +12,6 @@ public class ResourceAllocator
         _mapName = new Dictionary<string, string>();
     }
 
-    // Load maps from JSON files
-    private void LoadMapsFromJson(string jsonFilePath)
-    {
-        try
-        {
-            string jsonData = File.ReadAllText(jsonFilePath);
-            _mapName = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonData);
-            //Console.WriteLine("Maps loaded successfully.");
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("JSON file not found.");
-        }
-        catch (Exception)
-        {
-            Console.WriteLine("An error occurred while loading maps");
-        }
-    }
-
-/*    public void LoadMapsFromAnsiTxt(string pathFile)
-    {
-        try
-        {
-            string jsonData = File.ReadAllText(pathFile);
-            _mapName = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonData);
-            //Console.WriteLine("Maps loaded successfully.");
-        }
-        catch (FileNotFoundException)
-        {
-            Console.WriteLine("File not found.");
-        }
-        catch (Exception)
-        {
-            Console.WriteLine("An error occurred while loading maps");
-        }
-    }*/
-
     // Get map data by name
     public string GetBackMap(string mapName)
     {
@@ -79,7 +42,7 @@ public class ResourceAllocator
         }
     }
 
-    public string GetFrontMap(string mapName)
+    public string GetFrontMap(string mapName, int width)
     {
         if (_mapName.ContainsKey(mapName))
         {
@@ -89,7 +52,14 @@ public class ResourceAllocator
         {
             using (StreamReader map = new StreamReader("../../../maps/"+mapName))
             {
-                string str = map.ReadToEnd().Replace("\\e", "\x1b");
+                int count = 0;
+                int startIndex = -1;
+                string str = map.ReadToEnd();
+                //while ((startIndex = str.IndexOf("\\e", startIndex + 1)) != -1)
+                //{
+                //    str = str.Insert(startIndex, "<BR>");
+                //}
+                str = str.Replace("\\e", "\x1b");
                 map.Close();
                 _mapName.Add(mapName, str);
             }
