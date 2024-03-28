@@ -12,6 +12,7 @@ using System.Diagnostics;
 using C__GC.DataString;
 using C__GC.Combats;
 using System.Runtime.InteropServices;
+using C__GC.Player;
 
 namespace C__GC.Hub
 {
@@ -33,27 +34,30 @@ namespace C__GC.Hub
         Player.Player Player = new();
         Difficulty Difficulty = new();
 
-        private int HubIndex, 
-            _hubIndex, 
-            Volume, 
+        public static List<Protagonist> Heroes = new();
+
+        private int HubIndex,
+            _hubIndex,
+            Volume,
             isClosed;
 
-        private string _prompt, 
+        private string _prompt,
             Prompt;
 
         str_func[] _hubInfo;
         public str_func[] _mainMenuPreset,
             _OptionMenuPreset,
             _OptionDifficult,
+            _ChooseUrHeroes,
             _OptionWindows;
 
         public string map;
 
-/*
-    ------------------------------------------------------
-    |             Initialize Function Hub.cs             |                     
-    ------------------------------------------------------
-*/
+        /*
+            ------------------------------------------------------
+            |             Initialize Function Hub.cs             |                     
+            ------------------------------------------------------
+        */
 
         public Hub()
         {
@@ -79,6 +83,14 @@ namespace C__GC.Hub
                 new str_func(CharactereData.InfoDifficult[0]),
                 new str_func(CharactereData.InfoDifficult[1]),
                 new str_func(CharactereData.InfoDifficult[2]),
+            };
+            _ChooseUrHeroes = new[]
+            {
+                new str_func(CharactereData.InfoHeroes[0]),
+                new str_func(CharactereData.InfoHeroes[1]),
+                new str_func(CharactereData.InfoHeroes[2]),
+                new str_func(CharactereData.InfoHeroes[3]),
+                new str_func(CharactereData.InfoHeroes[4]),
             };
 
             _hubIndex = 0;
@@ -263,33 +275,34 @@ namespace C__GC.Hub
             _hubIndex = HubOptions.SwapIndex();
             ChooseUrHeroes();
         }
-        private void ChoiseUrHeroes()
+        private void ChooseUrHeroes()
         {
             switch (_hubIndex)
             {
                 case 0:
-                    Difficulty.Easy = true;
+                    Heroes.Add(CharaClasses.classes[0]);
                     break;
                 case 1:
-                    Difficulty.Medium = true;
+                    Heroes.Add(CharaClasses.classes[1]);
                     break;
                 case 2:
-                    Difficulty.Hard = true;
+                    Heroes.Add(CharaClasses.classes[2]);
+                    break;
+                case 3:
+                    Heroes.Add(CharaClasses.classes[3]);
+                    break;
+                case 4:
+                    Heroes.Add(CharaClasses.classes[4]);
                     break;
             }
 
             Console.Clear();
-            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
-
-            //string map = Parser.ParseBitmap(assetsPath, 102);
-            // Print the parsed bitmap to console
 
 
             // Initialize allocator and map manager
             MapManager mapManager = new MapManager();
             mapManager.StartMap();
 
-            // Create an instance of the Player class and pass the MapParser and Bitmap objects
             Player.InitPlayer(map, 101, mapManager);
 
             // Start taking input from the player
