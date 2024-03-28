@@ -147,6 +147,7 @@ Use arrow keys and press 'Spacebar' to select ur options :
     ░▓█ ░██ ░██▄▄▄▄██ ▒██▀▀█▄  ░▓█▄   ▌
     ░▓█▒░██▓ ▓█   ▓██▒░██▓ ▒██▒░▒████▓ 
      ▒ ░░▒░▒ ▒▒   ▓▒█░░ ▒▓ ░▒▓░ ▒▒▓  ▒",
+            };
 
         public static string[] InfoHeroes =
                             { @"
