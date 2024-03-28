@@ -34,11 +34,11 @@ namespace C__GC.DataString
             {
                 Console.Clear();
             }
-            PrintMap();
-            //foreach (DisplayElement element in _elements)
-            for (int e = 1; e < _elements.Count; e++)
+            //PrintMap();
+            foreach (DisplayElement element in _elements)
+            //for (int e = 1; e < _elements.Count; e++)
             {
-                DisplayElement element = _elements[e];
+                //DisplayElement element = _elements[e];
                 Console.ForegroundColor = element.fgColor;
                 Console.BackgroundColor = element.bgColor;
 

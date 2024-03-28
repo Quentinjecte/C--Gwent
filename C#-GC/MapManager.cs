@@ -22,8 +22,8 @@ namespace C__GC
         {
 
             // Get the initial map named "map1" from the ResourceAllocator
-            string initialMap = ResourceAllocator.GetBackMap("map1");
-            //string initialMap = ResourceAllocator.GetFrontMap("mapMask.txt");
+            string initialMap = ResourceAllocator.GetBackMap("map_by_kawa");
+            string Mask = ResourceAllocator.GetFrontMap("greatMap.txt");
             // Add FrontMap
 
             if (initialMap == null)
@@ -34,9 +34,11 @@ namespace C__GC
 
             // Set the content of the map display
             DisplayElement map = new DisplayElement(initialMap, 100, 0, 0);
+            //DisplayElement map = new DisplayElement(Mask, -1, 0, 0);
             // Update the display
             DisplaySystem.Subscribe(map);
-            DisplaySystem.PrintMap();
+            //DisplaySystem.PrintMap();
+            DisplaySystem.Update();
 
             // Initialize player after loading maps successfully
             _player.InitPlayer(initialMap, 100, this);

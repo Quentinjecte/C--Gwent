@@ -104,17 +104,17 @@ namespace C__GC.Player
                     Move(x, y);
                     if (IsGrass(newX, newY))
                     {
-                        if (rdm.Next(0, 10) == 0)
-                        {
-                            Difficulty difficulty = new();
-                            difficulty.EnemyCount();
-                            Battle battle = new Battle(_team, Difficulty.Enemy);
+                        //if (rdm.Next(0, 10) == 0)
+                        //{
+                        //    Difficulty difficulty = new();
+                        //    difficulty.EnemyCount();
+                        //    Battle battle = new Battle(_team, Difficulty.Enemy);
                             
-                            if (battle.start() == false)
-                            {
-                                return;
-                            }
-                        }
+                        //    if (battle.start() == false)
+                        //    {
+                        //        return;
+                        //    }
+                        //}
                     }
                     else if (IsTavern(newX, newY))
                     {
