@@ -51,8 +51,8 @@ namespace C__GC
             stats.atk = 100;
 
             Protagonist prota = new Protagonist("jenti", stats);
-            prota.Spells.Add(SpellCollection.testSpell);
-            prota.Spells.Add(SpellCollection.testSpell);
+            prota.Spells.Add(SpellCollection.toxicVaporSpell);
+            prota.Spells.Add(SpellCollection.chargeSpell);
             Recruite(prota);
         }
         //saveS
@@ -78,10 +78,10 @@ namespace C__GC
                         (x, y) = (1, 0);
                         break;
                     case ConsoleKey.P:
-                        overlay.InitPopUp(overlay._OverlayOptions, 20, 25);
+                        overlay.InitPopUp(overlay._OverlayOptions, 2, 2);
                         if (keyInfo.Key == ConsoleKey.P)
                         {
-                            Console.ReadKey(true);
+                            break;
                         }
                         break;
                     default:
@@ -116,8 +116,8 @@ namespace C__GC
                         stats.atk = 100;
 
                         Protagonist prota = new Protagonist("jenti", stats);
-                        prota.Spells.Add(SpellCollection.testSpell);
-                        prota.Spells.Add(SpellCollection.testSpell);
+                        prota.Spells.Add(SpellCollection.minorHealSpell);
+                        prota.Spells.Add(SpellCollection.chargeSpell);
                         Recruite(prota);
                     }
                     if (IsTransition(newX, newY))

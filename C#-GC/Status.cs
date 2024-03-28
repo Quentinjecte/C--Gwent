@@ -30,6 +30,10 @@ namespace C__GC
         {
             target.TakeDmg(2);
         }
+        public static void Poison(Character target)
+        {
+            target.TakeDmg(2);
+        }
 
         public static void Stun(Character target)
         {

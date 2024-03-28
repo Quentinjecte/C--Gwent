@@ -16,17 +16,16 @@ namespace C__GC
         Hub.Hub hub = new();
         Player Player = new();
         DisplayElement DisplayE;
+        DisplayElement element;
 
         private int _OlverlayIndex, 
             isClosed, 
             _boxX,
             _boxY, 
-            consoleWidth, 
-            consoleHeight, 
             boxWidth, 
             boxHeight;
 
-        private bool InFight = false;
+        public static bool InFight;
 
         private Rectangle Box;
 
@@ -51,25 +50,22 @@ namespace C__GC
                 new str_func("      Item        "),
             };
 
-            consoleWidth = Console.WindowWidth;
-            consoleHeight = Console.WindowHeight;
-
-
-/*            if (InFight)
+            if (InFight)
             {
-                Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
-            boxX = 4;
-            boxY = 2;
-            boxWidth = 10;
-            boxHeight = 10;            
-            }*/
-
-            _boxX = 0;
-            _boxY = 0;
-            boxWidth = 20;
-            boxHeight = 20;
-
-            Box = new Rectangle(2, 2, 20, 10);
+                _boxX = 20;
+                _boxY = 20;
+                boxWidth = Console.WindowWidth - 25;
+                boxHeight = Console.BufferHeight;
+                Box = new Rectangle(_boxX + 5, _boxY, boxWidth - 20, boxHeight);
+            }
+            else
+            {
+                _boxX = 2;
+                _boxY = 2;
+                boxWidth = 20;
+                boxHeight = 20;
+                Box = new Rectangle(2, 2, 20, 10);
+            }
         }
         public void InitPopUp(str_func[] OlInfo, int x, int y, bool backGround = false)
         {
@@ -77,16 +73,25 @@ namespace C__GC
             _boxY = y;
             _OlverlayIndex = 0;
             _OverlayOptions = OlInfo;
-            if (backGround) { MenuPopUp(); };
+            MenuPopUp();
             PrintText(_OverlayOptions);
             DisplaySystem.Unsubscribe();
             DisplaySystem.Update();
         }
         private void MenuPopUp()
         {
-            DisplayE = new DisplayElement(CharactereData.OverlayMenu, 20, _boxX , _boxY);
+            if (InFight) 
+            {
+                _boxX = 20;
+                _boxY = 20;
+                DisplayE = new DisplayElement(CharactereData.OverlayFight, 156, _boxX, _boxY);
+            }
+            else
+            {
+                DisplayE = new DisplayElement(CharactereData.OverlayMenu, 20, _boxX, _boxY);
+            }
 
-            DisplaySystem.Subscribe((DisplayE));
+            DisplaySystem.Subscribe(DisplayE);
             DisplaySystem.Update();
         }
         private void PrintText(str_func[] OlInfo)
@@ -103,7 +108,7 @@ namespace C__GC
             {
                 string CurrentOption = _OverlayOptions[i].Str;
 
-                DisplayElement element = new DisplayElement(CurrentOption, CurrentOption.Length, textX, textY);
+                element = new DisplayElement(CurrentOption, CurrentOption.Length, textX, textY);
                 if (i == _OlverlayIndex)
                 {
                     element.fgColor = ConsoleColor.Red;
@@ -115,16 +120,6 @@ namespace C__GC
                 }
                 DisplaySystem.Subscribe(element);
                 textY++;
-                //Change les chars en ' '
-                if (_OverlayOptions[i].Str.Trim() == "Exit")
-                {
-                    while (textY <= Box.Bottom - 1)
-                    {
-
-                        DisplayElement emptyElement = new DisplayElement(new string(' ', Box.Width - 2), CurrentOption.Length, textX, textY);
-                        textY++;
-                    }
-                }
             }
             DisplaySystem.Update();
             Console.ResetColor();
@@ -158,9 +153,11 @@ namespace C__GC
                             _OlverlayIndex = 0;
                         }
                     }
-                    else if (KeyPress == ConsoleKey.P)
+                    else if (KeyPress == ConsoleKey.P || KeyPress == ConsoleKey.Escape)
                     {
                         isClosed = 1;
+                        for(int i = 0 ; i < _OverlayOptions.Length; i++)
+                            DisplaySystem.Unsubscribe();
                         break;
                     }
                 } while (KeyPress != ConsoleKey.Spacebar);
@@ -174,7 +171,6 @@ namespace C__GC
             return _OlverlayIndex;
         }
     }
-
     public class Rectangle
     {
         public int X { get; set; }

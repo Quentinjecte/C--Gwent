@@ -26,24 +26,25 @@ namespace C__GC
         public Battle(List<Protagonist> protagonists, List<Enemy> enemies)
         {
             Overlay _menu = new Overlay();
+            Overlay.InFight = true;
             _overlay = new[] {
                 // Attack option
-                new str_func("Attack          ", () => { 
+                new str_func("  Attack          ", () => { 
                     // Select target
                     str_func[] nextOverlay = new str_func[_enemies.Count];
                     for(int i = 0; i < _enemies.Count; i++)
                     {
-                        int iCopy = i;
+                        int Icopy = i;
                         nextOverlay[i] = new str_func(i.ToString(), () =>
                         {
-                            _currentAuthor.attack(_enemies[iCopy]);
+                            _currentAuthor.attack(_enemies[Icopy]);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay, 10, 15); 
+                    _menu.InitPopUp(nextOverlay, 0, 0); 
                     },0),
 
                 // Spell option
-                new str_func("Spell           ", () => {
+                new str_func("  Spell           ", () => {
                     // Select spell
                     str_func[] nextOverlay = new str_func[_currentAuthor.Spells.Count];
                     for(int i = 0; i < _currentAuthor.Spells.Count; i++)
@@ -61,13 +62,13 @@ namespace C__GC
                                     _currentAuthor.Cast(_currentAuthor.Spells[iCopy], _enemies[jCopy]);
                                 }, 0);
                             }
-                        _menu.InitPopUp(nextOverlay, 15, 15);
+                        _menu.InitPopUp(nextOverlay, 0, 0);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay, 10, 15);
+                    _menu.InitPopUp(nextOverlay, 0, 0);
                 }, 0),
 
-                new str_func("Item            "),
+                new str_func("  Item            "),
             };
 
             _protagonists = protagonists;
