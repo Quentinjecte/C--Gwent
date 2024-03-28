@@ -58,8 +58,8 @@ namespace C__GC.Player
             stats.atk = 100;
 
             Protagonist prota = new Protagonist("jenti", stats);
-            prota.Spells.Add(SpellCollection.testSpell);
-            prota.Spells.Add(SpellCollection.testSpell);
+            prota.Spells.Add(SpellCollection.toxicVaporSpell);
+            prota.Spells.Add(SpellCollection.chargeSpell);
             Recruite(prota);
             _mapManager = mapManager;
         }
@@ -124,8 +124,8 @@ namespace C__GC.Player
                         stats.atk = 100;
 
                         Protagonist prota = new Protagonist("jenti", stats);
-                        prota.Spells.Add(SpellCollection.testSpell);
-                        prota.Spells.Add(SpellCollection.testSpell);
+                        prota.Spells.Add(SpellCollection.minorHealSpell);
+                        prota.Spells.Add(SpellCollection.chargeSpell);
                         Recruite(prota);
                     }
                     if (IsTransition(newX, newY))

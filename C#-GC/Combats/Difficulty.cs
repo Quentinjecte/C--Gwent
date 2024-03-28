@@ -49,15 +49,28 @@ namespace C__GC.Combats
             {
                 if (i == 0)
                 {
-                    Enemy.Add(EnemyFactory.basic());
+                    if(rdm.Next(0, 3) == 0)
+                        Enemy.Add(EnemyFactory.cherubEnemy());
+                    else if(rdm.Next(0,3) == 1)
+                        Enemy.Add(EnemyFactory.carionEaterEnemy());
+                    else
+                        Enemy.Add(EnemyFactory.houndEnemy());
                 }
                 if (i == 1)
                 {
-                    Enemy.Add(EnemyFactory.glassCanon());
+                    if (rdm.Next(0, 3) == 0)
+                        Enemy.Add(EnemyFactory.flayerEnemy());
+                    else if (rdm.Next(0, 3) == 1)
+                        Enemy.Add(EnemyFactory.clumpsEnemy());
+                    else
+                        Enemy.Add(EnemyFactory.gnasherEnemy());
                 }
                 if (i == 2 || i == 3)
                 {
-                    Enemy.Add(EnemyFactory.caster());
+                    if (rdm.Next(0, 3) == 0)
+                        Enemy.Add(EnemyFactory.facelingEnemy());
+                    else if (rdm.Next(0, 3) == 1)
+                        Enemy.Add(EnemyFactory.sculptureEnemy());
                 }
             }
 
