@@ -280,27 +280,6 @@ namespace C__GC.Hub
             switch (_hubIndex)
             {
                 case 0:
-                    Difficulty.Easy = true;
-                    break;
-                case 1:
-                    Difficulty.Medium = true;
-                    break;
-                case 2:
-                    Difficulty.Hard = true;
-                    break;
-            }
-
-            Console.Clear();
-            Hub HubOptions = new Hub();
-            HubOptions.InitHub(this._prompt, _ChooseUrHeroes);
-            _hubIndex = HubOptions.SwapIndex();
-            ChoiseUrHeroes();
-        }
-        private void ChoiseUrHeroes()
-        {
-            switch (_hubIndex)
-            {
-                case 0:
                     Heroes.Add(CharaClasses.classes[0]);
                     break;
                 case 1:
