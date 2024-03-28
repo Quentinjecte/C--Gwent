@@ -17,6 +17,11 @@ namespace C__GC.Combats
 
         public void EnemyCount() 
         {
+            while(Enemy.Count > 0)
+            {
+                Enemy.RemoveAt(Enemy.Count - 1);
+            }
+
             if (true == Easy)
             {
                 for (int i = 0; i < 1; i++)
@@ -35,7 +40,7 @@ namespace C__GC.Combats
             {
                 for (int i = 0; i < rdm.Next(1, 3); i++)
                 {
-                    Entity.Add(rdm.Next(1, 2));
+                    Entity.Add(rdm.Next(1, 3));
                 }
             }
             else Console.WriteLine("False");
@@ -50,7 +55,7 @@ namespace C__GC.Combats
                 {
                     Enemy.Add(EnemyFactory.glassCanon());
                 }
-                if (i == 2)
+                if (i == 2 || i == 3)
                 {
                     Enemy.Add(EnemyFactory.caster());
                 }
