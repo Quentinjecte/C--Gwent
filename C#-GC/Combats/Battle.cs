@@ -137,11 +137,9 @@ namespace C__GC
 
         }
 
-        private void UpdateHUD()
+        private void DeleteHUD()
         {
-            DisplayElement oldHUD = _hud;
-            _hud.content = "|----------------------------|";
-                foreach (Protagonist prota in _protagonists)
+            foreach (DisplayElement sprite in _protaSprites)
             {
                 DisplaySystem.Unsubscribe(sprite);
             }
