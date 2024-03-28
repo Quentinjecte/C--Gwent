@@ -1,4 +1,4 @@
-﻿/*using C__GC.Entity;
+﻿using C__GC.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,4 +30,4 @@ namespace C__GC.Items
             public static AtkBonus TaperTresFortPotion { get; } = new AtkBonus("TAPER TRES FORT Potion", 5, 10);
         }
     }
-}*/
+}

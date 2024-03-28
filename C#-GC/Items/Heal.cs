@@ -1,4 +1,4 @@
-﻿/*using C__GC.Entity;
+﻿using C__GC.Entity;
 using System;
 using System.Xml.Linq;
 
@@ -28,4 +28,4 @@ namespace C__GC.Items
             public static Heal LargeHealingPotion { get; } = new Heal("Large Healing Potion", 30, 100); // Damn huge celle la ;)
         }
     }
-}*/
+}

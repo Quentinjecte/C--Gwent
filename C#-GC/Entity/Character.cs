@@ -66,6 +66,17 @@ namespace C__GC.Entity
             character.TakeDmg(_stats.atk);
         }
 
+        public void ApplyAttackBonus(int bonus)
+        {
+            // Apply the attack bonus to the character's attributes or stats
+            _stats.atk += bonus;
+        }
+
+        public void RestoreMana(int amount)
+        {
+            _mana += amount;
+        }
+
         public void Cast(Spell spell, Character target)
         {
             if (_spells.Contains(spell))
