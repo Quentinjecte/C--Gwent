@@ -278,7 +278,23 @@ namespace C__GC.Hub
         private void ChooseUrHeroes()
         {
 
+            //string map = Parser.ParseBitmap(assetsPath, 102);
+            // Print the parsed bitmap to console
 
+
+            // Initialize allocator and map manager
+            ResourceAllocator allocator = new ResourceAllocator();
+            MapManager mapManager = new MapManager(allocator);
+            mapManager.StartMap();
+
+            // Create an instance of the Player class and pass the MapParser and Bitmap objects
+            Player.InitPlayer(map, 101, mapManager);
+
+            // Start taking input from the player
+            Player.Input(0, 0);
+        }
+        private void ChoiseUrHeroes()
+        {
             switch (_hubIndex)
             {
                 case 0:
@@ -298,10 +314,33 @@ namespace C__GC.Hub
                     break;
             }
 
-            Console.Clear();
-            // Initialize allocator and map manager
+            string assetsPath = Path.Combine(Directory.GetCurrentDirectory(), "assets", "B:\\repos\\C--Gwent\\C#-GC\\assets\\testMap.bmp");
 
-            ResourceAllocator allocator = new ResourceAllocator();
+            //string map = Parser.ParseBitmap(assetsPath, 102);
+            // Print the parsed bitmap to console
+
+
+            string map = "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%#########%%%%%%%%%%%%%%%%%%@@%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#####%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%##########%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&&&%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" +
+                        "#####################################################################################################";
+            //Console.WriteLine(map);zs
+            DisplayElement mapDisplay = new DisplayElement(map, 101, 0, 0);
+            DisplaySystem.Subscribe(mapDisplay);
+            //DisplaySystem.Update();
+
+
+            // Initialize allocator and map manager
+            MapManager mapManager = new MapManager();
             MapManager mapManager = new MapManager(allocator);
             mapManager.StartMap();
 
