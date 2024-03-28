@@ -30,7 +30,7 @@ namespace C__GC.Hub
         IntPtr ConsoleHandle = GetConsoleWindow();
 
 
-        Player Player = new();
+        Player.Player Player = new();
         Difficulty Difficulty = new();
 
         private int HubIndex, 

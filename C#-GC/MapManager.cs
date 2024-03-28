@@ -11,7 +11,7 @@ namespace C__GC
 {
     public class MapManager
     {
-        private Player _player;
+        private Player.Player _player;
 
         internal MapManager()
         {

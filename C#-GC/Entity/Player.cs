@@ -3,8 +3,9 @@ using System.Runtime.CompilerServices;
 using C__GC.Combats;
 using C__GC.DataString;
 using C__GC.Entity;
+using C__GC.Hub;
 
-namespace C__GC
+namespace C__GC.Player
 {
 
     struct Inventory
@@ -14,33 +15,36 @@ namespace C__GC
     }
 
 
-    internal class Player
+    public class Player
     {
-/*
-------------------------------------------------------
-|             Initialize Varialbe Player.cs          |                     
-------------------------------------------------------
-*/
+        /*
+        ------------------------------------------------------
+        |             Initialize Varialbe Player.cs          |                     
+        ------------------------------------------------------
+        */
         private string _map;
         private int _size;
-        public int playerX = 10;
-        public int playerY = 10;
+        public int playerX = 5;
+        public int playerY = 5;
         DisplayElement _playerRender;
+        MapManager _mapManager;
 
         List<Protagonist> _team;
+        List<Enemy> _enemies;
         public List<Protagonist> Team { get => _team; }
+        public List<Enemy> Enemies { get => _enemies; }
 
         Random rdm = new();
 
-/*
-------------------------------------------------------
-|             Initialize Function Player.cs          |                     
-------------------------------------------------------
-*/
+        /*
+        ------------------------------------------------------
+        |             Initialize Function Player.cs          |                     
+        ------------------------------------------------------
+        */
         public Player()
         {
         }
-        public void InitPlayer(string map, int size)
+        public void InitPlayer(string map, int size, MapManager mapManager)
         {
             _map = map;
             _size = size;
@@ -54,9 +58,10 @@ namespace C__GC
             stats.atk = 100;
 
             Protagonist prota = new Protagonist("jenti", stats);
-            prota.Spells.Add(SpellCollection.toxicVaporSpell);
-            prota.Spells.Add(SpellCollection.chargeSpell);
+            prota.Spells.Add(SpellCollection.minorHealSpell);
+            prota.Spells.Add(SpellCollection.curativPrayerSpell);
             Recruite(prota);
+            _mapManager = mapManager;
         }
         //saveS
         public void Input(int x, int y)
@@ -81,10 +86,10 @@ namespace C__GC
                         (x, y) = (1, 0);
                         break;
                     case ConsoleKey.P:
-                        overlay.InitPopUp(overlay._OverlayOptions, 2, 2);
+                        overlay.InitPopUp(overlay._OverlayOptions, 20, 25);
                         if (keyInfo.Key == ConsoleKey.P)
                         {
-                            break;
+                            Console.ReadKey(true);
                         }
                         break;
                     default:
@@ -104,7 +109,7 @@ namespace C__GC
                             Difficulty difficulty = new();
                             difficulty.EnemyCount();
                             Battle battle = new Battle(_team, Difficulty.Enemy);
-                            
+
                             if (battle.start() == false)
                             {
                                 return;
@@ -119,7 +124,7 @@ namespace C__GC
                         stats.atk = 100;
 
                         Protagonist prota = new Protagonist("jenti", stats);
-                        prota.Spells.Add(SpellCollection.minorHealSpell);
+                        prota.Spells.Add(SpellCollection.toxicVaporSpell);
                         prota.Spells.Add(SpellCollection.chargeSpell);
                         Recruite(prota);
                     }
@@ -166,7 +171,7 @@ namespace C__GC
         {
             return _map[y * _size + x] == '*';
         }
-        public void SetPlayerPosition(int x, int y) 
+        public void SetPlayerPosition(int x, int y)
         {
             DisplayElement oldRender = _playerRender;
             playerX = x;

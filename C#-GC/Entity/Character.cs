@@ -72,18 +72,6 @@ namespace C__GC
             }
         }
 
-        public void Healed(int amount)
-        {
-            if (_hp <= Stats.hp - amount)
-            {
-                _hp += amount;
-            }
-            else
-            {
-                _hp = Stats.hp;
-            }
-        }
-
         public void attack(Character character)
         {
             character.TakeDmg(_stats.atk);

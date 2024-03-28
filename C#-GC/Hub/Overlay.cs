@@ -15,7 +15,7 @@ namespace C__GC.Hub
     internal class Overlay
     {
         Hub hub = new();
-        Player Player = new();
+        Player.Player Player = new();
         DisplayElement DisplayE;
         DisplayElement element;
 
