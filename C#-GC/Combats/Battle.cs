@@ -16,9 +16,7 @@ namespace C__GC
     internal class Battle
     {
         List<Protagonist> _protagonists;
-        List<DisplayElement> _protaSprites;
         List<Enemy> _enemies;
-        List<DisplayElement> _enemiesSprites;
 
         Character _currentTarget;
         Character _currentAuthor;
@@ -44,7 +42,7 @@ namespace C__GC
                             _currentAuthor.attack(_enemies[iCopy]);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay, 10, 15); 
+                    _menu.InitPopUp(nextOverlay, 10, 25); 
                     },0),
 
                 // Spell option
@@ -66,10 +64,10 @@ namespace C__GC
                                     _currentAuthor.Cast(_currentAuthor.Spells[iCopy], _enemies[jCopy]);
                                 }, 0);
                             }
-                        _menu.InitPopUp(nextOverlay, 15, 15);
+                        _menu.InitPopUp(nextOverlay, 15, 25);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay, 10, 15);
+                    _menu.InitPopUp(nextOverlay, 10, 25);
                 }, 0),
 
                 new str_func("Item            "),
@@ -77,9 +75,7 @@ namespace C__GC
 
             _protagonists = protagonists;
             _enemies = enemies;
-            _protaSprites = new();
-            _enemiesSprites = new();
-            foreach (Protagonist prota in _protagonists)
+            foreach(Protagonist prota in _protagonists)
             {
                 prota.Suicide += () => { _protagonists.Remove(prota); };
             }
@@ -90,14 +86,15 @@ namespace C__GC
         }
         public bool start()
         {
+            Console.SetCursorPosition(0, 0);
             
             // assigner int Run au retour de cette fonction
-            InitHud();
+            _hud = new DisplayElement("", 30, 0, 0);
+            UpdateHUD();
+            DisplaySystem.Subscribe(_hud);
+            DisplaySystem.Update();
 
             Overlay _menu = new Overlay();
-            DisplayElement map = DisplaySystem.GetById(0);
-            DisplaySystem.ReplaceByIndex(0, new DisplayElement("", 1, 0, 0));
-            DisplaySystem.Update(true);
 
             while (_protagonists.Count > 0 && _enemies.Count > 0)
             {
@@ -105,7 +102,7 @@ namespace C__GC
                 {
                     _currentAuthor = prota;
                     _currentTarget = _enemies[0];
-                    _menu.InitPopUp(_overlay, 3, 15, true);
+                    _menu.InitPopUp(_overlay, 3, 25, true);
                     //        Status.Subscribe(() => Status.Burn(_protagonists[0]));
                     //        SpellCollection.testSpell.Cast(prota);
                     if(prota.Hp <= 0)
@@ -123,35 +120,32 @@ namespace C__GC
                 }
 
                 Status.Tick();
+                UpdateHUD();
 
             }
-            DeleteHUD();
-
-
-            DisplaySystem.ReplaceByIndex(0, map);
-            //DisplaySystem.Update(true);
+            DisplaySystem.Unsubscribe();
+            DisplaySystem.Update();
             return _protagonists.Count > 0;
 
         }
 
-        private void DeleteHUD()
+        private void UpdateHUD()
         {
-            foreach(DisplayElement sprite in _protaSprites)
+            DisplayElement oldHUD = _hud;
+            _hud.content = "|----------------------------|";
+                foreach (Protagonist prota in _protagonists)
             {
-                DisplaySystem.Unsubscribe(sprite);
+                _hud.content += "| protaHP:" + _protagonists[0].Hp + "                |"; ;
             }
-            //foreach(Enemy enemy in _enemies)
-            //{
-            //    _hud.content += "| enemyHP:" + enemy.Hp + "                 |";
-            //}
-        }
-        private void InitHud()
-        {
-            for (int i = 0; i < _protagonists.Count; i++)
+            foreach(Enemy enemy in _enemies)
             {
-                _protaSprites.Add(new DisplayElement(ResourceAllocator.GetFrontMap("fighter.txt"), -1, 25 + 30 * i, 2));
-                DisplaySystem.Subscribe(_protaSprites[i]);
+                _hud.content += "| enemyHP:" + enemy.Hp + "                 |";
             }
+
+            _hud.content += "|                            |" +
+                "|----------------------------|";
+            DisplaySystem.ReplaceByValue(oldHUD, _hud);
+            DisplaySystem.Update();
         }
 
     }

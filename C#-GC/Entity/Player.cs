@@ -48,7 +48,7 @@ namespace C__GC.Player
         {
             _map = map;
             _size = size;
-            _playerRender = new DisplayElement(ResourceAllocator.GetFrontMap("character.txt"), -1, playerX, playerY);
+            _playerRender = new DisplayElement("p", 1, playerX, playerY);
             _team = new List<Protagonist>();
             DisplaySystem.Subscribe(_playerRender);
 
