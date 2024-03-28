@@ -31,7 +31,7 @@ namespace C__GC
             Overlay _menu = new Overlay();
             _overlay = new[] {
                 // Attack option
-                new str_func("Attack          ", () => { 
+                new str_func("  Attack          ", () => { 
                     // Select target
                     str_func[] nextOverlay = new str_func[_enemies.Count];
                     for(int i = 0; i < _enemies.Count; i++)
@@ -46,7 +46,7 @@ namespace C__GC
                     },0),
 
                 // Spell option
-                new str_func("Spell           ", () => {
+                new str_func("  Spell           ", () => {
                     // Select spell
                     str_func[] nextOverlay = new str_func[_currentAuthor.Spells.Count];
                     for(int i = 0; i < _currentAuthor.Spells.Count; i++)
@@ -70,7 +70,7 @@ namespace C__GC
                     _menu.InitPopUp(nextOverlay, 10, 25);
                 }, 0),
 
-                new str_func("Item            "),
+                new str_func("  Item            "),
             };
 
             _protagonists = protagonists;
@@ -89,7 +89,7 @@ namespace C__GC
             Console.SetCursorPosition(0, 0);
             
             // assigner int Run au retour de cette fonction
-            _hud = new DisplayElement("", 30, 0, 0);
+            _hud = new DisplayElement(" ", 30, 0, 0);
             UpdateHUD();
             DisplaySystem.Subscribe(_hud);
             DisplaySystem.Update();

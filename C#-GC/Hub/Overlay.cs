@@ -24,12 +24,10 @@ namespace C__GC.Hub
             isClosed, 
             _boxX,
             _boxY, 
-            consoleWidth, 
-            consoleHeight, 
             boxWidth, 
             boxHeight;
 
-        private bool InFight = false;
+        private bool InFight = true;
 
         private Rectangle Box;
 
@@ -174,7 +172,6 @@ namespace C__GC.Hub
             return _OlverlayIndex;
         }
     }
-
     public class Rectangle
     {
         public int X { get; set; }
