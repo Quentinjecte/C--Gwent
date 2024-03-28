@@ -24,8 +24,8 @@ namespace C__GC.Player
         */
         private string _map;
         private int _size;
-        public int playerX = 5;
-        public int playerY = 5;
+        public int playerX = 50;
+        public int playerY = 50;
         DisplayElement _playerRender;
         MapManager _mapManager;
 

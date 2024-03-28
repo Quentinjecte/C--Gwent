@@ -21,7 +21,7 @@ public static class ResourceAllocator
 #if DEBUG
         string mapsJsonPath = Path.Combine(baseDirectory, "../../../maps/maps.json");
 #else
-        string mapsJsonPath = Path.Combine(baseDirectory, "maps/maps.json");
+        string mapsJsonPath = Path.Combine(baseDirectory, "./maps/maps.json");
 #endif
 
         if (_mapName.ContainsKey(mapName))
@@ -57,7 +57,7 @@ public static class ResourceAllocator
 #if DEBUG
             using (StreamReader map = new StreamReader("../../../maps/"+mapName))
 #else
-            using (StreamReader map = new StreamReader("maps/"+mapName))
+            using (StreamReader map = new StreamReader("./maps/"+mapName))
 #endif
             {
                 int count = 0;

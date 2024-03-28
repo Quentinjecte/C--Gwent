@@ -30,6 +30,15 @@ namespace C__GC.Hub
         static extern void SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int width, int height, uint flags);
         IntPtr ConsoleHandle = GetConsoleWindow();
 
+                [DllImport("kernel32.dll", SetLastError = true)]
+        static extern IntPtr GetStdHandle(int nStdHandle);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool GetConsoleMode(IntPtr hConsoleHandle, out uint lpMode);
+
 
         Player.Player Player = new();
         Difficulty Difficulty = new();
@@ -61,6 +70,17 @@ namespace C__GC.Hub
 
         public Hub()
         {
+            IntPtr hConsole = GetStdHandle(-11); // Standard output handle
+
+            uint mode;
+            GetConsoleMode(hConsole, out mode);
+
+            mode |= 0x0004; // Enable Virtual Terminal Processing / ANSI handling
+
+            // Set the new console mode
+            SetConsoleMode(hConsole, mode);
+
+
             _OptionWindows = new[] {
                 new str_func(CharactereData.OptionWindowSize[0]),
                 new str_func(CharactereData.OptionWindowSize[1]), // Language pas fait
