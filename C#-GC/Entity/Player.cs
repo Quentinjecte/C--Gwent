@@ -104,8 +104,9 @@ namespace C__GC.Player
                     Move(x, y);
                     if (IsGrass(newX, newY))
                     {
-                        if (rdm.Next(0, 10) == 0)
+                        if (rdm.Next(0, 5) == 0)
                         {
+                            Overlay.InFight = true;
                             Difficulty difficulty = new();
                             difficulty.EnemyCount();
                             Battle battle = new Battle(_team, Difficulty.Enemy);
@@ -130,7 +131,7 @@ namespace C__GC.Player
                     }
                     if (IsTransition(newX, newY))
                     {
-                        _map = _mapManager.ChangeMap("map2"); // Call a method to change the map
+                        _map = _mapManager.ChangeMap("map_by_kawa"); // Call a method to change the map
                     }
                 }
 
