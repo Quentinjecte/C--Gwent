@@ -4,9 +4,8 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
-using C__GC.Entity;
 
-namespace C__GC.Combats
+namespace C__GC
 {
     static class Status
     {

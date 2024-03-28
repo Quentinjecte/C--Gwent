@@ -9,15 +9,12 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-using C__GC.Entity;
-
-
-namespace C__GC.Hub
+namespace C__GC
 {
     internal class Overlay
     {
-        Hub hub = new();
-        Player.Player Player = new();
+        Hub.Hub hub = new();
+        Player Player = new();
         DisplayElement DisplayE;
 
         private int _OlverlayIndex, 
@@ -35,7 +32,7 @@ namespace C__GC.Hub
 
         public str_func[] _OverlayOptions;
         public str_func[] _OverlayFight;
-
+        
         public Overlay()
         {
 
@@ -54,22 +51,25 @@ namespace C__GC.Hub
                 new str_func("      Item        "),
             };
 
-            if (InFight)
+            consoleWidth = Console.WindowWidth;
+            consoleHeight = Console.WindowHeight;
+
+
+/*            if (InFight)
             {
-                _boxX = 4;
-                _boxY = 2;
-                boxWidth = 10;
-                boxHeight = 10;
-                Box = new Rectangle(_boxX + 5, _boxY, boxWidth - 20, boxHeight);
-            }
-            else
-            {
-                _boxX = 0;
-                _boxY = 0;
-                boxWidth = 20;
-                boxHeight = 20;
-                Box = new Rectangle(2, 2, 20, 10);
-            }
+                Box = new Rectangle(boxX + 5, boxY, boxWidth - 20, boxHeight);
+            boxX = 4;
+            boxY = 2;
+            boxWidth = 10;
+            boxHeight = 10;            
+            }*/
+
+            _boxX = 0;
+            _boxY = 0;
+            boxWidth = 20;
+            boxHeight = 20;
+
+            Box = new Rectangle(2, 2, 20, 10);
         }
         public void InitPopUp(str_func[] OlInfo, int x, int y, bool backGround = false)
         {
@@ -86,7 +86,7 @@ namespace C__GC.Hub
         {
             DisplayE = new DisplayElement(CharactereData.OverlayMenu, 20, _boxX , _boxY);
 
-            DisplaySystem.Subscribe(DisplayE);
+            DisplaySystem.Subscribe((DisplayE));
             DisplaySystem.Update();
         }
         private void PrintText(str_func[] OlInfo)

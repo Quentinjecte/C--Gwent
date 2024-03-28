@@ -1,11 +1,7 @@
 ﻿using System.Drawing;
 using System.Runtime.CompilerServices;
-using C__GC.Combats;
-using C__GC.DataString;
-using C__GC.Entity;
-using C__GC.Hub;
 
-namespace C__GC.Player
+namespace C__GC
 {
 
     struct Inventory
@@ -15,40 +11,40 @@ namespace C__GC.Player
     }
 
 
-    public class Player
+    internal class Player
     {
-        /*
-        ------------------------------------------------------
-        |             Initialize Varialbe Player.cs          |                     
-        ------------------------------------------------------
-        */
+/*
+------------------------------------------------------
+|             Initialize Varialbe Player.cs          |                     
+------------------------------------------------------
+*/
         private string _map;
         private int _size;
-        public int playerX = 5;
-        public int playerY = 5;
+        public int playerX = 10;
+        public int playerY = 10;
         DisplayElement _playerRender;
-        MapManager _mapManager;
 
         List<Protagonist> _team;
-        List<Enemy> _enemies;
         public List<Protagonist> Team { get => _team; }
-        public List<Enemy> Enemies { get => _enemies; }
 
         Random rdm = new();
 
-        /*
-        ------------------------------------------------------
-        |             Initialize Function Player.cs          |                     
-        ------------------------------------------------------
-        */
+/*
+------------------------------------------------------
+|             Initialize Function Player.cs          |                     
+------------------------------------------------------
+*/
         public Player()
         {
         }
-        public void InitPlayer(string map, int size, MapManager mapManager)
+        public void InitPlayer(string map, int size)
         {
             _map = map;
             _size = size;
-            _playerRender = new DisplayElement("p", 1, playerX, playerY);
+            _playerRender.content = "p";
+            _playerRender.width = 1;
+            _playerRender.xOffset = playerX;
+            _playerRender.yOffset = playerY;
             _team = new List<Protagonist>();
             DisplaySystem.Subscribe(_playerRender);
 
@@ -61,7 +57,6 @@ namespace C__GC.Player
             prota.Spells.Add(SpellCollection.testSpell);
             prota.Spells.Add(SpellCollection.testSpell);
             Recruite(prota);
-            _mapManager = mapManager;
         }
         //saveS
         public void Input(int x, int y)
@@ -87,7 +82,7 @@ namespace C__GC.Player
                         break;
                     case ConsoleKey.P:
                         overlay.InitPopUp(overlay._OverlayOptions, 20, 25);
-                        if (keyInfo.Key == ConsoleKey.P)
+                        if(keyInfo.Key == ConsoleKey.P)
                         {
                             Console.ReadKey(true);
                         }
@@ -101,22 +96,20 @@ namespace C__GC.Player
 
                 if (IsObstacle(newX, newY) == false)
                 {
+                    SetBack(playerX, playerY);
                     Move(x, y);
-                    if (IsGrass(newX, newY))
+                    if(IsGrass(newX, newY))
                     {
-                        if (rdm.Next(0, 10) == 0)
+                        if(rdm.Next(0, 10) == 0)
                         {
-                            Difficulty difficulty = new();
-                            difficulty.EnemyCount();
-                            Battle battle = new Battle(_team, Difficulty.Enemy);
-                            
-                            if (battle.start() == false)
+                            Battle battle = new Battle(_team, [EnemyFactory.basic(), EnemyFactory.basic()]);
+                            if(battle.start() == false)
                             {
                                 return;
                             }
                         }
                     }
-                    else if (IsTavern(newX, newY))
+                    else if(IsTavern(newX, newY))
                     {
                         Stats stats = new Stats();
                         stats.mana = 200;
@@ -127,10 +120,6 @@ namespace C__GC.Player
                         prota.Spells.Add(SpellCollection.testSpell);
                         prota.Spells.Add(SpellCollection.testSpell);
                         Recruite(prota);
-                    }
-                    if (IsTransition(newX, newY))
-                    {
-                        _map = _mapManager.ChangeMap("map2"); // Call a method to change the map
                     }
                 }
 
@@ -145,9 +134,8 @@ namespace C__GC.Player
             _playerRender.yOffset = playerY;
             DisplaySystem.ReplaceByValue(oldRender, _playerRender);
             DisplaySystem.Update();
-
+            
         }
-
         private bool IsObstacle(int x, int y)
         {
             return _map[y * _size + x] == '#';
@@ -160,24 +148,16 @@ namespace C__GC.Player
         {
             return _map[y * _size + x] == '&';
         }
+        public void SetBack(int x, int y)
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(_map[y * _size + x]);
+        }
 
         public void Recruite(Protagonist prota)
         {
             _team.Add(prota);
-            prota.Suicide += () => { _team.Remove(prota); };
-        }
-
-        private bool IsTransition(int x, int y)
-        {
-            return _map[y * _size + x] == '*';
-        }
-        public void SetPlayerPosition(int x, int y) 
-        {
-            DisplayElement oldRender = _playerRender;
-            playerX = x;
-            playerY = y;
-            DisplaySystem.ReplaceByValue(oldRender, _playerRender);
-            DisplaySystem.Update();
+            prota.Suicide += ()=> { _team.Remove(prota); };
         }
     }
 }
