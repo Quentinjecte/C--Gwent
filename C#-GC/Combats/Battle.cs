@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using C__GC.Entity;
 using C__GC.Hub;
 
-namespace C__GC
+namespace C__GC.Combats
 {
     internal class Battle
     {
@@ -92,7 +92,7 @@ namespace C__GC
             {
                 prota.Suicide += () => { _protagonists.Remove(prota); };
             }
-            foreach(Enemy enemy in _enemies)
+            foreach (Enemy enemy in _enemies)
             {
                 enemy.Suicide += () => { _enemies.Remove(enemy); };
             }
@@ -100,7 +100,7 @@ namespace C__GC
 
         public bool start()
         {
-            
+
             // assigner int Run au retour de cette fonction
 <<<<<<< HEAD:C#-GC/Battle.cs
             InitHud();
@@ -129,7 +129,7 @@ namespace C__GC
 >>>>>>> SAVEcOMMIT:C#-GC/Combats/Battle.cs
                     //        Status.Subscribe(() => Status.Burn(_protagonists[0]));
                     //        SpellCollection.testSpell.Cast(prota);
-                    if(prota.Hp <= 0)
+                    if (prota.Hp <= 0)
                     {
                         prota.Suicide();
                     }
@@ -158,7 +158,7 @@ namespace C__GC
 
         private void DeleteHUD()
         {
-            foreach(DisplayElement sprite in _protaSprites)
+            foreach (DisplayElement sprite in _protaSprites)
 =======
         private void UpdateHUD()
         {
