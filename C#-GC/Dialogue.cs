@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace C__GC
-
+{ 
     public class Dialogue
     {
         DisplayElement _renderer;
