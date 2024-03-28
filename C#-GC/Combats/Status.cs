@@ -25,6 +25,20 @@ namespace C__GC.Combats
         {
             target.TakeDmg(15);
         }
+        public static void Poison(Character target)
+        {
+            target.TakeDmg(2);
+        }
 
+        public static void Stun(Character target)
+        {
+            int chance;
+            Random rnd = new Random();
+            chance = rnd.Next(0, 100);
+            if (chance <= 80)
+            {
+
+            }
+        }
     }
 }
