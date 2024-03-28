@@ -18,7 +18,11 @@ public static class ResourceAllocator
         // Get the directory where the executable is located
         string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
         // Path to the "maps.json" file in the same directory as the executable
+#if DEBUG
         string mapsJsonPath = Path.Combine(baseDirectory, "../../../maps/maps.json");
+#else
+        string mapsJsonPath = Path.Combine(baseDirectory, "maps/maps.json");
+#endif
 
         if (_mapName.ContainsKey(mapName))
         {
@@ -50,7 +54,11 @@ public static class ResourceAllocator
         }
         else
         {
+#if DEBUG
             using (StreamReader map = new StreamReader("../../../maps/"+mapName))
+#else
+            using (StreamReader map = new StreamReader("maps/"+mapName))
+#endif
             {
                 int count = 0;
                 int startIndex = -1;
