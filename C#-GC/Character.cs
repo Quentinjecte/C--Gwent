@@ -4,9 +4,8 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using C__GC.Combats;
 
-namespace C__GC.Entity
+namespace C__GC
 {
     public struct Stats(int ATK, int HP, int MANA)
     {
@@ -16,7 +15,7 @@ namespace C__GC.Entity
     }
 
 
-    internal class Offense
+    internal class  Offense
     {
         public int dmg;
 
@@ -41,7 +40,7 @@ namespace C__GC.Entity
         int _lvl;
         public int Lvl { get => _lvl; }
 
-        public Character(string name, Stats stats)
+        public Character(string name, Stats stats) 
         {
             _hp = stats.hp;
             _mana = stats.mana;
@@ -55,9 +54,20 @@ namespace C__GC.Entity
         {
             _hp -= amount;
 
-            if (_hp <= 0)
+            if(_hp <= 0)
             {
                 Suicide.Invoke();
+            }
+        }
+        
+        public void Healed(int amount)
+        {
+            if (_hp <= Stats.hp - amount)
+            {
+                _hp += amount;
+            } else
+            {
+                _hp = Stats.hp;
             }
         }
 
@@ -98,7 +108,7 @@ namespace C__GC.Entity
             _hp += gain.hp;
             _mana += gain.mana;
 
-            foreach (Spell spell in learn)
+            foreach(Spell spell in learn)
             {
                 _spells.Add(spell);
             }

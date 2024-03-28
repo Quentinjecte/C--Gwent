@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 namespace C__GC
 {
@@ -7,6 +6,12 @@ namespace C__GC
     {
         public static void Main(string[] args)
         {
+            int left = Console.LargestWindowWidth - Console.WindowWidth;
+            int top = Console.LargestWindowHeight - Console.WindowHeight;
+            Console.SetWindowSize(Console.LargestWindowWidth, Console.LargestWindowHeight);
+
+            Console.SetWindowPosition(0, 0);
+
             Game game = new Game();
             game.Start();
         }

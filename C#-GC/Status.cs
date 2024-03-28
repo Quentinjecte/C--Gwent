@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
-using C__GC.Entity;
 
-namespace C__GC.Combats
+namespace C__GC
 {
     static class Status
     {
@@ -23,8 +23,23 @@ namespace C__GC.Combats
 
         public static void Burn(Character target)
         {
-            target.TakeDmg(15);
+            target.TakeDmg(2);
+        }
+        
+        public static void Poison(Character target)
+        {
+            target.TakeDmg(2);
         }
 
+        public static void Stun(Character target)
+        {
+            int chance;
+            Random rnd = new Random();
+            chance = rnd.Next(0, 100);
+            if (chance <= 80)
+            {
+
+            }
+        }
     }
 }
