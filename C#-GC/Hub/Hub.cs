@@ -157,7 +157,7 @@ namespace C__GC.Hub
             Hub HubOptions = new Hub();
             HubOptions.InitHub(this._prompt, _OptionDifficult);
             _hubIndex = HubOptions.SwapIndex();
-            ChoiseUrDifficulty();
+            ChooseUrDifficulty();
         }
         private void Continue()
         {
@@ -242,7 +242,7 @@ namespace C__GC.Hub
             Option(CharactereData.Prompt, _OptionWindows);
 
         }
-        private void ChoiseUrDifficulty()
+        private void ChooseUrDifficulty()
         {
             switch (_hubIndex)
             {
@@ -275,7 +275,7 @@ namespace C__GC.Hub
             // Start taking input from the player
             Player.Input(0, 0);
         }
-        private void ChoiseUrHeroes()
+        private void ChooseUrHeroes()
         {
             switch (_hubIndex)
             {

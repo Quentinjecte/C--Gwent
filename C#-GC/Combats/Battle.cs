@@ -29,24 +29,25 @@ namespace C__GC
         public Battle(List<Protagonist> protagonists, List<Enemy> enemies)
         {
             Overlay _menu = new Overlay();
+            Overlay.InFight = true;
             _overlay = new[] {
                 // Attack option
-                new str_func("Attack          ", () => { 
+                new str_func("  Attack          ", () => { 
                     // Select target
                     str_func[] nextOverlay = new str_func[_enemies.Count];
                     for(int i = 0; i < _enemies.Count; i++)
                     {
-                        int iCopy = i;
+                        int Icopy = i;
                         nextOverlay[i] = new str_func(i.ToString(), () =>
                         {
-                            _currentAuthor.attack(_enemies[iCopy]);
+                            _currentAuthor.attack(_enemies[Icopy]);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay, 10, 25); 
+                    _menu.InitPopUp(nextOverlay, 0, 0); 
                     },0),
 
                 // Spell option
-                new str_func("Spell           ", () => {
+                new str_func("  Spell           ", () => {
                     // Select spell
                     str_func[] nextOverlay = new str_func[_currentAuthor.Spells.Count];
                     for(int i = 0; i < _currentAuthor.Spells.Count; i++)
@@ -64,13 +65,13 @@ namespace C__GC
                                     _currentAuthor.Cast(_currentAuthor.Spells[iCopy], _enemies[jCopy]);
                                 }, 0);
                             }
-                        _menu.InitPopUp(nextOverlay, 15, 25);
+                        _menu.InitPopUp(nextOverlay, 0, 0);
                         }, 0);
                     }
-                    _menu.InitPopUp(nextOverlay, 10, 25);
+                    _menu.InitPopUp(nextOverlay, 0, 0);
                 }, 0),
 
-                new str_func("Item            "),
+                new str_func("  Item            "),
             };
 
             _protagonists = protagonists;
@@ -89,7 +90,7 @@ namespace C__GC
             Console.SetCursorPosition(0, 0);
             
             // assigner int Run au retour de cette fonction
-            _hud = new DisplayElement("", 30, 0, 0);
+            _hud = new DisplayElement(" ", 30, 0, 0);
             UpdateHUD();
             DisplaySystem.Subscribe(_hud);
             DisplaySystem.Update();
@@ -102,7 +103,7 @@ namespace C__GC
                 {
                     _currentAuthor = prota;
                     _currentTarget = _enemies[0];
-                    _menu.InitPopUp(_overlay, 3, 25, true);
+                    _menu.InitPopUp(_overlay, 3, 0, true);
                     //        Status.Subscribe(() => Status.Burn(_protagonists[0]));
                     //        SpellCollection.testSpell.Cast(prota);
                     if(prota.Hp <= 0)
@@ -128,9 +129,9 @@ namespace C__GC
             return _protagonists.Count > 0;
 
         }
-
         private void UpdateHUD()
         {
+            Console.Clear();
             DisplayElement oldHUD = _hud;
             _hud.content = "|----------------------------|";
                 foreach (Protagonist prota in _protagonists)
