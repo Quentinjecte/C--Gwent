@@ -265,8 +265,7 @@ namespace C__GC.Hub
 
 
             // Initialize allocator and map manager
-            ResourceAllocator allocator = new ResourceAllocator();
-            MapManager mapManager = new MapManager(allocator);
+            MapManager mapManager = new MapManager();
             mapManager.StartMap();
 
             // Create an instance of the Player class and pass the MapParser and Bitmap objects
@@ -313,12 +312,11 @@ namespace C__GC.Hub
             //Console.WriteLine(map);zs
             DisplayElement mapDisplay = new DisplayElement(map, 101, 0, 0);
             DisplaySystem.Subscribe(mapDisplay);
-            DisplaySystem.Update();
+            //DisplaySystem.Update();
 
 
             // Initialize allocator and map manager
-            ResourceAllocator allocator = new ResourceAllocator();
-            MapManager mapManager = new MapManager(allocator);
+            MapManager mapManager = new MapManager();
             mapManager.StartMap();
 
             // Create an instance of the Player class and pass the MapParser and Bitmap objects

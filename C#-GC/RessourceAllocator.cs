@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-public class ResourceAllocator
+public static class ResourceAllocator
 {
-    public Dictionary<string, string> _mapName;
+    static public Dictionary<string, string> _mapName;
 
-    public ResourceAllocator()
+    static ResourceAllocator()
     {
         _mapName = new Dictionary<string, string>();
     }
 
     // Get map data by name
-    public string GetBackMap(string mapName)
+    public static string GetBackMap(string mapName)
     {
         // Get the directory where the executable is located
         string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -42,7 +42,7 @@ public class ResourceAllocator
         }
     }
 
-    public string GetFrontMap(string mapName, int width)
+    public static string GetFrontMap(string mapName)
     {
         if (_mapName.ContainsKey(mapName))
         {
@@ -55,10 +55,6 @@ public class ResourceAllocator
                 int count = 0;
                 int startIndex = -1;
                 string str = map.ReadToEnd();
-                //while ((startIndex = str.IndexOf("\\e", startIndex + 1)) != -1)
-                //{
-                //    str = str.Insert(startIndex, "<BR>");
-                //}
                 str = str.Replace("\\e", "\x1b");
                 map.Close();
                 _mapName.Add(mapName, str);
