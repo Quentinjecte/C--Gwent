@@ -104,20 +104,22 @@ namespace C__GC.Player
                     Move(x, y);
                     if (IsGrass(newX, newY))
                     {
-                        //if (rdm.Next(0, 10) == 0)
-                        //{
-                        //    Difficulty difficulty = new();
-                        //    difficulty.EnemyCount();
-                        //    Battle battle = new Battle(_team, Difficulty.Enemy);
+                        if (rdm.Next(0, 5) == 0)
+                        {
+                            Overlay.InFight = true;
+                            Difficulty difficulty = new();
+                            difficulty.EnemyCount();
+                            Battle battle = new Battle(_team, Difficulty.Enemy);
                             
-                        //    if (battle.start() == false)
-                        //    {
-                        //        return;
-                        //    }
-                        //}
+                            if (battle.start() == false)
+                            {
+                                return;
+                            }
+                        }
                     }
                     else if (IsTavern(newX, newY))
                     {
+                        DisplayTavernDialogue();
                         Stats stats = new Stats();
                         stats.mana = 200;
                         stats.hp = 100;
@@ -130,7 +132,7 @@ namespace C__GC.Player
                     }
                     if (IsTransition(newX, newY))
                     {
-                        _map = _mapManager.ChangeMap("map2"); // Call a method to change the map
+                        _map = _mapManager.ChangeMap("map_by_kawa"); // Call a method to change the map
                     }
                 }
 
@@ -157,12 +159,18 @@ namespace C__GC.Player
         }
         private bool IsTavern(int x, int y)
         {
-            return _map[y * _size + x] == '&';
+            return _map[y * _size + x] == '$';
         }
         public void Recruite(Protagonist prota)
         {
             _team.Add(prota);
             prota.Suicide += () => { _team.Remove(prota); };
+        }
+
+        private void DisplayTavernDialogue()
+        {
+            Dialogue tavernDialogue = new Dialogue();
+            tavernDialogue.Start();
         }
         private bool IsTransition(int x, int y)
         {
