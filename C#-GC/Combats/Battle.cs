@@ -92,7 +92,7 @@ namespace C__GC
             _enemies = enemies;
             _protaSprites = new();
             _enemiesSprites = new();
-            _healthBars = new List<DisplayElement>();
+            //_healthBars = new List<DisplayElement>();
 
             foreach (Protagonist prota in _protagonists)
             {
