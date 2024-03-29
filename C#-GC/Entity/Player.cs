@@ -24,8 +24,8 @@ namespace C__GC.Player
         */
         private string _map;
         private int _size;
-        public int playerX = 50;
-        public int playerY = 50;
+        public int playerX = 20;
+        public int playerY = 20;
         DisplayElement _playerRender;
         Dialogue _dialogue;
         MapManager _mapManager;
@@ -109,7 +109,7 @@ namespace C__GC.Player
                     Move(x, y);
                     if (IsGrass(newX, newY))
                     {
-                        if (rdm.Next(0, 500) == 0)
+                        if (rdm.Next(0, 10) == 0)
                         {
                             Overlay.InFight = true;
                             Difficulty difficulty = new();
