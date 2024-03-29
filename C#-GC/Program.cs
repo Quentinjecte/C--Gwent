@@ -7,6 +7,8 @@ namespace C__GC
     {
         public static void Main(string[] args)
         {
+            Console.CursorVisible = false;
+
             Game game = new Game();
             game.Start();
         }
