@@ -35,6 +35,8 @@ namespace C__GC.Entity
         public Stats Stats { get => _stats; set => _stats = value; }
         string _name;
         public string Name { get => _name; }
+        List<Item> _items;
+        public List<Item> Items { get => _items; set => _items = value; }
         List<Spell> _spells;
         public List<Spell> Spells { get => _spells; set => _spells = value; }
         public Action Suicide { get; set; }
@@ -48,6 +50,7 @@ namespace C__GC.Entity
             Stats = stats;
             _name = name;
             _spells = [];
+            _items = [];
         }
 
 
@@ -71,6 +74,16 @@ namespace C__GC.Entity
             {
                 _hp = Stats.hp;
             }
+        }
+
+        public virtual void Use(Character character)
+        {
+            Console.WriteLine($"You used {_name}!");
+
+            character.TakeDmg(_stats.atk);
+            character.ApplyAttackBonus(_stats.atk);
+            character.RestoreMana(_mana);
+
         }
 
         public void attack(Character character)

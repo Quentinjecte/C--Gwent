@@ -72,7 +72,20 @@ namespace C__GC
                     _menu.InitPopUp(nextOverlay, 10, 15);
                 }, 0),
 
-                new str_func("Item            "),
+                new str_func("Item           ", () => {
+                    // Select spell
+                    str_func[] nextOverlay = new str_func[_currentAuthor.Items.Count];
+                    for(int i = 0; i < _currentAuthor.Items.Count; i++)
+                    {
+                        int iCopy = i;
+                        nextOverlay[i] = new str_func(_currentAuthor.Items[iCopy]._name, () =>
+                        {
+                             //_currentAuthor.Use(_currentAuthor.Items[iCopy]);
+                        _menu.InitPopUp(nextOverlay, 15, 25);
+                        }, 0);
+                    }
+                    _menu.InitPopUp(nextOverlay, 10, 25);
+                }, 0),
             };
 
             _protagonists = protagonists;

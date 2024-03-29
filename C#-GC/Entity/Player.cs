@@ -27,8 +27,9 @@ namespace C__GC.Player
         public int playerX = 5;
         public int playerY = 5;
         DisplayElement _playerRender;
+        Dialogue _dialogue;
         MapManager _mapManager;
-
+        Item items;
         List<Protagonist> _team;
         List<Enemy> _enemies;
         public List<Protagonist> Team { get => _team; }
@@ -60,6 +61,10 @@ namespace C__GC.Player
             Protagonist prota = new Protagonist("jenti", stats);
             prota.Spells.Add(SpellCollection.toxicVaporSpell);
             prota.Spells.Add(SpellCollection.chargeSpell);
+            prota.Items.Add(ItemCollection.HealPotion);
+            prota.Items.Add(ItemCollection.testItemM);
+            prota.Items.Add(ItemCollection.testItemAB);
+            prota.Items.Add(ItemCollection.testItemE);
             Recruite(prota);
             _mapManager = mapManager;
         }
@@ -104,7 +109,7 @@ namespace C__GC.Player
                     Move(x, y);
                     if (IsGrass(newX, newY))
                     {
-                        if (rdm.Next(0, 5) == 0)
+                        if (rdm.Next(0, 500) == 0)
                         {
                             Overlay.InFight = true;
                             Difficulty difficulty = new();
@@ -128,6 +133,12 @@ namespace C__GC.Player
                         Protagonist prota = new Protagonist("jenti", stats);
                         prota.Spells.Add(SpellCollection.minorHealSpell);
                         prota.Spells.Add(SpellCollection.chargeSpell);
+                        prota.Items.Add(ItemCollection.HealPotion);
+                        prota.Items.Add(ItemCollection.testItemM);
+                        prota.Items.Add(ItemCollection.testItemAB);
+                        prota.Items.Add(ItemCollection.testItemE);
+                        prota.Items.Add(ItemCollection.testItemE);
+
                         Recruite(prota);
                     }
                     if (IsTransition(newX, newY))
