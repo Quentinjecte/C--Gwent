@@ -64,5 +64,10 @@ namespace C__GC
             // Invoke the event to notify response received
             DialogueResponseReceived?.Invoke(this, response);
         }
+
+        public string GetResponse(Func<string> getInput)
+        {
+            return getInput();
+        }
     }
 }

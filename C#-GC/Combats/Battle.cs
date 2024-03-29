@@ -19,6 +19,7 @@ namespace C__GC
         List<DisplayElement> _protaSprites;
         List<Enemy> _enemies;
         List<DisplayElement> _enemiesSprites;
+        //private List<DisplayElement> _healthBars;
 
         Character _currentTarget;
         Character _currentAuthor;
@@ -26,7 +27,6 @@ namespace C__GC
         public str_func[] _overlay;
         DisplayElement _hud;
 
-        Overlay _menu;
 
         public Battle(List<Protagonist> protagonists, List<Enemy> enemies)
         {
@@ -73,7 +73,7 @@ namespace C__GC
                 }, 0),
 
                 new str_func("Item           ", () => {
-                    // Select spell
+                    // Select Item
                     str_func[] nextOverlay = new str_func[_currentAuthor.Items.Count];
                     for(int i = 0; i < _currentAuthor.Items.Count; i++)
                     {
@@ -92,6 +92,8 @@ namespace C__GC
             _enemies = enemies;
             _protaSprites = new();
             _enemiesSprites = new();
+            _healthBars = new List<DisplayElement>();
+
             foreach (Protagonist prota in _protagonists)
             {
                 prota.Suicide += () => { _protagonists.Remove(prota); };
@@ -114,6 +116,7 @@ namespace C__GC
 
             while (_protagonists.Count > 0 && _enemies.Count > 0)
             {
+
                 foreach (Protagonist prota in _protagonists)
                 {
                     _currentAuthor = prota;
@@ -134,7 +137,6 @@ namespace C__GC
                         enemy.Suicide();
                     }
                 }
-
                 Status.Tick();
 
             }
@@ -146,6 +148,7 @@ namespace C__GC
             return _protagonists.Count > 0;
 
         }
+
 
         private void DeleteHUD()
         {
@@ -165,7 +168,14 @@ namespace C__GC
                 _protaSprites.Add(new DisplayElement(ResourceAllocator.GetFrontMap("fighter.txt"), -1, 25 + 30 * i, 2));
                 DisplaySystem.Subscribe(_protaSprites[i]);
             }
+
+            for (int i = 0; i < _enemies.Count; i++)
+            {
+                _enemiesSprites.Add(new DisplayElement(ResourceAllocator.GetFrontMap("enemies.txt"), -1, 160 + 30 * i, 2));
+                DisplaySystem.Subscribe(_enemiesSprites[i]);
+            }
         }
+
 
     }
 }

@@ -5,6 +5,7 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using C__GC.Combats;
+using C__GC.DataString;
 
 namespace C__GC.Entity
 {
@@ -43,6 +44,9 @@ namespace C__GC.Entity
         int _lvl;
         public int Lvl { get => _lvl; }
 
+        private const int MaxHealthBarLength = 100;
+        private DisplayElement _healthDisplayElement;
+
         public Character(string name, Stats stats)
         {
             _hp = stats.hp;
@@ -53,6 +57,20 @@ namespace C__GC.Entity
             _items = [];
         }
 
+        private void UpdateHealthBar()
+        {
+            // Calculate the current health percentage
+            double healthPercentage = (double)_hp / _stats.hp;
+
+            // Calculate the length of the health bar based on the percentage
+            int barLength = (int)Math.Round(healthPercentage * MaxHealthBarLength);
+
+            // Construct the health bar string
+            string healthBar = new string('|', barLength).PadRight(MaxHealthBarLength, ' ');
+
+            // Update the health bar content
+            _healthDisplayElement.content = $"HP: {_hp}/{_stats.hp} [{healthBar}]";
+        }
 
         public void TakeDmg(int amount)
         {
@@ -62,6 +80,7 @@ namespace C__GC.Entity
             {
                 Suicide.Invoke();
             }
+            UpdateHealthBar();
         }
 
         public void Healed(int amount)
@@ -74,6 +93,8 @@ namespace C__GC.Entity
             {
                 _hp = Stats.hp;
             }
+
+            UpdateHealthBar();
         }
 
         public virtual void Use(Character character)
