@@ -124,7 +124,7 @@ namespace C__GC
                     _currentAuthor = prota;
                     _currentTarget = _enemies[0];
                     _menu.InitPopUp(_overlay, 3, 15, true);
-                    if (prota.Hp <= 0)
+                     if (prota.Hp <= 0)
                     {
                         prota.Suicide();
                         foreach (DisplayElement sprite in _protaSprites)
@@ -141,11 +141,34 @@ namespace C__GC
                     if (enemy.Hp <= 0)
                     {
                         enemy.Suicide();
-                        foreach (DisplayElement sprite in _protaSprites)
-                        {
-                            DisplaySystem.Unsubscribe(sprite);
-                        }
                     }
+                }
+
+                if(_enemies.Count == 0)
+                {
+                    foreach (DisplayElement sprite in _protaSprites)
+                    {
+                        DisplaySystem.Unsubscribe(sprite);
+                    }
+
+                    while (DisplaySystem._elements.Count != 2)
+                    {
+                        DisplaySystem.Unsubscribe();
+                    }
+                }
+                if(_protagonists.Count == 0)
+                {
+                    foreach (DisplayElement sprite in _protaSprites)
+                    {
+                        DisplaySystem.Unsubscribe(sprite);
+                    }
+
+                    while (DisplaySystem._elements.Count != 0)
+                    {
+                        DisplaySystem.Unsubscribe();
+                    }
+                    Hub.Hub hub = new();
+                    hub.Dead();
                 }
                 Status.Tick();
 
@@ -172,14 +195,14 @@ namespace C__GC
             //}
         }
         private void InitHud()
-        { 
+        {
             for (int i = 0; i < _protagonists.Count; i++)
             {
                 _protaSprites.Add(new DisplayElement(ResourceAllocator.GetFrontMap("fighter.txt"), -1, 25 + 30 * i, 2));
                 DisplaySystem.Subscribe(_protaSprites[i]);
                 foreach (Protagonist prota in _protagonists)
                 {
-                    HeroesStats = new DisplayElement(prota.Hp + " / " + prota.Hp, 7, Console.GetCursorPosition().Left - 22, Console.GetCursorPosition().Top + 2);
+                    HeroesStats = new DisplayElement(prota.Hp + " / " + Hub.Hub.Heroes[0].Hp, 7, Console.GetCursorPosition().Left - 22, Console.GetCursorPosition().Top + 2);
                 }
                 DisplaySystem.Subscribe(HeroesStats);
             }
@@ -191,7 +214,7 @@ namespace C__GC
 
                 foreach (Enemy enemy in _enemies)
                 {
-                    HeroesStats = new DisplayElement(enemy.Hp + " / " + enemy.Hp, 7, Console.GetCursorPosition().Left + 113, Console.GetCursorPosition().Top + 2);
+                    HeroesStats = new DisplayElement(enemy.Hp + " / " + _enemies[0].Hp, 7, Console.GetCursorPosition().Left + 113, Console.GetCursorPosition().Top + 2);
                     //HeroesStats = new DisplayElement(enemy.Mana + " / " + enemy.Mana, 7, Console.GetCursorPosition().Left + 113, Console.GetCursorPosition().Top + 3);
                 }
                 DisplaySystem.Subscribe(HeroesStats);

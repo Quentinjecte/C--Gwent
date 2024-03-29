@@ -52,7 +52,7 @@ namespace C__GC.Hub
                 new str_func("      Option      "),
                 new str_func("       Save       "),
                 new str_func("       Load       "),
-                new str_func("       Exit       "),
+                new str_func("       Exit       ", Hub, 7),
             };
             _OverlayFight = new[] {// Update to do
                 new str_func("      Attack      ", (Character author, Character target) => author.attack(target), 0),
@@ -186,17 +186,21 @@ namespace C__GC.Hub
             DisplaySystem.Subscribe(_renderer);
             DisplaySystem.Update();
         }
-
         private void DialogueResponseHandler(object sender, string response)
         {
             Console.WriteLine($"Vous avez répondu : {response}");
             ClearDialogueOverlay();
         }
-
         private void ClearDialogueOverlay()
         {
             DisplaySystem.Unsubscribe(_renderer);
             DisplaySystem.Update();
+        }
+
+        private void Hub()
+        {
+            Game game = new();
+            game.Start();
         }
     }
     public class Rectangle

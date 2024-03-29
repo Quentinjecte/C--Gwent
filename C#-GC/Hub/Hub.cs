@@ -13,6 +13,7 @@ using C__GC.DataString;
 using C__GC.Combats;
 using System.Runtime.InteropServices;
 using C__GC.Player;
+using System.IO;
 
 namespace C__GC.Hub
 {
@@ -43,7 +44,6 @@ namespace C__GC.Hub
         Player.Player Player = new();
 
         public static List<Protagonist> Heroes = new();
-
         private int HubIndex, 
             _hubIndex, 
             Volume, 
@@ -186,7 +186,7 @@ namespace C__GC.Hub
         {
             Console.Clear();
             Hub HubOptions = new Hub();
-            HubOptions.InitHub(this._prompt, _OptionDifficult);
+            HubOptions.InitHub(CharactereData.Prompt, _OptionDifficult);
             _hubIndex = HubOptions.SwapIndex();
             ChooseUrDifficulty();
         }
@@ -199,7 +199,7 @@ namespace C__GC.Hub
         private void Option(string prompt, str_func[] HubInfo)
         {
             Hub HubOptions = new Hub();
-            HubOptions.InitHub(prompt, _OptionMenuPreset);
+            HubOptions.InitHub(CharactereData.Prompt, _OptionMenuPreset);
             _hubIndex = HubOptions.SwapIndex();
         }
         private void Credit()
@@ -222,9 +222,9 @@ namespace C__GC.Hub
             }
 
             Console.Clear();
-            Console.ReadKey(true);
             InitHub(CharactereData.GameOver, _mainMenuPreset);
             SwapIndex();
+
         }
         private void Back(string prompt, str_func[] HubInfo)
         {

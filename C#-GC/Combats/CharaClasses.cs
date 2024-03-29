@@ -13,7 +13,7 @@ namespace C__GC.Combats
         static public List<Protagonist> classes = new List<Protagonist>()
         {
             //new Protagonist("mage", new Stats(10, 80, 150))
-            new Protagonist("Fighter",   new Stats(10, 33, 7)),
+            new Protagonist("Fighter",   new Stats(10, 31, 7)),
             new Protagonist("Crusader",  new Stats(5, 29, 15)),
             new Protagonist("Priest",    new Stats(1, 20, 25)),
             new Protagonist("Arcanist",  new Stats(1, 15, 30)),
