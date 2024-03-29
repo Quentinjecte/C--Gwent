@@ -60,13 +60,19 @@ namespace C__GC.Entity
         private void UpdateHealthBar()
         {
             // Calculate the current health percentage
+            string healthBar;
             double healthPercentage = (double)_hp / _stats.hp;
-
             // Calculate the length of the health bar based on the percentage
             int barLength = (int)Math.Round(healthPercentage * MaxHealthBarLength);
 
             // Construct the health bar string
-            string healthBar = new string('|', barLength).PadRight(MaxHealthBarLength, ' ');
+            if (barLength <= 0) 
+            {
+                barLength = 0;
+                healthBar = new string('|', barLength).PadRight(MaxHealthBarLength, ' ');
+            }
+            else
+                healthBar = new string('|', barLength).PadRight(MaxHealthBarLength, ' ');
 
             // Update the health bar content
             _healthDisplayElement.content = $"HP: {_hp}/{_stats.hp} [{healthBar}]";

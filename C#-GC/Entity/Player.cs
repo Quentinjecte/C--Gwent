@@ -30,6 +30,7 @@ namespace C__GC.Player
         Dialogue _dialogue;
         MapManager _mapManager;
         Item items;
+        Protagonist Heroes;
         List<Protagonist> _team;
         List<Enemy> _enemies;
         public List<Protagonist> Team { get => _team; }
@@ -52,20 +53,20 @@ namespace C__GC.Player
             _playerRender = new DisplayElement(ResourceAllocator.GetFrontMap("character.txt"), -1, playerX, playerY);
             _team = new List<Protagonist>();
             DisplaySystem.Subscribe(_playerRender);
+            Hub.Hub hub = new();
 
-            Stats stats = new Stats();
-            stats.mana = 200;
-            stats.hp = 100;
-            stats.atk = 100;
-
-            Protagonist prota = new Protagonist("jenti", stats);
-            prota.Spells.Add(SpellCollection.toxicVaporSpell);
-            prota.Spells.Add(SpellCollection.chargeSpell);
-            prota.Items.Add(ItemCollection.HealPotion);
-            prota.Items.Add(ItemCollection.testItemM);
-            prota.Items.Add(ItemCollection.testItemAB);
-            prota.Items.Add(ItemCollection.testItemE);
-            Recruite(prota);
+            foreach(Protagonist heroes in Hub.Hub.Heroes)
+            {
+                Protagonist protagonist = new Protagonist(heroes.Name, heroes.Stats);
+                Heroes = protagonist;
+            }
+            Heroes.Spells.Add(SpellCollection.toxicVaporSpell);
+            Heroes.Spells.Add(SpellCollection.chargeSpell);
+            Heroes.Items.Add(ItemCollection.HealPotion);
+            Heroes.Items.Add(ItemCollection.testItemM);
+            Heroes.Items.Add(ItemCollection.testItemAB);
+            Heroes.Items.Add(ItemCollection.testItemE);
+            Recruite(Heroes);
             _mapManager = mapManager;
         }
         //saveS
@@ -125,21 +126,16 @@ namespace C__GC.Player
                     else if (IsTavern(newX, newY))
                     {
                         DisplayTavernDialogue();
-                        Stats stats = new Stats();
-                        stats.mana = 200;
-                        stats.hp = 100;
-                        stats.atk = 100;
 
-                        Protagonist prota = new Protagonist("jenti", stats);
-                        prota.Spells.Add(SpellCollection.minorHealSpell);
-                        prota.Spells.Add(SpellCollection.chargeSpell);
-                        prota.Items.Add(ItemCollection.HealPotion);
-                        prota.Items.Add(ItemCollection.testItemM);
-                        prota.Items.Add(ItemCollection.testItemAB);
-                        prota.Items.Add(ItemCollection.testItemE);
-                        prota.Items.Add(ItemCollection.testItemE);
+                        Heroes.Spells.Add(SpellCollection.minorHealSpell);
+                        Heroes.Spells.Add(SpellCollection.chargeSpell);
+                        Heroes.Items.Add(ItemCollection.HealPotion);
+                        Heroes.Items.Add(ItemCollection.testItemM);
+                        Heroes.Items.Add(ItemCollection.testItemAB);
+                        Heroes.Items.Add(ItemCollection.testItemE);
+                        Heroes.Items.Add(ItemCollection.testItemE);
 
-                        Recruite(prota);
+                        Recruite(Heroes);
                     }
                     if (IsTransition(newX, newY))
                     {

@@ -93,7 +93,7 @@ namespace C__GC.Hub
             if (InFight) 
             {
                 _boxX = 20;
-                _boxY = 20;
+                _boxY = Console.WindowHeight - 25;
                 DisplayE = new DisplayElement(CharactereData.OverlayFight, 156, _boxX, _boxY);
             }
             else

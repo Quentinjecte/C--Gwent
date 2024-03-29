@@ -103,6 +103,7 @@ namespace C__GC
                 enemy.Suicide += () => { _enemies.Remove(enemy); };
             }
         }
+        DisplayElement HeoresHP;
         public bool start()
         {
 
@@ -114,19 +115,24 @@ namespace C__GC
             DisplaySystem.ReplaceByIndex(0, new DisplayElement("", 1, 0, 0));
             DisplaySystem.Update(true);
 
+
             while (_protagonists.Count > 0 && _enemies.Count > 0)
             {
-
+                 
                 foreach (Protagonist prota in _protagonists)
                 {
                     _currentAuthor = prota;
                     _currentTarget = _enemies[0];
                     _menu.InitPopUp(_overlay, 3, 15, true);
-                    //        Status.Subscribe(() => Status.Burn(_protagonists[0]));
-                    //        SpellCollection.testSpell.Cast(prota);
                     if (prota.Hp <= 0)
                     {
                         prota.Suicide();
+                        foreach (DisplayElement sprite in _protaSprites)
+                        {
+                            DisplaySystem.Unsubscribe(sprite);
+                        }
+                        Hub.Hub hub = new();
+                        hub.Dead();
                     }
                 }
                 foreach (Enemy enemy in _enemies)
@@ -135,6 +141,10 @@ namespace C__GC
                     if (enemy.Hp <= 0)
                     {
                         enemy.Suicide();
+                        foreach (DisplayElement sprite in _protaSprites)
+                        {
+                            DisplaySystem.Unsubscribe(sprite);
+                        }
                     }
                 }
                 Status.Tick();
@@ -149,7 +159,7 @@ namespace C__GC
 
         }
 
-
+        DisplayElement HeroesStats;
         private void DeleteHUD()
         {
             foreach (DisplayElement sprite in _protaSprites)
@@ -162,20 +172,31 @@ namespace C__GC
             //}
         }
         private void InitHud()
-        {
+        { 
             for (int i = 0; i < _protagonists.Count; i++)
             {
                 _protaSprites.Add(new DisplayElement(ResourceAllocator.GetFrontMap("fighter.txt"), -1, 25 + 30 * i, 2));
                 DisplaySystem.Subscribe(_protaSprites[i]);
+                foreach (Protagonist prota in _protagonists)
+                {
+                    HeroesStats = new DisplayElement(prota.Hp + " / " + prota.Hp, 7, Console.GetCursorPosition().Left - 22, Console.GetCursorPosition().Top + 2);
+                }
+                DisplaySystem.Subscribe(HeroesStats);
             }
 
             for (int i = 0; i < _enemies.Count; i++)
             {
                 _enemiesSprites.Add(new DisplayElement(ResourceAllocator.GetFrontMap("enemies.txt"), -1, 160 + 30 * i, 2));
                 DisplaySystem.Subscribe(_enemiesSprites[i]);
+
+                foreach (Enemy enemy in _enemies)
+                {
+                    HeroesStats = new DisplayElement(enemy.Hp + " / " + enemy.Hp, 7, Console.GetCursorPosition().Left + 113, Console.GetCursorPosition().Top + 2);
+                    //HeroesStats = new DisplayElement(enemy.Mana + " / " + enemy.Mana, 7, Console.GetCursorPosition().Left + 113, Console.GetCursorPosition().Top + 3);
+                }
+                DisplaySystem.Subscribe(HeroesStats);
             }
+
         }
-
-
     }
 }

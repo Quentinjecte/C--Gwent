@@ -41,7 +41,6 @@ namespace C__GC.Hub
 
 
         Player.Player Player = new();
-        Difficulty Difficulty = new();
 
         public static List<Protagonist> Heroes = new();
 
@@ -214,6 +213,18 @@ namespace C__GC.Hub
         private void Exit()
         {
             Environment.Exit(0);
+        }        
+        public void Dead()
+        {
+            while (DisplaySystem._elements.Count != 0)
+            {
+                DisplaySystem.Unsubscribe();
+            }
+
+            Console.Clear();
+            Console.ReadKey(true);
+            InitHub(CharactereData.GameOver, _mainMenuPreset);
+            SwapIndex();
         }
         private void Back(string prompt, str_func[] HubInfo)
         {
